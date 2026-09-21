@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, MessageCircle, Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -12,30 +14,29 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import {
+  ALL_PAGES,
   NAV_LINKS,
   SITE,
   whatsappMessageUrl,
 } from "@/data/site";
 import { track } from "@/lib/analytics";
-import { useBookingStore } from "@/lib/booking-store";
+import { cn } from "@/lib/utils";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const openBooking = useBookingStore((s) => s.openBooking);
+  const pathname = usePathname();
 
-  const handleBook = () => {
-    track("click_booking", { source: "header" });
-    openBooking();
-  };
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
     <header className="sticky top-0 z-50 border-b-2 border-ink bg-cream">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
         {/* Wordmark */}
-        <a
-          href="#top"
+        <Link
+          href="/"
           className="group flex flex-col leading-none"
-          aria-label="Red Scooty Sreemangal - back to top"
+          aria-label="Red Scooty Sreemangal - home"
         >
           <span className="font-display text-3xl tracking-wide text-ink transition-colors group-hover:text-brand">
             RED SCOOTY
@@ -43,24 +44,34 @@ export function Header() {
           <span className="label-micro mt-0.5 text-steel">
             SREEMANGAL / BANGLADESH
           </span>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav aria-label="Main navigation" className="hidden items-center gap-7 md:flex">
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
-              className="label-micro text-ink underline-offset-4 transition-colors hover:text-brand hover:underline"
+              aria-current={isActive(link.href) ? "page" : undefined}
+              className={cn(
+                "label-micro underline-offset-4 transition-colors hover:text-brand hover:underline",
+                isActive(link.href) ? "text-brand underline" : "text-ink",
+              )}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
           <Button
-            onClick={handleBook}
+            asChild
+            onClick={() => track("click_booking", { source: "header" })}
             className="h-11 rounded-none border-2 border-ink bg-ink px-5 font-display text-lg tracking-wider text-cream shadow-hard-sm transition-all hover:-translate-y-0.5 hover:bg-brand hover:shadow-hard-red-sm"
           >
-            BOOK A RIDE
+            <Link href={SITE.bookingUrl}>
+              BOOK A RIDE
+              <span aria-hidden="true" className="ml-2">
+                →
+              </span>
+            </Link>
           </Button>
         </nav>
 
@@ -89,35 +100,33 @@ export function Header() {
                   SREEMANGAL / BANGLADESH
                 </p>
               </SheetHeader>
-              <nav aria-label="Mobile navigation" className="flex flex-col p-5">
-                {NAV_LINKS.map((link) => (
-                  <a
+              <nav
+                aria-label="Mobile navigation"
+                className="scrollbar-brutal flex max-h-[calc(100vh-11rem)] flex-col overflow-y-auto p-5"
+              >
+                {ALL_PAGES.map((link) => (
+                  <Link
                     key={link.href}
                     href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setMenuOpen(false);
-                      // Close the sheet first, then scroll - the sheet's
-                      // scroll-lock release cancels in-flight smooth scrolls.
-                      setTimeout(() => {
-                        document
-                          .querySelector(link.href)
-                          ?.scrollIntoView({ behavior: "smooth" });
-                      }, 350);
-                    }}
-                    className="border-b border-ink/20 py-4 font-display text-4xl tracking-wide text-ink transition-colors hover:text-brand"
+                    onClick={() => setMenuOpen(false)}
+                    aria-current={isActive(link.href) ? "page" : undefined}
+                    className={cn(
+                      "border-b border-ink/20 py-3 font-display text-3xl tracking-wide transition-colors hover:text-brand",
+                      isActive(link.href) ? "text-brand" : "text-ink",
+                    )}
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
                 <Button
+                  asChild
                   onClick={() => {
                     setMenuOpen(false);
-                    handleBook();
+                    track("click_booking", { source: "mobile_menu" });
                   }}
                   className="mt-6 h-14 rounded-none border-2 border-ink bg-brand font-display text-2xl tracking-wider text-white shadow-hard hover:bg-ink"
                 >
-                  BOOK A RIDE
+                  <Link href={SITE.bookingUrl}>BOOK A RIDE</Link>
                 </Button>
                 <div className="mt-6 grid grid-cols-2 gap-3">
                   <Button

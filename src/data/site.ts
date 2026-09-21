@@ -13,7 +13,7 @@ export const SITE = {
   fullName: "Red Scooty Sreemangal",
   tagline: "EXPLORE SREEMANGAL",
   heroHeadline: "DON'T JUST VISIT SREEMANGAL. RIDE IT.",
-  heroSub: "Scooty rentals for exploring the tea gardens, forests, roads and hidden corners of Sreemangal.",
+  heroSub: "Scooty rentals for exploring the tea gardens, forest roads, local trails and the hidden corners of Sreemangal.",
 
   phoneDisplay: "01897-423694",
   phoneIntl: "+8801897423694",
@@ -38,12 +38,30 @@ export const SITE = {
   },
 
   locationStrip: "JALALIA ROAD · SREEMANGAL, BD",
+
+  bookingUrl: "/book",
 } as const;
 
+/** Primary desktop navigation (brief: EXPLORE / SCOOTIES / ROUTES / HOW IT WORKS). */
 export const NAV_LINKS = [
-  { label: "EXPLORE", href: "#explore" },
-  { label: "SCOOTIES", href: "#fleet" },
-  { label: "HOW IT WORKS", href: "#how-it-works" },
+  { label: "EXPLORE", href: "/explore" },
+  { label: "SCOOTIES", href: "/scooties" },
+  { label: "ROUTES", href: "/routes" },
+  { label: "HOW IT WORKS", href: "/how-it-works" },
+] as const;
+
+/** Every page — mobile menu, footer sitemap, 404 recovery. */
+export const ALL_PAGES = [
+  { label: "HOME", href: "/" },
+  { label: "SCOOTIES", href: "/scooties" },
+  { label: "EXPLORE SREEMANGAL", href: "/explore" },
+  { label: "RIDE ROUTES", href: "/routes" },
+  { label: "HOW IT WORKS", href: "/how-it-works" },
+  { label: "RENTAL GUIDE", href: "/rental-guide" },
+  { label: "BOOK A RIDE", href: "/book" },
+  { label: "ABOUT", href: "/about" },
+  { label: "JOURNAL", href: "/journal" },
+  { label: "CONTACT", href: "/contact" },
 ] as const;
 
 export const MAPS_DIRECTIONS_URL =

@@ -1,18 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { Bike, MessageCircle, Phone } from "lucide-react";
 
 import { SITE, whatsappMessageUrl } from "@/data/site";
 import { track } from "@/lib/analytics";
-import { useBookingStore } from "@/lib/booking-store";
 
 /**
- * Persistent mobile bottom bar (PRD sections 14 / 25):
+ * Persistent mobile bottom bar:
  * CALL | WHATSAPP | BOOK - 48px+ tap targets, safe-area aware.
+ * BOOK now navigates to the dedicated booking page.
  */
 export function MobileCtaBar() {
-  const openBooking = useBookingStore((s) => s.openBooking);
-
   return (
     <nav
       aria-label="Quick actions"
@@ -40,18 +39,15 @@ export function MobileCtaBar() {
         <MessageCircle className="h-5 w-5" aria-hidden="true" />
         <span className="label-micro">WHATSAPP</span>
       </a>
-      <button
-        type="button"
-        onClick={() => {
-          track("click_booking", { source: "mobile_bar" });
-          openBooking();
-        }}
+      <Link
+        href={SITE.bookingUrl}
+        onClick={() => track("click_booking", { source: "mobile_bar" })}
         className="flex min-h-14 flex-col items-center justify-center gap-0.5 bg-brand py-1 text-white active:bg-ink"
         aria-label="Book a scooty"
       >
         <Bike className="h-5 w-5" aria-hidden="true" />
         <span className="label-micro">BOOK</span>
-      </button>
+      </Link>
     </nav>
   );
 }

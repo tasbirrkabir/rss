@@ -1,0 +1,225 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Suspense } from "react";
+import {
+  ArrowRight,
+  Banknote,
+  CheckCircle2,
+  FileText,
+  MessageCircle,
+  NotebookPen,
+  Phone,
+  type LucideIcon,
+} from "lucide-react";
+
+import { Header } from "@/components/site/header";
+import { Footer } from "@/components/site/footer";
+import { MobileCtaBar } from "@/components/site/mobile-cta-bar";
+import { PageHeader } from "@/components/site/page-header";
+import { DemoBadge } from "@/components/site/demo-badge";
+import { Reveal } from "@/components/site/reveal";
+import { TrackedLink } from "@/components/site/tracked-link";
+import { RideStatus } from "@/components/book/ride-status";
+import { BookingForm } from "@/components/book/booking-form";
+import { SITE, whatsappMessageUrl } from "@/data/site";
+
+export const metadata: Metadata = {
+  title: "Book a Scooty — Request Your Ride | Red Scooty Sreemangal",
+  description:
+    "Request a scooty for your Sreemangal ride - pick a date, duration and pickup point. Red Scooty confirms personally. No online payment, no account needed.",
+};
+
+const GOOD_TO_KNOW: {
+  icon: LucideIcon;
+  title: string;
+  text: string;
+  demo?: boolean;
+}[] = [
+  {
+    icon: NotebookPen,
+    title: "BOOKING BY REQUEST",
+    text: "No account, no prepayment. Send the form and we reply personally with availability and the rate.",
+  },
+  {
+    icon: CheckCircle2,
+    title: "CONFIRMED PERSONALLY",
+    text: "A human checks every request - nothing is automated and nothing is promised before we reply.",
+  },
+  {
+    icon: Banknote,
+    title: "NO ONLINE PAYMENT",
+    text: "You pay in person when you collect the scooty. Nothing is charged online.",
+  },
+  {
+    icon: FileText,
+    title: "DEPOSIT & DOCUMENTS",
+    text: "Details to be confirmed.",
+    demo: true,
+  },
+];
+
+const HELPFUL_LINKS: { label: string; href: string }[] = [
+  { label: "RENTAL GUIDE", href: "/rental-guide" },
+  { label: "HOW IT WORKS", href: "/how-it-works" },
+  { label: "CONTACT", href: "/contact" },
+];
+
+export default function BookPage() {
+  return (
+    <div className="flex min-h-screen flex-col">
+      <Header />
+      <main className="flex-1">
+        <PageHeader
+          kicker="BOOK A RIDE"
+          title={
+            <>
+              LET&apos;S GET
+              <br />
+              YOU MOVING.
+            </>
+          }
+          intro="Send your date and duration. Red Scooty confirms personally - no payment online, no account needed."
+        />
+
+        <RideStatus />
+
+        <section
+          aria-labelledby="booking-heading"
+          className="py-14 md:py-20"
+        >
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            <div className="grid gap-10 lg:grid-cols-12">
+              {/* Form column */}
+              <div className="lg:col-span-8">
+                <Reveal>
+                  <h2
+                    id="booking-heading"
+                    className="font-display text-[clamp(40px,5vw,64px)] leading-none text-ink"
+                  >
+                    SEND A REQUEST.
+                  </h2>
+                  <p className="mt-3 max-w-xl text-base text-ink-soft">
+                    Two minutes now saves a day of guessing. We reply with
+                    availability, the rate and pickup details - usually fastest
+                    on WhatsApp.
+                  </p>
+                </Reveal>
+
+                <div className="mt-8 border-2 border-ink bg-paper shadow-hard">
+                  <div className="border-b-2 border-ink bg-ink px-6 py-3">
+                    <p className="label-micro text-cream">
+                      BOOKING REQUEST · NO PAYMENT ONLINE
+                    </p>
+                  </div>
+                  <Suspense fallback={null}>
+                    <BookingForm />
+                  </Suspense>
+                </div>
+
+                <p className="label-micro mt-4 text-center text-steel">
+                  BOOKING BY REQUEST · CONFIRMED PERSONALLY · NO ONLINE PAYMENT
+                  REQUIRED
+                </p>
+              </div>
+
+              {/* Right rail */}
+              <aside
+                aria-label="Good to know and direct contact"
+                className="space-y-8 lg:col-span-4"
+              >
+                <Reveal>
+                  <div className="border-2 border-ink bg-cream p-6 shadow-hard">
+                    <p className="label-micro text-brand">GOOD TO KNOW</p>
+                    <h3 className="mt-2 font-display text-3xl leading-tight tracking-wide text-ink">
+                      HOW BOOKING WORKS.
+                    </h3>
+                    <ul className="mt-6 space-y-5">
+                      {GOOD_TO_KNOW.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <li key={item.title} className="flex gap-3">
+                            <Icon
+                              className="mt-0.5 h-5 w-5 shrink-0 text-brand"
+                              aria-hidden="true"
+                            />
+                            <div>
+                              <p className="font-display text-xl tracking-wide text-ink">
+                                {item.title}
+                              </p>
+                              <p className="mt-0.5 text-sm leading-relaxed text-ink-soft">
+                                {item.text} {item.demo ? <DemoBadge /> : null}
+                              </p>
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+
+                    <div className="mt-7 border-t-2 border-ink pt-5">
+                      <p className="label-micro text-steel">KEEP READING</p>
+                      <nav
+                        aria-label="Helpful pages"
+                        className="mt-3 space-y-2"
+                      >
+                        {HELPFUL_LINKS.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className="group flex min-h-11 items-center justify-between border-2 border-ink bg-paper px-4 py-2.5 font-display text-xl tracking-wide text-ink transition-all hover:-translate-y-0.5 hover:bg-ink hover:text-cream"
+                          >
+                            {link.label}
+                            <ArrowRight
+                              className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        ))}
+                      </nav>
+                    </div>
+                  </div>
+                </Reveal>
+
+                <Reveal delay={0.1}>
+                  <div className="border-2 border-ink bg-ink p-6 text-cream shadow-hard-red">
+                    <p className="label-micro text-cream/60">PREFER TO TALK?</p>
+                    <h3 className="mt-2 font-display text-3xl leading-tight tracking-wide text-cream">
+                      CALL OR MESSAGE US DIRECTLY.
+                    </h3>
+                    <p className="mt-2 text-sm text-cream/80">
+                      Skip the form - quick questions get quick answers.
+                    </p>
+                    <div className="mt-6 space-y-3">
+                      <TrackedLink
+                        event="click_call"
+                        source="book_rail"
+                        href={SITE.telUrl}
+                        className="flex h-14 items-center justify-center gap-2 border-2 border-cream bg-cream font-display text-xl tracking-wider text-ink transition-all hover:-translate-y-0.5 hover:bg-brand hover:text-white"
+                      >
+                        <Phone className="h-5 w-5" aria-hidden="true" />
+                        CALL {SITE.phoneDisplay}
+                      </TrackedLink>
+                      <TrackedLink
+                        event="click_whatsapp"
+                        source="book_rail"
+                        href={whatsappMessageUrl(
+                          "Hi Red Scooty! I have a question about renting a scooty in Sreemangal.",
+                        )}
+                        external
+                        className="flex h-14 items-center justify-center gap-2 border-2 border-cream bg-brand font-display text-xl tracking-wider text-white transition-all hover:-translate-y-0.5 hover:bg-cream hover:text-ink"
+                      >
+                        <MessageCircle className="h-5 w-5" aria-hidden="true" />
+                        WHATSAPP US
+                      </TrackedLink>
+                    </div>
+                  </div>
+                </Reveal>
+              </aside>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+      <MobileCtaBar />
+    </div>
+  );
+}

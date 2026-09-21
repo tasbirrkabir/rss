@@ -11,12 +11,15 @@ datasource db {
 // NEW -> CONTACTED -> CONFIRMED -> COMPLETED -> CANCELLED
 model BookingRequest {
   id               String   @id @default(cuid())
-  rideDate         String // ISO date (yyyy-mm-dd) — stored as string: demo scope, timezone-safe
-  duration         String // HALF_DAY | FULL_DAY
+  type             String   @default("BOOKING") // BOOKING | MESSAGE (contact form)
+  rideDate         String? // ISO date (yyyy-mm-dd) — stored as string: demo scope, timezone-safe
+  duration         String? // HALF_DAY | FULL_DAY | MULTI_DAY
   vehicleId        String? // mini-scooty | standard-scooty | null = no preference
+  riders           String? // "1", "2", "2 adults + 1 child", ... free text
+  routeRef         String? // route/mood slug from the ride builders, e.g. "tea-garden-loop"
   name             String
   phone            String
-  pickupPreference String? // shop | hotel | unsure
+  pickupPreference String? // station | hotel | town | shop | unsure
   message          String?
   status           String   @default("NEW")
   createdAt        DateTime @default(now())
