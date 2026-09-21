@@ -73,6 +73,11 @@ const jsonLd = {
   telephone: SITE.phoneIntl,
   email: SITE.email,
   url: siteUrl,
+  founder: {
+    "@type": "Person",
+    name: "Radiyan Hossen",
+    jobTitle: "Founder & Owner",
+  },
   address: {
     "@type": "PostalAddress",
     streetAddress: "Jalalia Road",
@@ -81,7 +86,13 @@ const jsonLd = {
     postalCode: "3210",
     addressCountry: "BD",
   },
-  sameAs: [SITE.facebook],
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: SITE.coords.lat,
+    longitude: SITE.coords.lng,
+  },
+  hasMap: SITE.mapsUrl,
+  sameAs: [SITE.facebook, SITE.instagram, SITE.youtube.watchUrl, SITE.mapsUrl],
 };
 
 export default function RootLayout({

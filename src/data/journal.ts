@@ -36,8 +36,9 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     readTime: "5 MIN READ",
     excerpt:
       "One day, one scooty, and a route that hits the gardens, the forest edge and the wetland without ever feeling rushed.",
-    image: "/images/journal-one-day.png",
-    imageAlt: "Tea garden workers plucking tea leaves at sunrise in Sreemangal",
+    image: "/images/real-tea-break.jpg",
+    imageAlt:
+      "Scooty rider taking a roadside tea break beside a Finlay tea garden in Sreemangal",
     relatedDestinations: ["tea-gardens", "lawachara", "baikka-beel"],
     relatedRoute: "tea-garden-loop",
     content: [
@@ -167,8 +168,9 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     readTime: "7 MIN READ",
     excerpt:
       "The big picture: what Sreemangal is, how to get there, when to go, and why it rewards slow travel more than any checklist.",
-    image: "/images/journal-guide.png",
-    imageAlt: "Wide view over the green tea hills around Sreemangal",
+    image: "/images/real-town-ride.jpg",
+    imageAlt:
+      "Riding a scooty through Sreemangal town traffic on the way to the tea gardens",
     relatedDestinations: ["tea-gardens", "lawachara", "madhabpur-lake", "baikka-beel", "sreemangal-town"],
     content: [
       {

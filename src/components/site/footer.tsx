@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Facebook, Mail, Phone } from "lucide-react";
+import { Facebook, Mail, MapPin, Phone, Youtube } from "lucide-react";
 
 import { ALL_PAGES, SITE, whatsappMessageUrl } from "@/data/site";
 import { TrackedLink } from "@/components/site/tracked-link";
@@ -43,6 +43,26 @@ export function Footer() {
                 className="inline-flex h-12 w-12 items-center justify-center border-2 border-cream text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
               >
                 <Facebook className="h-5 w-5" aria-hidden="true" />
+              </TrackedLink>
+              <TrackedLink
+                event="click_youtube"
+                source="footer"
+                href={SITE.youtube.watchUrl}
+                external
+                ariaLabel="Featured Sreemangal tour video on YouTube"
+                className="inline-flex h-12 w-12 items-center justify-center border-2 border-cream text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
+              >
+                <Youtube className="h-5 w-5" aria-hidden="true" />
+              </TrackedLink>
+              <TrackedLink
+                event="get_directions"
+                source="footer"
+                href={SITE.mapsUrl}
+                external
+                ariaLabel="Red Scooty Sreemangal on Google Maps"
+                className="inline-flex h-12 w-12 items-center justify-center border-2 border-cream text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
+              >
+                <MapPin className="h-5 w-5" aria-hidden="true" />
               </TrackedLink>
             </div>
           </div>
@@ -105,9 +125,17 @@ export function Footer() {
                 </a>
               </li>
               <li className="text-cream/70">
-                {SITE.addressLine1}
-                <br />
-                {SITE.addressLine2}
+                <TrackedLink
+                  event="get_directions"
+                  source="footer_address"
+                  href={SITE.mapsUrl}
+                  external
+                  className="hover:text-brand"
+                >
+                  {SITE.addressLine1}
+                  <br />
+                  {SITE.addressLine2}
+                </TrackedLink>
               </li>
             </ul>
             <p className="label-micro mt-6 text-cream/40">

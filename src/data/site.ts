@@ -6,6 +6,11 @@
  * - Email: screenshot value normalized ("redsc ootysreemangal@gmail.com" -> below).
  * - WhatsApp number: NOT owner-confirmed. Derived from the public phone number
  *   as a demo placeholder — must be validated before production (PRD section 50).
+ * - Owner + photo: supplied directly by the owner (Radiyan Hossen).
+ * - Maps share link + coordinates: owner-provided Google Maps listing
+ *   (maps.app.goo.gl/ZE53GmbXSVHsUJQJ7 -> place "Red Scooty Sreemangal").
+ * - YouTube tour video: business video "শ্রীমঙ্গল কখন ঘুরতে আসবেন | Bike Rent
+ *   Sreemangal | Sreemangal Tour" (youtu.be/vk0oyKnZVPs).
  */
 
 export const SITE = {
@@ -27,8 +32,32 @@ export const SITE = {
 
   facebook: "https://www.facebook.com/redscootysmg/",
   instagram: "https://www.instagram.com/redscootysmg/",
-  mapsUrl:
-    "https://www.google.com/maps/search/?api=1&query=Red+Scooty+Sreemangal+Jalalia+Road",
+  // Owner-provided share link to the verified Google Maps listing.
+  mapsUrl: "https://maps.app.goo.gl/ZE53GmbXSVHsUJQJ7",
+
+  /** Verified listing coordinates (from the owner's Maps share link). */
+  coords: {
+    lat: 24.3040891,
+    lng: 91.7342349,
+  },
+
+  /** The person behind the phone — supplied and approved by the owner. */
+  owner: {
+    name: "RADIYAN HOSSEN",
+    role: "FOUNDER & OWNER",
+    photo: "/images/owner-radiyan-hossen.jpg",
+    photoAlt: "Radiyan Hossen, owner of Red Scooty Sreemangal, leaning against a car in front of green bushes",
+  },
+
+  /** Business tour video — embedded on the About page. */
+  youtube: {
+    id: "vk0oyKnZVPs",
+    watchUrl: "https://youtu.be/vk0oyKnZVPs",
+    embedUrl: "https://www.youtube-nocookie.com/embed/vk0oyKnZVPs",
+    title: "শ্রীমঙ্গল কখন ঘুরতে আসবেন | Bike Rent Sreemangal | Sreemangal Tour",
+    titleEn: "When to come explore Sreemangal — Bike Rent Sreemangal",
+    poster: "/images/video-sreemangal-tour.jpg",
+  },
 
   // Honest, screenshot-sourced stats (PRD section 3.1). Never inflate.
   stats: {
@@ -63,6 +92,9 @@ export const ALL_PAGES = [
   { label: "JOURNAL", href: "/journal" },
   { label: "CONTACT", href: "/contact" },
 ] as const;
+
+/** Live embedded map (no API key needed) centred on the verified listing. */
+export const MAPS_EMBED_URL = `https://maps.google.com/maps?q=${SITE.coords.lat},${SITE.coords.lng}&z=16&hl=en&output=embed`;
 
 export const MAPS_DIRECTIONS_URL =
   "https://www.google.com/maps/search/?api=1&query=";

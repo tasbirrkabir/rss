@@ -489,3 +489,53 @@ Stage Summary:
   2px black borders, hard offset shadows, editorial asymmetry.
 - Honesty guards intact everywhere: ৳ — / DAY pricing, — distances/times,
   DemoBadge markers, NOT TO SCALE map, no invented reviews/policies/hours.
+
+---
+Task ID: 5
+Agent: Z.ai Code (main agent)
+Task: Integrate owner-supplied materials — owner photo (Radiyan Hossen),
+YouTube tour video (youtu.be/vk0oyKnZVPs) and verified Google Maps listing
+(maps.app.goo.gl/ZE53GmbXSVHsUJQJ7) into the finished multi-page site.
+
+Work Log:
+- Extracted info: Maps share link resolves to place "Red Scooty Sreemangal"
+  at coords 24.3040891, 91.7342349; video metadata (title, publish date
+  2025-11-01, ~1.9K views); fetched real 1280x720 video stills via ytimg
+  (yt-dlp blocked by YouTube bot check).
+- Assets: optimized owner photo -> public/images/owner-radiyan-hossen.jpg
+  (960px JPEG, 138KB); video thumbnail -> video-sreemangal-tour.jpg (poster);
+  two real frames -> real-tea-break.jpg (Finlay tea-garden tea stop) and
+  real-town-ride.jpg (POV town riding).
+- src/data/site.ts: added owner block (name/role/photo/alt), verified
+  coords, youtube block (id/embedUrl/watchUrl/poster), mapsUrl upgraded from
+  search-query fallback to owner's verified share link; added MAPS_EMBED_URL.
+- New src/components/site/video-band.tsx: click-to-play, privacy-enhanced
+  YouTube embed (youtube-nocookie), brutalist frame, zero YT requests until play.
+- About page: new "THE PERSON BEHIND THE PHONE" owner section (rotated photo
+  card + THE OWNER sticker + honest copy + WhatsApp CTA with demo badge);
+  new "SEE SREEMANGAL IN MOTION" video section; VideoObject JSON-LD with
+  real upload date 2025-11-01.
+- Contact page: stylized plus-code panel replaced with REAL Google Maps embed
+  (grayscale -> color on hover, red sticker label, verified-listing note,
+  plus code kept); OPEN IN GOOGLE MAPS buttons now hit the verified share link.
+- Footer: added YouTube + Google Maps icon buttons; footer address now links
+  to the Maps listing.
+- Journal: swapped AI images for real video stills on "one day" (real tea
+  break) and "travel guide" (real town ride) with accurate alt text.
+- layout.tsx JSON-LD: added founder (Radiyan Hossen), GeoCoordinates, hasMap,
+  expanded sameAs (FB, IG, YouTube, Maps).
+- analytics.ts: added click_youtube event.
+- Lint: 0 errors (1 known benign RHF warning). Browser-verified (desktop
+  1440x900 + mobile 390x844): owner section, video poster -> click -> iframe
+  loads youtube-nocookie embed, contact map renders pin at verified coords,
+  journal real images load, footer icons present; all 14 routes 200; no
+  dev-log errors.
+
+Stage Summary:
+- All owner-supplied material is now live: owner identity + photo on About,
+  business tour video embedded (click-to-play), verified Maps listing
+  embedded on Contact and linked everywhere.
+- Real footage stills replace two AI journal images for authenticity.
+- Structured data enriched (founder, geo, hasMap, VideoObject) — SEO benefit.
+- Honesty guards preserved: WhatsApp still demo-badged, no invented facts;
+  video publish date sourced from the actual YouTube page.

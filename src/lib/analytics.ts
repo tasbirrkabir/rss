@@ -14,7 +14,8 @@ export type AnalyticsEvent =
   | "submit_booking"
   | "get_directions"
   | "click_facebook"
-  | "click_instagram";
+  | "click_instagram"
+  | "click_youtube";
 
 declare global {
   interface Window {

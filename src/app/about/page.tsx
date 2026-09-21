@@ -19,12 +19,30 @@ import { PageHeader } from "@/components/site/page-header";
 import { DemoBadge } from "@/components/site/demo-badge";
 import { Reveal } from "@/components/site/reveal";
 import { TrackedLink } from "@/components/site/tracked-link";
+import { VideoBand } from "@/components/site/video-band";
 import { SITE } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "About — We're Not Just Renting Scooties | Red Scooty Sreemangal",
   description:
     "Red Scooty exists to make Sreemangal easier to explore - independently, on two wheels, through the tea capital of Bangladesh. Confirmed personally, every time.",
+};
+
+/** VideoObject schema for the embedded business tour video. */
+const videoJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  name: SITE.youtube.titleEn,
+  description:
+    "A scooty tour through Sreemangal - town streets, tea gardens and the stops in between. Bike Rent Sreemangal.",
+  thumbnailUrl: ["https://i.ytimg.com/vi/vk0oyKnZVPs/maxresdefault.jpg"],
+  uploadDate: "2025-11-01T07:50:34-07:00",
+  embedUrl: "https://www.youtube.com/embed/vk0oyKnZVPs",
+  contentUrl: SITE.youtube.watchUrl,
+  publisher: {
+    "@type": "Organization",
+    name: "Red Scooty Sreemangal",
+  },
 };
 
 /**
@@ -53,6 +71,10 @@ const TIMELINE: { label: string; text: string }[] = [
 export default function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }}
+      />
       <Header />
       <main className="flex-1">
         <PageHeader
@@ -120,6 +142,84 @@ export default function AboutPage() {
                   <p className="absolute -top-1 left-4 -rotate-3 border-2 border-ink bg-brand px-3 py-1.5 font-display text-lg tracking-wider text-white shadow-hard-sm">
                     JALALIA ROAD / SREEMANGAL
                   </p>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
+        {/* Owner — supplied and approved by the owner */}
+        <section
+          aria-labelledby="owner-heading"
+          className="border-t-2 border-ink bg-cream py-14 md:py-20"
+        >
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            <div className="grid items-center gap-12 lg:grid-cols-12">
+              <Reveal className="lg:col-span-5">
+                <div className="relative pt-6">
+                  <div className="-rotate-2 border-2 border-ink bg-paper p-3 shadow-hard-lg transition-transform duration-300 hover:rotate-0">
+                    <Image
+                      src={SITE.owner.photo}
+                      alt={SITE.owner.photoAlt}
+                      width={960}
+                      height={960}
+                      className="h-auto w-full border-2 border-ink object-cover"
+                    />
+                    <p className="label-micro mt-3 flex items-center justify-between text-steel">
+                      <span>{SITE.owner.name}</span>
+                      <span>RED SCOOTY SREEMANGAL</span>
+                    </p>
+                  </div>
+                  <p className="absolute -top-1 right-4 -rotate-3 border-2 border-ink bg-brand px-3 py-1.5 font-display text-lg tracking-wider text-white shadow-hard-sm">
+                    THE OWNER
+                  </p>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.12} className="lg:col-span-7">
+                <p className="label-micro text-brand">THE PERSON BEHIND THE PHONE</p>
+                <h2
+                  id="owner-heading"
+                  className="mt-2 font-display text-[clamp(40px,5.5vw,76px)] leading-[0.95] text-ink"
+                >
+                  {SITE.owner.name}.
+                </h2>
+                <p className="mt-2 inline-block border-2 border-ink bg-ink px-3 py-1 font-display text-lg tracking-widest text-cream shadow-hard-sm">
+                  {SITE.owner.role}
+                </p>
+                <div className="mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-ink-soft">
+                  <p>
+                    When you message Red Scooty, this is who answers. Radiyan
+                    reads every request, confirms every booking personally, and
+                    is the one handing over the keys on Jalalia Road.
+                  </p>
+                  <p>
+                    Ask him where to ride and you get an answer from someone
+                    who actually rides these roads - which garden road is worth
+                    the detour, when the light hits the tea rows best, and
+                    where to stop for a proper cup of tea.
+                  </p>
+                  <p>
+                    That is the difference between renting a vehicle and being
+                    looked after on the road.
+                  </p>
+                </div>
+                <div className="mt-8 flex flex-wrap items-center gap-4">
+                  <TrackedLink
+                    event="click_whatsapp"
+                    source="about_owner"
+                    href={`https://wa.me/8801897423694?text=${encodeURIComponent(
+                      "Hi Radiyan! I'd like to ask about renting a scooty in Sreemangal.",
+                    )}`}
+                    external
+                    className="inline-flex h-13 items-center gap-2 border-2 border-ink bg-ink px-6 py-3 font-display text-xl tracking-wider text-cream transition-all hover:-translate-y-0.5 hover:bg-brand hover:text-white hover:shadow-hard"
+                  >
+                    <MessageCircle className="h-5 w-5" aria-hidden="true" />
+                    MESSAGE HIM DIRECTLY <DemoBadge className="ml-1" />
+                  </TrackedLink>
+                  <span className="text-xs text-steel">
+                    WhatsApp derived from phone - to be confirmed.
+                  </span>
                 </div>
               </Reveal>
             </div>
@@ -376,6 +476,32 @@ export default function AboutPage() {
                   you get the place.
                 </figcaption>
               </figure>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Video — real roads, real ride */}
+        <section
+          aria-labelledby="video-heading"
+          className="border-t-2 border-ink bg-cream py-14 md:py-20"
+        >
+          <div className="mx-auto max-w-5xl px-4 sm:px-6">
+            <Reveal>
+              <p className="label-micro text-brand">STRAIGHT FROM THE ROAD</p>
+              <h2
+                id="video-heading"
+                className="mt-2 font-display text-[clamp(40px,5.5vw,72px)] leading-[0.95] text-ink"
+              >
+                SEE SREEMANGAL <span className="text-brand">IN MOTION.</span>
+              </h2>
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-soft">
+                A tour filmed on the roads you could be riding - town streets,
+                tea garden stretches and the stops in between. Press play and
+                get a feel for the place before you ever land.
+              </p>
+            </Reveal>
+            <Reveal delay={0.1} className="mt-8">
+              <VideoBand />
             </Reveal>
           </div>
         </section>

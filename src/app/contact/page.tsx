@@ -18,7 +18,7 @@ import { DemoBadge } from "@/components/site/demo-badge";
 import { Reveal } from "@/components/site/reveal";
 import { TrackedLink } from "@/components/site/tracked-link";
 import { QuickMessageForm } from "@/components/contact/quick-message-form";
-import { SITE, mapsQueryUrl, whatsappMessageUrl } from "@/data/site";
+import { SITE, MAPS_EMBED_URL, whatsappMessageUrl } from "@/data/site";
 import type { AnalyticsEvent } from "@/lib/analytics";
 
 export const metadata: Metadata = {
@@ -165,7 +165,7 @@ export default function ContactPage() {
                 icon={MapPin}
                 label="GOOGLE MAPS"
                 detail="GET DIRECTIONS"
-                note="Find us on Jalalia Road - the tea capital is easy to navigate."
+                note="Verified listing - find us on Jalalia Road, the tea capital is easy to navigate."
                 href={SITE.mapsUrl}
                 event="get_directions"
                 external
@@ -226,35 +226,33 @@ export default function ContactPage() {
               </Reveal>
 
               <Reveal delay={0.1}>
-                <div className="relative flex h-full min-h-80 flex-col justify-between overflow-hidden border-2 border-ink bg-leaf p-6 text-cream shadow-hard sm:p-8">
-                  {/* decorative tea rows */}
-                  <div
-                    className="pointer-events-none absolute inset-0 opacity-20"
-                    aria-hidden="true"
-                    style={{
-                      backgroundImage:
-                        "repeating-linear-gradient(-35deg, transparent 0 38px, #f4f1ea 38px 40px)",
-                    }}
-                  />
-                  <div className="relative">
-                    <p className="label-micro text-cream/70">
-                      GOOGLE MAPS · PLUS CODE
-                    </p>
-                    <p className="mt-2 font-display text-6xl leading-none tracking-wide text-cream sm:text-7xl">
-                      {SITE.plusCode}
-                    </p>
-                    <p className="mt-3 max-w-xs text-sm text-cream/85">
-                      Jalalia Road, Sreemangal - the tea capital of Bangladesh.
-                      Easy to find, easy to start.
+                <div className="flex h-full flex-col border-2 border-ink bg-paper p-3 shadow-hard">
+                  <div className="relative min-h-72 flex-1 overflow-hidden border-2 border-ink">
+                    <iframe
+                      src={MAPS_EMBED_URL}
+                      title="Google Map showing Red Scooty Sreemangal on Jalalia Road"
+                      loading="lazy"
+                      allowFullScreen
+                      referrerPolicy="no-referrer-when-downgrade"
+                      className="absolute inset-0 h-full w-full grayscale transition-all duration-500 hover:grayscale-0"
+                    />
+                    <p className="absolute left-3 top-3 -rotate-2 border-2 border-ink bg-brand px-2.5 py-1 font-display text-base tracking-wider text-white shadow-hard-sm">
+                      RED SCOOTY SREEMANGAL
                     </p>
                   </div>
-                  <div className="relative mt-10">
+                  <div className="flex flex-col gap-3 px-1 pb-1 pt-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p className="label-micro text-steel">VERIFIED LISTING · PLUS CODE {SITE.plusCode}</p>
+                      <p className="mt-1 text-sm text-ink-soft">
+                        Jalalia Road, Sreemangal - the tea capital of Bangladesh.
+                      </p>
+                    </div>
                     <TrackedLink
                       event="get_directions"
                       source="contact_map"
-                      href={mapsQueryUrl("Red Scooty Sreemangal Jalalia Road")}
+                      href={SITE.mapsUrl}
                       external
-                      className="inline-flex h-14 w-full items-center justify-center gap-2 border-2 border-cream bg-brand font-display text-2xl tracking-wider text-white transition-all hover:-translate-y-0.5 hover:shadow-hard"
+                      className="inline-flex h-14 shrink-0 items-center justify-center gap-2 border-2 border-ink bg-brand px-6 font-display text-xl tracking-wider text-white transition-all hover:-translate-y-0.5 hover:shadow-hard"
                     >
                       <Navigation className="h-5 w-5" aria-hidden="true" />
                       OPEN IN GOOGLE MAPS
