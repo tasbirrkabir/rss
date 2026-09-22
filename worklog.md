@@ -1204,3 +1204,20 @@ Stage Summary:
 - Credentials (seeded): owner@redscooty.com / RedScooty2025! (OWNER), admin@redscooty.com / Admin2025! (ADMIN).
 - Security posture: httpOnly session cookie (7d), bcrypt(12) hashes, layout redirect for pages, requireRole() on every API route, owner-only guard on user management, robots noindex on /admin, upload type/size validation.
 - Public site unaffected: home reflects DB content with static fallbacks; DEMO DATA honesty badges retained.
+
+---
+Task ID: 10-b
+Agent: Z.ai Code (main agent)
+Task: Fill demo prices via the admin GUI (user request: "do it and give me demo passwords") + wire the admin-managed priceNote into the public fleet showcase.
+
+Work Log:
+- Logged in as Owner through /admin/login (browser GUI) and edited both scooties in /admin/scooties:
+  * MINI SCOOTY: priceLabel "৳ 800 / DAY", priceNote "Demo rate — final price confirmed personally on request."
+  * STANDARD SCOOTY: priceLabel "৳ 1,200 / DAY", same priceNote.
+- Found + fixed a CMS integration gap: fleet-showcase.tsx hardcoded "PRICING AVAILABLE ON REQUEST" as the DAY RATE small print, ignoring the DB priceNote. Now renders {v.priceNote || fallback} — admin edits flow to /scooties.
+- Verified on the live site: /scooties shows both prices + the demo note (uppercase label-micro styling); home showcase shows both prices. Lint: 0 errors (1 pre-existing benign warning).
+- Activity log in admin records both SCOOTY_UPDATE entries.
+
+Stage Summary:
+- Prices are now real-looking demo values, editable anytime from /admin/scooties without code. Honesty preserved: the note marks them as demo rates confirmed personally on request.
+- Demo credentials: OWNER owner@redscooty.com / RedScooty2025! — ADMIN admin@redscooty.com / Admin2025! (login at /admin).

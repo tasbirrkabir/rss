@@ -156,7 +156,7 @@ export function FleetShowcase({ vehicles }: { vehicles: ScootyRecord[] }) {
                               {v.priceLabel}
                             </span>
                             <span className="label-micro mt-0.5 block text-steel">
-                              PRICING AVAILABLE ON REQUEST
+                              {v.priceNote || "PRICING AVAILABLE ON REQUEST"}
                             </span>
                           </dd>
                         </div>
