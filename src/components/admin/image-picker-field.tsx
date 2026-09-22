@@ -81,7 +81,6 @@ export function ImagePickerField({
           className={`relative w-full shrink-0 overflow-hidden border border-ink/15 bg-paper sm:w-44 ${previewAspect}`}
         >
           {value ? (
-            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={value}
               alt="Selected image preview"

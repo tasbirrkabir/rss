@@ -1177,3 +1177,30 @@ Work Log:
 Stage Summary:
 - Nav + footer now contain only page-level links; /explore#slug and /routes?route=id deep links remain available from the pages themselves (destination cards, route chips) but no longer pollute global navigation.
 - Mobile sheet uses a real accordion (COMPANY) instead of permanent chips — matches user request "mobile view te dropdown deo".
+
+---
+Task ID: 10
+Agent: Z.ai Code (main agent)
+Task: Admin Panel — full management system (no-code GUI, Scooties editor, Home page editor, bookings pipeline, site settings, Owner/Admin RBAC + access management) — completion verification + bug fix.
+
+Work Log:
+- Inherited a mostly-complete admin build from the pre-compaction session: Prisma models (User/Session/Scooty/SiteConfig/HomeContent/ActivityLog), session-cookie auth in src/lib/admin-auth.ts, /admin/(panel) pages (dashboard, scooties, home, bookings, settings, users) with layout-level redirect guard, /api/admin/* routes with requireRole() guards, admin components (admin-shell, scooties-manager, home-editor, settings-editor, users-manager, bookings-manager, image-picker-field), prisma/seed.ts, DB seeded (owner@redscooty.com OWNER, admin@redscooty.com ADMIN, 2 scooties, site config, home content).
+- Fixed lint: removed unused eslint-disable in image-picker-field.tsx (lint now 0 errors, 1 benign pre-existing warning).
+- Browser verification (desktop 1440x900 + iPhone 14):
+  * /admin redirects to /admin/login when signed out (307); login page renders on desktop + mobile; owner sign-in (Radiyan Hossen) lands on dashboard with sidebar ACCESS item; sign-out returns to login.
+  * Dashboard KPIs live (new/confirmed/scooties/team), latest requests + activity log render.
+  * Scooties CRUD: ADD SCOOTY form (name/category/price/badge/tagline/description/image/alt/order/features/visibility) — FIXED A REAL BUG: POST /api/admin/scooties returned 400 because the zod slug regex rejected the empty-string slug the form always sends; schema now accepts "" and auto-slugifies from the name. After fix: create → 201 → appears on public /scooties immediately; HIDE → removed from public page + SHOW restored state; EDIT price → saved and visible; DELETE (window.confirm) → gone.
+  * Image picker: PICK FROM LIBRARY dialog lists /images + /uploads; picking fills the field + preview; UPLOAD endpoint tested via curl with session cookie (valid PNG → saved to public/uploads + served 200; text/plain → 415 with clear error); test file cleaned up.
+  * Home editor: all hero/marquee/stats fields pre-filled from DB; edited intro paragraph → SAVE → public home page reflected the change; restored original → public restored.
+  * Bookings: pipeline tabs (ALL/NEW/CONTACTED/CONFIRMED/COMPLETED/CANCELLED with counts), status combobox moved Test Rider CONTACTED→CONFIRMED (tab count moved), DETAILS dialog shows full request + CALL NOW/WHATSAPP.
+  * ACCESS (owner-only): shows OWNER (YOU) + ADMIN cards with RESET PASSWORD/BLOCK/MAKE OWNER/DELETE; created "Test Manager" admin user, BLOCKED (UNBLOCK appeared), deleted with confirm dialog.
+  * RBAC: signed in as ADMIN — ACCESS hidden in nav; direct /admin/users redirects to /admin; fetch /api/admin/users → 403 "Owner access required." while /api/admin/scooties → 200; ADMIN can save site settings ("Contact details saved." toast).
+  * Mobile (iPhone 14): dashboard/scooties/login no horizontal overflow; top bar + hamburger menu with nav + user block works; KPI grid 2-up.
+- dev.log: one historical 500 at server start ("Functions cannot be passed directly to Client Components" — whatsappUrl in provider props) is a stale artifact of an intermediate edit from the prior session; current layout passes only serializable config/home, all requests since are 200 and full browsing session produced zero page errors.
+
+Stage Summary:
+- Admin Panel COMPLETE and browser-verified end-to-end: no-code GUI for scooties (CRUD + image upload/library), home page content, bookings pipeline, site settings, and owner-level access management (create/block/role/delete users).
+- 1 real bug fixed during verification (scooty POST 400 on empty slug).
+- Credentials (seeded): owner@redscooty.com / RedScooty2025! (OWNER), admin@redscooty.com / Admin2025! (ADMIN).
+- Security posture: httpOnly session cookie (7d), bcrypt(12) hashes, layout redirect for pages, requireRole() on every API route, owner-only guard on user management, robots noindex on /admin, upload type/size validation.
+- Public site unaffected: home reflects DB content with static fallbacks; DEMO DATA honesty badges retained.

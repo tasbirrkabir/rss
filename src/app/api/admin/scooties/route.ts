@@ -16,8 +16,12 @@ const scootySchema = z.object({
   slug: z
     .string()
     .trim()
-    .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers and dashes only.")
     .max(60)
+    // Empty string = "build the slug from the name" (the admin form has no
+    // slug field, it always posts "").
+    .refine((v) => v === "" || /^[a-z0-9-]+$/.test(v), {
+      message: "Lowercase letters, numbers and dashes only.",
+    })
     .optional(),
   name: z.string().trim().min(2, "Name is required.").max(60),
   category: z.string().trim().max(60).default(""),
