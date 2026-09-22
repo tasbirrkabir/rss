@@ -1,12 +1,10 @@
 /**
- * Navigation structure — desktop dropdowns + mobile sheet groups.
+ * Navigation structure — desktop dropdowns + mobile sheet accordion.
  *
- * Deep links:
- * - /explore#<slug>      → destination entry anchors (see destination-entry.tsx)
- * - /routes?route=<id>   → routes explorer preselects the route
+ * Only links to real, separate pages live here. In-page anchors
+ * (/explore#slug, /routes?route=id) are reachable from the pages
+ * themselves, not from the nav.
  */
-import { DESTINATIONS } from "@/data/destinations";
-import { RIDE_ROUTES } from "@/data/ride-routes";
 
 export type NavChild = {
   label: string;
@@ -29,34 +27,10 @@ export const NAV_ITEMS: NavItem[] = [
   {
     label: "EXPLORE",
     href: "/explore",
-    children: [
-      {
-        label: "ALL DESTINATIONS",
-        href: "/explore",
-        description: "The real map, verified pins",
-      },
-      ...DESTINATIONS.map((d) => ({
-        label: d.name,
-        href: `/explore#${d.slug}`,
-        description: d.type,
-      })),
-    ],
   },
   {
     label: "ROUTES",
     href: "/routes",
-    children: [
-      {
-        label: "ALL ROUTES",
-        href: "/routes",
-        description: "Pick your pace",
-      },
-      ...RIDE_ROUTES.map((r) => ({
-        label: r.title,
-        href: `/routes?route=${r.id}`,
-        description: r.character,
-      })),
-    ],
   },
   {
     label: "HOW IT WORKS",

@@ -2,16 +2,22 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Facebook, Mail, MapPin, MessageCircle, Phone, Youtube } from "lucide-react";
 
-import { DESTINATIONS } from "@/data/destinations";
 import { LEGAL_LINKS } from "@/data/nav";
 import { SITE, whatsappMessageUrl } from "@/data/site";
 import { TrackedLink } from "@/components/site/tracked-link";
+
+/** Page-level links only — no in-page anchors in the footer. */
+const PAGE_LINKS = [
+  { label: "Scooties", href: "/scooties" },
+  { label: "Explore Sreemangal", href: "/explore" },
+  { label: "Ride Routes", href: "/routes" },
+  { label: "How It Works", href: "/how-it-works" },
+];
 
 const COMPANY_LINKS = [
   { label: "About", href: "/about" },
   { label: "Journal", href: "/journal" },
   { label: "Rental Guide", href: "/rental-guide" },
-  { label: "How It Works", href: "/how-it-works" },
   { label: "Contact", href: "/contact" },
   { label: "Book a Ride", href: "/book" },
 ];
@@ -139,38 +145,20 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Explore — destinations */}
-          <nav aria-label="Explore destinations" className="md:col-span-3">
-            <p className="label-micro text-cream/50">EXPLORE</p>
+          {/* Pages */}
+          <nav aria-label="Pages" className="md:col-span-3">
+            <p className="label-micro text-cream/50">PAGES</p>
             <ul className="mt-4 space-y-2.5">
-              <li>
-                <Link
-                  href="/explore"
-                  className="font-display text-xl tracking-wide text-cream transition-colors hover:text-brand"
-                >
-                  All Destinations
-                </Link>
-              </li>
-              {DESTINATIONS.map((d) => (
-                <li key={d.slug}>
+              {PAGE_LINKS.map((l) => (
+                <li key={l.href}>
                   <Link
-                    href={`/explore#${d.slug}`}
-                    className="text-sm text-cream/80 transition-colors hover:text-brand"
+                    href={l.href}
+                    className="font-display text-xl tracking-wide text-cream transition-colors hover:text-brand"
                   >
-                    {d.name
-                      .toLowerCase()
-                      .replace(/(^|\s)\S/g, (t) => t.toUpperCase())}
+                    {l.label}
                   </Link>
                 </li>
               ))}
-              <li className="pt-2">
-                <Link
-                  href="/routes"
-                  className="font-display text-xl tracking-wide text-cream transition-colors hover:text-brand"
-                >
-                  Ride Routes
-                </Link>
-              </li>
             </ul>
           </nav>
 

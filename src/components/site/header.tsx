@@ -156,6 +156,7 @@ function NavDropdown({ item, pathname }: { item: NavItem; pathname: string }) {
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
   const pathname = usePathname();
 
   const isActive = (href: string) =>
@@ -253,31 +254,52 @@ export function Header() {
                   <div key={item.label} className="border-b border-ink/10 py-2 last:border-b-0">
                     {item.children?.length ? (
                       <>
-                        <Link
-                          href={item.href}
-                          onClick={() => setMenuOpen(false)}
-                          aria-current={isActive(item.href) ? "page" : undefined}
+                        <button
+                          type="button"
+                          aria-expanded={openGroup === item.label}
+                          aria-controls={`nav-group-${item.label}`}
+                          onClick={() =>
+                            setOpenGroup((v) => (v === item.label ? null : item.label))
+                          }
                           className={cn(
-                            "flex items-center justify-between py-1.5 font-display text-2xl tracking-wide transition-colors hover:text-brand",
+                            "flex w-full items-center justify-between py-1.5 font-display text-2xl tracking-wide transition-colors hover:text-brand",
                             itemIsActive(item, pathname) ? "text-brand" : "text-ink",
                           )}
                         >
                           {item.label}
-                          <ArrowRight className="h-4 w-4 text-steel" aria-hidden="true" />
-                        </Link>
-                        <ul className="mb-1 mt-1 flex flex-wrap gap-1.5">
-                          {item.children.map((child) => (
-                            <li key={child.label + child.href}>
-                              <Link
-                                href={child.href}
-                                onClick={() => setMenuOpen(false)}
-                                className="label-micro inline-block border border-ink/15 bg-paper px-2.5 py-2 text-ink transition-colors hover:border-ink/40 hover:text-brand"
-                              >
-                                {child.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
+                          <ChevronDown
+                            aria-hidden="true"
+                            className={cn(
+                              "h-5 w-5 text-steel transition-transform duration-200",
+                              openGroup === item.label && "rotate-180",
+                            )}
+                          />
+                        </button>
+                        <div
+                          id={`nav-group-${item.label}`}
+                          aria-hidden={openGroup !== item.label}
+                          inert={openGroup !== item.label}
+                          className={cn(
+                            "grid transition-all duration-200 ease-out",
+                            openGroup === item.label
+                              ? "grid-rows-[1fr] opacity-100"
+                              : "grid-rows-[0fr] opacity-0",
+                          )}
+                        >
+                          <ul className="ml-1 mt-1 overflow-hidden border-l-2 border-ink/10 pl-4">
+                            {item.children.map((child) => (
+                              <li key={child.label + child.href}>
+                                <Link
+                                  href={child.href}
+                                  onClick={() => setMenuOpen(false)}
+                                  className="block py-2 text-sm tracking-wide text-ink transition-colors hover:text-brand"
+                                >
+                                  {child.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </>
                     ) : (
                       <Link

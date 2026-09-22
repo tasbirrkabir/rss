@@ -1162,3 +1162,18 @@ Work Log:
 Stage Summary:
 - Task 8 CONFIRMED COMPLETE and browser-verified end-to-end on desktop and mobile. No fixes were required this pass — implementation from the prior session is sound.
 - All 6 items from the user's latest request are live: (1) nav dropdowns, (2) footer credit link to tasbirkabir.me, (3) phone map/image reliability, (4) footer Legal+Company columns with 3 policy pages, (5) decorative badges removed, (6) owner logo wired into favicon/apple-icon/OG/header/footer/intro.
+
+---
+Task ID: 9
+Agent: Z.ai Code (main agent)
+Task: Nav/footer declutter — remove in-page anchor spam (destinations/routes) from nav + footer; nav keeps only real page links; mobile sheet gets a real accordion dropdown for COMPANY.
+
+Work Log:
+- src/data/nav.ts rewritten: EXPLORE and ROUTES are now plain links (children removed); COMPANY keeps its dropdown (About/Journal/Rental Guide/Contact are genuine separate pages). Removed DESTINATIONS/RIDE_ROUTES imports.
+- header.tsx mobile sheet: replaced always-expanded chip lists with an accordion — items with children render a full-width toggle button (aria-expanded, aria-controls) with rotating ChevronDown; children collapse/expand via grid-rows-[0fr]/[1fr] transition inside an overflow-hidden ul with left border; closed panel gets aria-hidden + inert so links are not tab-focusable when collapsed.
+- footer.tsx: removed the EXPLORE destinations column (8 anchor links + All Destinations + Ride Routes). New structure: brand+contact | PAGES (Scooties, Explore Sreemangal, Ride Routes, How It Works) | COMPANY (About, Journal, Rental Guide, Contact, Book a Ride — red) | LEGAL (Privacy/Refund/Terms + honesty note). No DESTINATIONS import anymore.
+- Verification: lint 0 errors (same benign pre-existing warning). Desktop 1440: nav shows SCOOTIES/EXPLORE/ROUTES/HOW IT WORKS as links + COMPANY dropdown opens with 4 children; footer columns render PAGES/COMPANY/LEGAL, no anchor links. Mobile iPhone 14: sheet shows 4 plain links + COMPANY accordion (collapsed by default, chevron rotates, expands to About/Journal/Rental Guide/Contact with left-border list); footer behind sheet confirms no destination anchors. 0 page errors; dev.log clean (all 200s).
+
+Stage Summary:
+- Nav + footer now contain only page-level links; /explore#slug and /routes?route=id deep links remain available from the pages themselves (destination cards, route chips) but no longer pollute global navigation.
+- Mobile sheet uses a real accordion (COMPANY) instead of permanent chips — matches user request "mobile view te dropdown deo".
