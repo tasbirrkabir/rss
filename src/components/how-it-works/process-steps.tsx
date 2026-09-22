@@ -62,7 +62,8 @@ const STEPS: Step[] = [
 
 /**
  * /how-it-works — five full-height numbered editorial steps, alternating
- * alignment. Giant display numbers alternate text-brand / text-outline.
+ * alignment over quiet alternating surfaces, separated by hairlines.
+ * Giant display numbers in brand red; hairline buttons via btn-outline.
  */
 export function ProcessSteps() {
   return (
@@ -74,19 +75,17 @@ export function ProcessSteps() {
           <section
             key={s.n}
             aria-label={`Step ${s.n}: ${s.title}`}
-            className={`border-b-2 border-ink ${bg}`}
+            className={`${bg} ${i > 0 ? "rule-soft" : ""}`}
           >
             <div
-              className={`mx-auto flex min-h-[60vh] max-w-7xl flex-col justify-center gap-8 px-4 py-16 sm:px-6 md:flex-row md:items-center md:gap-12 md:py-20 ${
+              className={`mx-auto flex min-h-[60vh] max-w-7xl flex-col justify-center gap-8 px-4 py-16 sm:px-6 md:flex-row md:items-center md:gap-12 md:py-24 ${
                 flip ? "md:flex-row-reverse" : ""
               }`}
             >
               <Reveal>
                 <span
                   aria-hidden="true"
-                  className={`block font-display text-[clamp(80px,14vw,200px)] leading-none ${
-                    flip ? "text-outline" : "text-brand"
-                  }`}
+                  className="display-hero block text-brand"
                 >
                   {s.n}
                 </span>
@@ -97,9 +96,7 @@ export function ProcessSteps() {
                 className={`max-w-md ${flip ? "md:text-right" : ""}`}
               >
                 <p className="label-micro text-steel">STEP {s.n} — {s.title}</p>
-                <h2 className="mt-2 font-display text-[clamp(44px,6vw,80px)] leading-[0.95] text-ink">
-                  {s.headline}
-                </h2>
+                <h2 className="display-1 mt-2 text-ink">{s.headline}</h2>
                 <p className="mt-4 text-base leading-relaxed text-ink-soft">
                   {s.body}
                 </p>
@@ -111,22 +108,22 @@ export function ProcessSteps() {
                       href={s.link.href}
                       external
                       ariaLabel="Open the Red Scooty location in Google Maps"
-                      className="mt-6 inline-flex h-12 items-center justify-center border-2 border-ink bg-paper px-5 font-display text-xl tracking-wider text-ink transition-colors hover:bg-ink hover:text-cream"
+                      className="btn-base btn-outline group mt-6"
                     >
                       {s.link.label}
                       <ArrowUpRight
-                        className="ml-2 h-4 w-4"
+                        className="h-5 w-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                         aria-hidden="true"
                       />
                     </TrackedLink>
                   ) : (
                     <Link
                       href={s.link.href}
-                      className="mt-6 inline-flex h-12 items-center justify-center border-2 border-ink bg-paper px-5 font-display text-xl tracking-wider text-ink transition-colors hover:bg-ink hover:text-cream"
+                      className="btn-base btn-outline group mt-6"
                     >
                       {s.link.label}
                       <ArrowUpRight
-                        className="ml-2 h-4 w-4"
+                        className="h-5 w-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                         aria-hidden="true"
                       />
                     </Link>

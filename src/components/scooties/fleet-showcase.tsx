@@ -1,127 +1,229 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Plus } from "lucide-react";
+import { ArrowRight, MessageCircle, Plus } from "lucide-react";
 
 import { Reveal } from "@/components/site/reveal";
 import { TrackedLink } from "@/components/site/tracked-link";
 import { whatsappMessageUrl } from "@/data/site";
 import { VEHICLES } from "@/data/vehicles";
+import { track } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 
 /**
- * Fleet showcase for /scooties — rebuilt fresh on the ink background.
- * Two real vehicles + one honest dashed "more models" tile. No invented
- * third model, no invented prices (data file carries "৳ — / DAY").
+ * Fleet showcase for /scooties — premium product-catalog entries.
+ * Large portrait hero image per scooty (mask reveal, whisper-quiet hover
+ * zoom), display type, and key characteristics as refined spec rows with
+ * hairline separators.
+ *
+ * Honesty rules kept intact:
+ * - priceLabel placeholders ("৳ — / DAY") are rendered exactly as stored.
+ * - Availability is only ever "CONFIRM AVAILABILITY" — no fake in-stock.
+ * - The Aug 2025 ৳2/minute promo is stated as clearly historical.
  */
 export function FleetShowcase() {
   return (
     <section
       aria-labelledby="fleet-showcase-heading"
-      className="border-b-2 border-ink bg-ink py-20 text-cream md:py-28"
+      className="bg-paper py-20 md:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <Reveal>
           <p className="label-micro text-brand">THE LINE-UP</p>
           <h2
             id="fleet-showcase-heading"
-            className="mt-2 font-display text-[clamp(48px,7vw,96px)] leading-[0.9]"
+            className="display-1 mt-2 max-w-3xl text-ink"
           >
-            TWO RIDES.
-            <br />
-            <span className="text-outline-cream">ZERO GEARS.</span>
+            TWO RIDES. <span className="text-brand">ZERO GEARS.</span>
           </h2>
-          <p className="mt-4 max-w-xl text-cream/80">
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">
             Every scooty below is automatic, checked and handed over in person
-            on Jalalia Road.
+            on Jalalia Road. Rates are confirmed on request — never guessed.
           </p>
         </Reveal>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {VEHICLES.map((v, i) => (
-            <Reveal key={v.id} delay={i * 0.08} className="h-full">
-              <article className="flex h-full flex-col border-2 border-ink bg-paper text-ink shadow-hard-red">
-                <div className="flex items-baseline justify-between gap-2 border-b-2 border-ink px-5 py-3">
-                  <span className="font-display text-xl tracking-wider text-brand">
-                    RED SCOOTY {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="label-micro text-steel">{v.category}</span>
-                </div>
-
-                <div className="relative aspect-[4/5] w-full overflow-hidden border-b-2 border-ink bg-cream">
-                  <Image
-                    src={v.image}
-                    alt={v.imageAlt}
-                    fill
-                    sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 90vw"
-                    className="object-cover transition-transform duration-500 hover:scale-[1.04]"
-                  />
-                </div>
-
-                <div className="flex flex-1 flex-col p-5">
-                  <h3 className="font-display text-4xl tracking-wide">
-                    {v.name}
-                  </h3>
-                  <ul
-                    className="mt-3 flex flex-wrap gap-2"
-                    aria-label={`${v.name} features`}
+        <div className="mt-4">
+          {VEHICLES.map((v, i) => {
+            const flip = i % 2 === 1;
+            return (
+              <article
+                key={v.id}
+                aria-labelledby={`vehicle-${v.id}-title`}
+                className={cn("rule-soft py-14 md:py-16", i === 0 && "border-t-0")}
+              >
+                <div className="grid items-center gap-10 md:grid-cols-12 md:gap-8 lg:gap-12">
+                  {/* Hero image */}
+                  <Reveal
+                    variant="mask"
+                    className={cn("md:col-span-6", flip ? "md:order-2" : "md:order-1")}
                   >
-                    {v.features.map((f) => (
-                      <li
-                        key={f}
-                        className="label-micro border border-ink px-2 py-1 text-ink"
-                      >
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
+                    <div className="group relative">
+                      <div className="img-frame relative aspect-[4/5] overflow-hidden">
+                        <Image
+                          src={v.image}
+                          alt={v.imageAlt}
+                          fill
+                          sizes="(min-width: 768px) 48vw, 92vw"
+                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                        />
+                      </div>
+                      {i === 0 ? (
+                        <p className="sticker absolute -right-2 top-5 rotate-2 bg-brand px-3 py-1.5 sm:-right-3">
+                          <span className="font-display text-lg tracking-wider text-white">
+                            NO GEARS · NO TENSION
+                          </span>
+                        </p>
+                      ) : null}
+                      <p className="label-micro mt-3 text-steel">
+                        {v.name} · {v.category}
+                      </p>
+                    </div>
+                  </Reveal>
 
-                  <div className="mt-5 border-2 border-ink bg-brand px-4 py-3">
-                    <p className="label-micro text-white/90">PER DAY</p>
-                    <p className="font-display text-2xl leading-tight tracking-wide text-white">
-                      {v.priceLabel}
-                    </p>
-                  </div>
-                  <p className="label-micro mt-2 text-steel">
-                    RATE CONFIRMED ON BOOKING — NO ONLINE PAYMENT.
-                  </p>
-
-                  <Link
-                    href={`/book?vehicle=${v.id}`}
-                    className="mt-4 flex h-14 items-center justify-center border-2 border-ink bg-ink font-display text-2xl tracking-wider text-cream transition-all hover:-translate-y-0.5 hover:bg-brand hover:text-white hover:shadow-hard-red active:translate-y-0"
-                  >
-                    BOOK THIS RIDE
-                    <ArrowUpRight className="ml-2 h-5 w-5" aria-hidden="true" />
-                  </Link>
-
-                  <TrackedLink
-                    event="click_whatsapp"
-                    source={`scooties:ask:${v.id}`}
-                    href={whatsappMessageUrl(
-                      `Hi Red Scooty! I would like to ask about the ${v.name}.`,
+                  {/* Catalog details */}
+                  <div
+                    className={cn(
+                      "md:col-span-6",
+                      flip ? "md:order-1" : "md:order-2",
                     )}
-                    external
-                    ariaLabel={`Ask on WhatsApp about the ${v.name}`}
-                    className="mt-2 flex h-12 items-center justify-center border-2 border-ink bg-transparent font-display text-xl tracking-wider text-ink transition-colors hover:border-brand hover:bg-brand hover:text-white"
                   >
-                    ASK ABOUT THIS SCOOTY
-                  </TrackedLink>
+                    <Reveal delay={0.08}>
+                      <p className="label-micro text-brand">
+                        RED SCOOTY {String(i + 1).padStart(2, "0")}
+                      </p>
+                      <h3
+                        id={`vehicle-${v.id}-title`}
+                        className="display-2 mt-2 text-ink"
+                      >
+                        {v.name}
+                      </h3>
+                      <p className="mt-2 text-sm font-semibold uppercase tracking-[0.14em] text-leaf">
+                        {v.category}
+                      </p>
+                    </Reveal>
+
+                    {/* Spec rows — hairline separators, no boxed grid */}
+                    <Reveal delay={0.14}>
+                      <dl className="mt-7 border-t border-ink/10">
+                        <div className="flex items-baseline justify-between gap-4 border-b border-ink/10 py-3.5">
+                          <dt className="label-micro text-steel">
+                            TRANSMISSION
+                          </dt>
+                          <dd className="text-right">
+                            <span className="font-display text-xl tracking-wide text-ink">
+                              {v.transmission ?? "—"}
+                            </span>
+                            <span className="label-micro ml-2 text-leaf">
+                              CONFIRMED
+                            </span>
+                          </dd>
+                        </div>
+                        <div className="flex items-start justify-between gap-4 border-b border-ink/10 py-3.5">
+                          <dt className="label-micro shrink-0 pt-1 text-steel">
+                            RIDES LIKE
+                          </dt>
+                          <dd className="text-right">
+                            <ul className="space-y-1.5">
+                              {v.features.map((f) => (
+                                <li
+                                  key={f}
+                                  className="flex items-center justify-end gap-2 text-sm font-medium text-ink"
+                                >
+                                  {f}
+                                  <span
+                                    className="h-1 w-1 shrink-0 rounded-full bg-brand"
+                                    aria-hidden="true"
+                                  />
+                                </li>
+                              ))}
+                            </ul>
+                          </dd>
+                        </div>
+                        <div className="flex items-baseline justify-between gap-4 border-b border-ink/10 py-3.5">
+                          <dt className="label-micro text-steel">
+                            AVAILABILITY
+                          </dt>
+                          <dd className="font-display text-xl tracking-wide text-ink">
+                            CONFIRM AVAILABILITY
+                          </dd>
+                        </div>
+                        <div className="flex items-baseline justify-between gap-4 py-3.5">
+                          <dt className="label-micro text-steel">DAY RATE</dt>
+                          <dd className="text-right">
+                            <span className="font-display text-2xl tracking-wide text-ink">
+                              {v.priceLabel}
+                            </span>
+                            <span className="label-micro mt-0.5 block text-steel">
+                              PRICING AVAILABLE ON REQUEST
+                            </span>
+                          </dd>
+                        </div>
+                      </dl>
+                    </Reveal>
+
+                    {/* CTAs */}
+                    <Reveal delay={0.2}>
+                      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                        <Link
+                          href={`/book?vehicle=${v.id}`}
+                          onClick={() =>
+                            track("click_booking", { source: `scooties:${v.id}` })
+                          }
+                          className="btn-base btn-primary group"
+                        >
+                          BOOK THIS SCOOTY
+                          <ArrowRight
+                            className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1"
+                            aria-hidden="true"
+                          />
+                        </Link>
+                        <TrackedLink
+                          event="click_whatsapp"
+                          source={`scooties:confirm:${v.id}`}
+                          href={whatsappMessageUrl(
+                            `Hi Red Scooty! I would like to confirm availability of the ${v.name}.`,
+                          )}
+                          external
+                          ariaLabel={`Confirm availability of the ${v.name} on WhatsApp`}
+                          className="btn-base btn-outline group"
+                        >
+                          <MessageCircle
+                            className="h-5 w-5"
+                            aria-hidden="true"
+                          />
+                          CONFIRM AVAILABILITY
+                        </TrackedLink>
+                      </div>
+                    </Reveal>
+                  </div>
                 </div>
               </article>
-            </Reveal>
-          ))}
+            );
+          })}
+        </div>
 
-          {/* Honest filler tile: fleet size and models are not invented */}
-          <Reveal delay={0.16} className="h-full">
-            <article className="flex h-full min-h-72 flex-col items-start justify-between border-2 border-dashed border-cream/40 p-6">
-              <div>
-                <Plus className="h-10 w-10 text-brand" aria-hidden="true" />
-                <h3 className="mt-6 font-display text-4xl leading-tight tracking-wide">
-                  MORE MODELS
-                  <br />
-                  ON REQUEST.
+        {/* Historical promo — stated as history, never as a current rate */}
+        <Reveal delay={0.05}>
+          <p className="label-micro rule-soft mt-2 pt-5 leading-relaxed text-steel">
+            HISTORICAL PROMO (AUG 2025) WAS ৳2/MINUTE — CURRENT RATES ON
+            REQUEST. NO PAYMENT ONLINE; EVERYTHING IS CONFIRMED PERSONALLY.
+          </p>
+        </Reveal>
+
+        {/* Honest "more models" tile — fleet size and models are not invented */}
+        <Reveal delay={0.08}>
+          <div className="mt-10 border border-dashed border-ink/25 p-6 sm:p-10">
+            <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
+              <div className="max-w-xl">
+                <Plus className="h-8 w-8 text-brand" aria-hidden="true" />
+                <h3 className="display-2 mt-4 text-ink">
+                  MORE MODELS ON REQUEST.
                 </h3>
-                <p className="mt-3 text-sm text-cream/70">
-                  Fleet size and models are confirmed directly with Red Scooty.
-                  Ask about multi-day rates, helmets and hotel pickup.
+                <p className="mt-3 text-base leading-relaxed text-ink-soft">
+                  Final fleet list, models and rates are confirmed directly with
+                  Red Scooty. Ask about multi-day rates, helmets and hotel
+                  pickup.
                 </p>
               </div>
               <TrackedLink
@@ -132,13 +234,17 @@ export function FleetShowcase() {
                 )}
                 external
                 ariaLabel="Ask which scooty models are available"
-                className="mt-6 flex h-12 w-full items-center justify-center border-2 border-cream bg-transparent font-display text-xl tracking-wider text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
+                className="btn-base btn-outline group shrink-0"
               >
                 ASK WHAT IS AVAILABLE
+                <ArrowRight
+                  className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
               </TrackedLink>
-            </article>
-          </Reveal>
-        </div>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

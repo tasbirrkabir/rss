@@ -1,33 +1,40 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { Reveal } from "@/components/site/reveal";
 
 /**
  * /how-it-works — closing CTA band pointing to /book.
+ * Matches the final-cta exemplar: ink band, display headline, btn-red.
  */
 export function HowCtaBand() {
   return (
-    <section aria-labelledby="how-cta-heading" className="bg-brand py-20 text-white md:py-24">
+    <section
+      aria-labelledby="how-cta-heading"
+      className="band-ink py-20 md:py-28"
+    >
       <div className="mx-auto max-w-7xl px-4 text-center sm:px-6">
         <Reveal>
-          <p className="label-micro text-white/80">YOUR MOVE</p>
+          <p className="label-micro text-brand">YOUR MOVE</p>
           <h2
             id="how-cta-heading"
-            className="mt-2 font-display text-[clamp(52px,8vw,110px)] leading-[0.9]"
+            className="display-1 mt-3 text-cream"
           >
             START WITH STEP 01.
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-white/90">
+          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-cream/70">
             Send the request — choose your scooter, pick a date, done. Red
             Scooty handles the rest personally.
           </p>
           <Link
             href="/book"
-            className="mt-8 inline-flex h-16 items-center justify-center border-2 border-ink bg-ink px-10 font-display text-2xl tracking-wider text-cream transition-all hover:-translate-y-0.5 hover:shadow-hard active:translate-y-0"
+            className="btn-base btn-red group mt-10 h-16 px-10 text-2xl"
           >
             GO TO BOOKING
-            <ArrowUpRight className="ml-2 h-5 w-5" aria-hidden="true" />
+            <ArrowRight
+              className="h-6 w-6 transition-transform duration-200 group-hover:translate-x-1"
+              aria-hidden="true"
+            />
           </Link>
         </Reveal>
       </div>

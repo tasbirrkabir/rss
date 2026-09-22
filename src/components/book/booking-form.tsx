@@ -13,7 +13,6 @@ import {
   Wand2,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -115,6 +114,9 @@ const PICKUP_NOTES: Record<PickupValue, string> = {
   unsure: "No problem — we'll sort it out together.",
 };
 
+const inputClass =
+  "h-12 rounded-none border border-ink/15 bg-paper text-base text-ink shadow-none transition-colors placeholder:text-steel/60 focus-visible:border-brand focus-visible:ring-0 md:text-base";
+
 function todayLocal(): string {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
@@ -137,10 +139,10 @@ function SegmentOption({
       aria-pressed={selected}
       onClick={onClick}
       className={cn(
-        "min-h-11 border-2 border-ink px-4 py-2 font-display text-lg tracking-wide transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2",
+        "min-h-11 border px-4 py-2 font-display text-lg tracking-wide transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2",
         selected
-          ? "bg-ink text-cream shadow-hard-sm"
-          : "bg-paper text-ink hover:-translate-y-0.5 hover:shadow-hard-sm",
+          ? "border-ink bg-ink text-cream"
+          : "border-ink/20 bg-paper text-ink hover:border-ink/50 hover:bg-cream",
       )}
     >
       {children}
@@ -367,29 +369,27 @@ export function BookingForm() {
   if (success) {
     return (
       <div className="p-6 sm:p-10" aria-live="polite">
-        <div className="border-2 border-ink bg-cream p-6 shadow-hard sm:p-8">
-          <CheckCircle2 className="h-12 w-12 text-brand" aria-hidden="true" />
-          <h3 className="mt-4 font-display text-[clamp(44px,6vw,72px)] leading-none tracking-wide text-ink">
-            REQUEST RECEIVED.
-          </h3>
-          <p className="mt-3 max-w-md text-base text-ink-soft">
+        <div className="bg-cream p-6 sm:p-8">
+          <CheckCircle2 className="h-10 w-10 text-brand" aria-hidden="true" />
+          <h3 className="display-1 mt-4 text-ink">REQUEST RECEIVED.</h3>
+          <p className="mt-3 max-w-md text-base leading-relaxed text-ink-soft">
             Red Scooty will contact you shortly to confirm availability.
           </p>
 
           <dl className="mt-6 grid grid-cols-2 gap-2 sm:max-w-md">
-            <div className="border-2 border-ink bg-paper px-3 py-2">
+            <div className="border border-ink/10 bg-paper px-3 py-2">
               <dt className="label-micro text-steel">DATE</dt>
               <dd className="font-display text-xl tracking-wide text-ink">
                 {success.rideDate}
               </dd>
             </div>
-            <div className="border-2 border-ink bg-paper px-3 py-2">
+            <div className="border border-ink/10 bg-paper px-3 py-2">
               <dt className="label-micro text-steel">DURATION</dt>
               <dd className="font-display text-xl tracking-wide text-ink">
                 {DURATION_LABELS[success.duration]}
               </dd>
             </div>
-            <div className="border-2 border-ink bg-paper px-3 py-2">
+            <div className="border border-ink/10 bg-paper px-3 py-2">
               <dt className="label-micro text-steel">SCOOTY</dt>
               <dd className="font-display text-xl tracking-wide text-ink">
                 {success.vehicleId && success.vehicleId !== "none"
@@ -398,7 +398,7 @@ export function BookingForm() {
               </dd>
             </div>
             {success.routeLabel ? (
-              <div className="border-2 border-ink bg-paper px-3 py-2">
+              <div className="border border-ink/10 bg-paper px-3 py-2">
                 <dt className="label-micro text-steel">RIDE</dt>
                 <dd className="font-display text-xl tracking-wide text-ink">
                   {success.routeLabel}
@@ -413,16 +413,19 @@ export function BookingForm() {
               source="book_form_success"
               href={whatsappHandoff}
               external
-              className="inline-flex h-14 w-full items-center justify-center gap-2 border-2 border-ink bg-brand font-display text-2xl tracking-wider text-white shadow-hard transition-all hover:-translate-y-0.5 hover:bg-ink hover:shadow-hard-red"
+              className="btn-base btn-red group w-full"
             >
               <MessageCircle className="h-5 w-5" aria-hidden="true" />
               CONTINUE ON WHATSAPP
-              <ArrowRight className="h-5 w-5" aria-hidden="true" />
+              <ArrowRight
+                className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
             </TrackedLink>
             <button
               type="button"
               onClick={resetForAnother}
-              className="label-micro text-steel underline-offset-4 hover:text-brand hover:underline"
+              className="label-micro link-underline text-steel transition-colors hover:text-brand"
             >
               MAKE ANOTHER REQUEST
             </button>
@@ -441,7 +444,7 @@ export function BookingForm() {
         </p>
       ) : null}
 
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-2">
         {/* 01 · NAME */}
         <div>
           <Label htmlFor="booking-name" className="label-micro text-steel">
@@ -453,7 +456,7 @@ export function BookingForm() {
             autoComplete="name"
             placeholder="e.g. Rakib Hasan"
             aria-invalid={!!errorFor("name")}
-            className="mt-2 h-12 rounded-none border-2 border-ink bg-paper text-base text-ink placeholder:text-steel/60 shadow-hard-sm focus-visible:ring-brand"
+            className={`mt-2 ${inputClass}`}
             {...register("name")}
           />
           <FieldErrorLine message={errorFor("name")} />
@@ -471,7 +474,7 @@ export function BookingForm() {
             autoComplete="tel"
             placeholder="01XXXXXXXXX"
             aria-invalid={!!errorFor("phone")}
-            className="mt-2 h-12 rounded-none border-2 border-ink bg-paper text-base text-ink placeholder:text-steel/60 shadow-hard-sm focus-visible:ring-brand"
+            className={`mt-2 ${inputClass}`}
             {...register("phone")}
           />
           <FieldErrorLine message={errorFor("phone")} />
@@ -488,7 +491,7 @@ export function BookingForm() {
             min={today}
             required
             aria-invalid={!!errorFor("rideDate")}
-            className="mt-2 h-12 rounded-none border-2 border-ink bg-paper text-base text-ink shadow-hard-sm focus-visible:ring-brand"
+            className={`mt-2 ${inputClass}`}
             {...register("rideDate")}
           />
           <FieldErrorLine message={errorFor("rideDate")} />
@@ -553,7 +556,7 @@ export function BookingForm() {
             autoComplete="off"
             maxLength={40}
             aria-invalid={!!errorFor("riders")}
-            className="mt-2 h-12 max-w-xs rounded-none border-2 border-ink bg-paper text-base text-ink placeholder:text-steel/60 shadow-hard-sm focus-visible:ring-brand"
+            className={`mt-2 max-w-xs ${inputClass}`}
             {...register("riders")}
           />
           <FieldErrorLine message={errorFor("riders")} />
@@ -600,7 +603,7 @@ export function BookingForm() {
             maxLength={500}
             placeholder="Route plans, questions, hotel name..."
             aria-invalid={!!errorFor("message")}
-            className="mt-2 resize-none rounded-none border-2 border-ink bg-paper text-base text-ink placeholder:text-steel/60 shadow-hard-sm focus-visible:ring-brand"
+            className={`mt-2 ${inputClass} min-h-12 resize-none py-2.5`}
             {...register("message")}
           />
           <FieldErrorLine message={errorFor("message")} />
@@ -610,7 +613,7 @@ export function BookingForm() {
       {serverError ? (
         <div
           role="alert"
-          className="mt-5 flex items-start gap-2 border-2 border-brand bg-brand/10 px-4 py-3"
+          className="mt-6 flex items-start gap-2 border border-brand/30 bg-brand/10 px-4 py-3"
         >
           <AlertCircle
             className="mt-0.5 h-4 w-4 shrink-0 text-brand"
@@ -620,14 +623,17 @@ export function BookingForm() {
         </div>
       ) : null}
 
-      <Button
+      <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-6 h-14 w-full rounded-none border-2 border-ink bg-brand font-display text-2xl tracking-wider text-white shadow-hard transition-all hover:-translate-y-0.5 hover:bg-ink hover:shadow-hard-red disabled:translate-y-0 disabled:opacity-70"
+        className="btn-base btn-red group mt-8 w-full"
       >
         {isSubmitting ? "SENDING..." : "REQUEST MY RIDE"}
-        <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
-      </Button>
+        <ArrowRight
+          className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1"
+          aria-hidden="true"
+        />
+      </button>
     </form>
   );
 }

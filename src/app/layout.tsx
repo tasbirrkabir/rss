@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Bebas_Neue, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { IntroReveal } from "@/components/site/intro-reveal";
 import { SITE } from "@/data/site";
 
 const bebas = Bebas_Neue({
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
       "Scooty rentals for exploring the tea gardens, forests, roads and hidden corners of Sreemangal.",
     url: siteUrl,
     siteName: "Red Scooty Sreemangal",
-    images: [{ url: "/images/hero-scooty.png", width: 864, height: 1152 }],
+    images: [{ url: "/images/hero-scooty.webp", width: 864, height: 1152 }],
     type: "website",
     locale: "en_BD",
   },
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
     title: "Red Scooty Sreemangal | Scooty Rental & Rides",
     description:
       "Scooty rentals for exploring the tea gardens, forests, roads and hidden corners of Sreemangal.",
-    images: ["/images/hero-scooty.png"],
+    images: ["/images/hero-scooty.webp"],
   },
   robots: { index: true, follow: true },
 };
@@ -92,7 +93,7 @@ const jsonLd = {
     longitude: SITE.coords.lng,
   },
   hasMap: SITE.mapsUrl,
-  sameAs: [SITE.facebook, SITE.instagram, SITE.youtube.watchUrl, SITE.mapsUrl],
+  sameAs: [SITE.facebook, SITE.youtube.watchUrl, SITE.mapsUrl],
 };
 
 export default function RootLayout({
@@ -109,6 +110,8 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <IntroReveal />
+        <div aria-hidden="true" className="grain-overlay" />
         {children}
         <Toaster />
       </body>

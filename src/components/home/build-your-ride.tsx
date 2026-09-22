@@ -10,7 +10,7 @@ import { track } from "@/lib/analytics";
 import { Reveal } from "@/components/site/reveal";
 
 /**
- * Build Your Ride - pick a mood, get a sample ride plan.
+ * Build Your Ride — pick a mood, get a sample ride plan.
  * Honesty rule: EST. TIME and DISTANCE render the "—" placeholders from the
  * data file deliberately; real numbers are confirmed when booking.
  */
@@ -27,7 +27,7 @@ export function BuildYourRide() {
     <section
       id="build-your-ride"
       aria-labelledby="mood-heading"
-      className="border-y-2 border-ink bg-cream py-20 md:py-28"
+      className="rule-soft bg-cream py-20 md:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-8">
@@ -35,18 +35,15 @@ export function BuildYourRide() {
           <div>
             <Reveal>
               <p className="label-micro text-brand">TRIP MOOD</p>
-              <h2
-                id="mood-heading"
-                className="mt-2 font-display text-[clamp(48px,7vw,96px)] leading-[0.9] text-ink"
-              >
+              <h2 id="mood-heading" className="display-1 mt-2 text-ink">
                 WHAT KIND
                 <br />
                 OF RIDE
                 <br />
-                <span className="text-outline">DO YOU WANT?</span>
+                <span className="text-brand">DO YOU WANT?</span>
               </h2>
-              <p className="mt-4 max-w-md text-ink-soft">
-                Tap a mood - we&apos;ll sketch a sample route for it. Ride it
+              <p className="mt-4 max-w-md leading-relaxed text-ink-soft">
+                Tap a mood — we&apos;ll sketch a sample route for it. Ride it
                 as-is or mix it up; we confirm the details when you book.
               </p>
             </Reveal>
@@ -55,7 +52,7 @@ export function BuildYourRide() {
               <div
                 role="radiogroup"
                 aria-label="Choose a ride mood"
-                className="mt-8 flex flex-wrap gap-3"
+                className="mt-8 flex flex-wrap gap-2.5"
               >
                 {RIDE_MOODS.map((m) => {
                   const isSel = m.id === moodId;
@@ -66,10 +63,10 @@ export function BuildYourRide() {
                       role="radio"
                       aria-checked={isSel}
                       onClick={() => selectMood(m.id)}
-                      className={`min-h-12 border-2 border-ink px-5 py-2 font-display text-xl tracking-wider transition-all ${
+                      className={`min-h-11 border px-5 py-2 font-display text-lg tracking-wider transition-all duration-200 ${
                         isSel
-                          ? "bg-brand text-white shadow-hard-sm"
-                          : "bg-paper text-ink hover:-translate-y-0.5 hover:shadow-hard-sm"
+                          ? "border-brand bg-brand text-white shadow-[0_8px_20px_rgba(245,34,45,0.25)]"
+                          : "border-ink/20 bg-paper text-ink hover:-translate-y-0.5 hover:border-ink"
                       }`}
                     >
                       {m.label}
@@ -81,9 +78,9 @@ export function BuildYourRide() {
           </div>
 
           {/* Result panel */}
-          <Reveal delay={0.15}>
+          <Reveal delay={0.15} variant="scale">
             <div
-              className="flex h-full flex-col border-2 border-ink bg-ink p-6 text-cream shadow-hard-red"
+              className="band-ink flex h-full flex-col p-6 sm:p-8"
               aria-live="polite"
             >
               {!mood ? (
@@ -99,9 +96,7 @@ export function BuildYourRide() {
               ) : (
                 <>
                   <p className="label-micro text-brand">{mood.tagline}</p>
-                  <h3 className="mt-2 font-display text-4xl tracking-wide text-cream">
-                    {mood.planTitle}
-                  </h3>
+                  <h3 className="display-2 mt-2 text-cream">{mood.planTitle}</h3>
 
                   <ol className="mt-6 flex-1 space-y-0">
                     {mood.stops.map((s, i) => (
@@ -111,12 +106,12 @@ export function BuildYourRide() {
                       >
                         {i < mood.stops.length - 1 ? (
                           <span
-                            className="absolute top-5 left-[7px] h-full w-0.5 bg-cream/25"
+                            className="absolute top-5 left-[7px] h-full w-px bg-cream/20"
                             aria-hidden="true"
                           />
                         ) : null}
                         <span
-                          className={`mt-1.5 h-3.5 w-3.5 shrink-0 border-2 border-cream ${
+                          className={`mt-1.5 h-3 w-3 shrink-0 rounded-full border-2 border-cream transition-colors ${
                             i === mood.stops.length - 1 ? "bg-brand" : "bg-cream"
                           }`}
                           aria-hidden="true"
@@ -131,7 +126,7 @@ export function BuildYourRide() {
                     ))}
                   </ol>
 
-                  <div className="mt-6 grid grid-cols-2 gap-4 border-t-2 border-cream/25 pt-6">
+                  <div className="mt-6 grid grid-cols-2 gap-4 border-t border-cream/15 pt-6">
                     <div>
                       <p className="label-micro text-cream/60">EST. TIME</p>
                       <p className="font-display text-3xl tracking-wide text-cream">
@@ -153,11 +148,16 @@ export function BuildYourRide() {
                   <div className="mt-6 space-y-3">
                     <Link
                       href={`/book?mood=${mood.bookQuery}`}
-                      onClick={() => track("click_booking", { source: "build_your_ride" })}
-                      className="flex h-14 w-full items-center justify-center border-2 border-cream bg-brand font-display text-2xl tracking-wider text-white transition-all hover:-translate-y-0.5 hover:shadow-hard"
+                      onClick={() =>
+                        track("click_booking", { source: "build_your_ride" })
+                      }
+                      className="btn-base btn-red group w-full"
                     >
-                      BOOK THIS ROUTE{" "}
-                      <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
+                      BOOK THIS ROUTE
+                      <ArrowRight
+                        className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
                     </Link>
                     <a
                       href={whatsappMessageUrl(
@@ -165,7 +165,7 @@ export function BuildYourRide() {
                       )}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-12 w-full items-center justify-center border-2 border-cream/60 font-display text-xl tracking-wider text-cream transition-colors hover:border-brand hover:text-brand"
+                      className="flex h-12 w-full items-center justify-center border border-cream/40 font-display text-lg tracking-wider text-cream transition-colors hover:border-brand hover:text-brand"
                     >
                       ASK ABOUT IT ON WHATSAPP
                     </a>
@@ -178,7 +178,7 @@ export function BuildYourRide() {
 
         <Reveal delay={0.2}>
           <p className="label-micro mt-8 text-steel">
-            BASED IN TOWN · {SITE.locationStrip} · RIDE TIMES ARE ESTIMATES
+            BASED IN TOWN · {SITE.locationStrip} · RIDE TIMES ARE DEMO ESTIMATES
           </p>
         </Reveal>
       </div>

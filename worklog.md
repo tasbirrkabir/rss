@@ -539,3 +539,528 @@ Stage Summary:
 - Structured data enriched (founder, geo, hasMap, VideoObject) — SEO benefit.
 - Honesty guards preserved: WhatsApp still demo-badged, no invented facts;
   video publish date sourced from the actual YouTube page.
+
+---
+Task ID: 6-a
+Agent: Z.ai Code (research sub-agent)
+Task: Research-only verification of REAL coordinates for Red Scooty Sreemangal +
+7 destinations around Sreemangal (Lawachara gate, Madhabpur Lake, Baikka Beel,
+Ham Ham waterfall, Sreemangal town/station, tea-garden viewpoint); plus road
+distances, road notes and Google Business Profile public data. No project code
+written or modified (per task rules).
+
+Work Log:
+- Plus-code cross-check: decoded 8P3M+JMQ with the official openlocationcode
+  library (pip, v1.0.1; self-tested against known vector 849VCWC8+R9).
+  recoverNearest -> 7MPH8P3M+JMQ, center 24.304088, 91.734234 = 0.2 m from the
+  owner's Google Maps share-link coords (24.3040891, 91.7342349). Also
+  re-resolved maps.app.goo.gl/ZE53GmbXSVHsUJQJ7 -> google.com/maps/place/Red+
+  Scooty+Sreemangal/...!8m2!3d24.3040891!4d91.7342349 (CID 0xafc386e426495147).
+  CONCLUSION: plus code and coordinates are MUTUALLY CONSISTENT, no discrepancy.
+- Wikipedia/Wikidata APIs: Lawachara NP 24.319722, 91.783611 (en+bn wiki,
+  Q3350641); Madhobpur Lake 24.2812, 91.8181 (enwiki Q/26048036 + bnwiki
+  মাধবপুর হ্রদ); Hum Hum Waterfall 24.16797222, 91.91252778 (enwiki 35399385;
+  bnwiki 24.16722222, 91.91161111); Sreemangal settlement Q4526619 24.308333,
+  91.733333; Sreemangal railway station Q60433078 24.306648, 91.734984.
+- OpenStreetMap (Nominatim/Overpass/OSM API): Lawachara MAIN ENTRANCE GATE node
+  401422104 (barrier=gate, entrance=main, desc "Main entrance to the Lowachara
+  national park") 24.3250162, 91.7871805; Sreemangal Railway Station way
+  1545698095 / node 317357840 24.306587, 91.734756; Baikka Beel wetland way
+  662227904 center 24.3502701, 91.6994845 + Baikka Beel Visitor Centre way
+  662227909 / node 10146518044 24.351474, 91.705516; Madhabpur lake way
+  29278148 24.281044, 91.817327; "Hum Ham Waterfall" node 10313158135
+  24.167732, 91.911957; Tea Museum (চা যাদুঘর) way 34580584, addr:street
+  "Sreemangal - Bhanugach Road", center 24.2999599, 91.7599871; unnamed
+  tourism=viewpoint node 13360929201 24.30946, 91.762857 in a tea garden.
+- Offroad Bangladesh pages scraped: Madhobpur Lake 24.2819, 91.8197; Baikka
+  Beel Sanctuary 24.3514, 91.6979; road notes captured (Baikka: CNG 400-500
+  BDT from Srimangal station road, ~6 km on main road then left at signboard,
+  "4WD Jeep/SUV suggested, country road not suitable for sedans"; Madhabpur:
+  CNG/bus from Sreemangal, lake trek 8-10 km trail, risky in rainy season).
+- Web searches: distances — Lawachara 7-8 km (Wikipedia "8 km from Sreemangal",
+  TripAdvisor "7 km"); Madhabpur 16 km (beautifulbangladesh.gov.bd official);
+  Baikka ~17 km (orientecotourism) / ~20 km (touristplacesbd), 45 min
+  (TripAdvisor); Ham Ham 32 km by road to trailhead (distancesfrom.com) + 2-3 h
+  trek (touristplacesbd/TripAdvisor/beautifulbangladesh). Tea gardens =
+  Sreemangal-Bhanugach Rd (OSM + Wikipedia + htlbd address); Lawachara inside
+  West Bhanugach Reserved Forest (Wikipedia).
+- DISTRICT CORRECTION found: Madhabpur Lake is in Kamalganj Upazila,
+  Moulvibazar (enwiki "Madhobpur Lake", offroadbangladesh, bnwiki "মাধবপুর
+  ইউনিয়ন, কমলগঞ্জ") — NOT Madhabpur Upazila, Habiganj (a different place);
+  flag for site copy fix.
+- Google Business Profile (headless browser on live Maps place panel): name
+  "Red Scooty Sreemangal", category "motorcycle/scooter rental agency"
+  (電單車租借代理), address "8P3M+JMQ, Jalalia road, Sreemangal, Bangladesh";
+  NO rating, NO review count, NO hours, NO phone, NO website published
+  (listing shows "add hours/phone/website" + "claim this business" prompts =>
+  appears unclaimed). FB page (public search snippet) shows phone +880 18 9742
+  3694 and "Jalaiya road" location; Instagram/TikTok/YouTube reels exist.
+- Straight-line distances computed from business coords: station 0.28 km,
+  Tea Museum 2.65 km, viewpoint node 2.96 km, Lawachara park centroid 5.30 km,
+  Lawachara gate 5.85 km, Baikka visitor centre 6.02 km, Madhabpur lake
+  8.87 km, Ham Ham falls 23.58 km.
+
+Stage Summary:
+- All 7 destinations now have source-verified coordinates (5-6 dp) with URLs;
+  nothing fabricated. Verified pairs: business 24.3040891, 91.7342349 (Maps +
+  plus code agree 0.2 m); Lawachara gate 24.325016, 91.787181 (OSM) with park
+  centroid 24.319722, 91.783611 (Wikipedia/Wikidata); Madhabpur 24.2812,
+  91.8181 (Wikipedia + OSM + offroadbd); Baikka visitor centre 24.351474,
+  91.705516 (OSM; no Wikipedia coord — OSM/travel-site only, flagged); Ham Ham
+  24.167972, 91.912528 (Wikipedia + OSM); station 24.306587, 91.734756 (OSM) +
+  town 24.308333, 91.733333 (Wikidata); tea-garden viewpoint via Tea Museum
+  24.299960, 91.759987 (OSM; formal "viewpoint POI" does not exist in sources,
+  flagged).
+- GBP: category + plus-code address verified live; rating/reviews/hours do NOT
+  exist publicly yet (listing unclaimed) — site must not display any.
+- Key copy risks flagged: Madhabpur district (Kamalganj/Moulvibazar, not
+  Habiganj); Ham Ham NOT scooty-accessible (jeep + 2-3 h trek); Baikka last
+  stretch is a rough country road.
+- No project files modified; research artifacts in /home/z/tmp/research/.
+
+---
+Task ID: 6-b
+Agent: General-purpose research sub-agent (web research, no code changes)
+Task: Research "Red Scooty Sreemangal" for website content — find creator/third-party
+videos (YouTube), Facebook public info (followers, pricing posts, about), reviews/
+news presence. Deliver JSON of videos + business facts. Read-only task.
+
+Work Log:
+- Tooling: `z-ai search` does not exist; used `z-ai function -n web_search`
+  (18 queries: EN/Bengali name variants, rental terms, handle, site:youtube.com,
+  Mini Scooty, instagram) and `page_reader`. Facebook page-level URLs redirect to
+  login, but individual post/video URLs return og:title/og:description + rendered
+  text via page_reader — used that to extract real post text, dates, reaction counts.
+- YouTube watch pages + innertube API + Googlebot UA are bot-walled (LOGIN_REQUIRED)
+  from this IP. Workarounds: curl-able YouTube oEmbed (title/channel), channel RSS
+  feeds (exact publish dates, view counts, full descriptions, no bot wall), and
+  agent-browser on youtube.com/results?search_query=... (ytInitialData scrape:
+  video IDs, channels, channel IDs, views, published-relative, description
+  snippets). Resolved channel IDs from @handles via curl; pulled RSS for Monsur27,
+  Vlogs Riyad 07, Sreemangal Bachelor Point, Tahsanur Rob, Film by Saeid, The Slow
+  Rider, Sulaiman Patwary, Tusher vlog44, Sakib Shoikot, Emon Atif.
+- KEY FINDING (flag for owner/integrator): the video the site embeds as "the
+  business's own tour video" (youtu.be/vk0oyKnZVPs, Monsur27, 2025-11-01,
+  1,921 views) never mentions "Red Scooty" in title/description. Its description
+  booking line is "Bike Rent-01738-055774 whatsapp/Call" + FB share link — the
+  same phone (01738055774) and share link used in the same channel's other rental
+  videos tagged #exploremotosreemangal, i.e. EXPLORE MOTO SREEMANGAL (competitor/
+  separate outfit; Red Scooty's public number is 01897-423694). Channel Monsur27
+  is a creator (fb.com/Monsur27official), not the Red Scooty page. Recommend the
+  owner confirm whether this video should stay embedded on the site.
+- Quoted YouTube search "Red Scooty" returns ZERO Sreemangal-related videos —
+  no third-party creator video mentions Red Scooty in indexed metadata. Closest:
+  Vlogs Riyad 07 "২ টাকায় শ্রীমঙ্গল ভ্রমণ!!" (~Sep 2025, 370 views) echoes the
+  ৳2/minute promo hook but desc unread (bot wall) → unclear.
+- FB facts captured via search snippets + page_reader og-meta: page @redscootysmg
+  ("Explore Sreemongl with Red Scooty…"), about: +880 1897-423694,
+  redscootysreemangal@gmail.com; 3,116 followers / 160 talking (recent snippet),
+  3,096 likes (older); category "Bike Rental" with "Call now" action; posts: rain
+  reel 2025-05-21 (2.1K views), "🥺" 2025-01-29 (3.8K views), "Right😏" 2025-06-30
+  (3K views); "ধামাকা" teaser 2026-09-12 (72 reactions, asks followers what to
+  launch next — new scooty / car rental / new service). ৳2/minute promo
+  "২ টাকা প্রতি মিনিটে শ্রীমঙ্গল ঘুরুন 🌱 Red Scooty Sreemangal 🌱" posted
+  2025-08-26 by page "Boy from Sreemangal" (ID 100092326193851, 2.4K reactions,
+  23 shares) — affiliate/promoter page that ALSO posts Explore Moto promos;
+  not the official page. Mini Scooty post 2026-03-19 (Google-indexed snippet:
+  "Mini Scooty rental : Red Scooty Sreemangal Number : +880 18 9742 3694
+  Location: jalaiya road. Eco-friendly • Affordable • Fun"); full URL not
+  recoverable (search API truncates long FB URLs).
+- No TripAdvisor listing, no news/blog coverage, no public Instagram account
+  found for the business. Competitor landscape mapped: Explore Moto Sreemangal
+  (01738055774), Sreemangal Bike Rent Point, Sreemangal Bikes Rental Services,
+  orientecotourism.com (motorbike/bicycle), Sreemangal Bachelor Point guest
+  house scooty rent, TikTok @mkrent11 (250৳/hr electric), @raj977547 (120৳/hr),
+  @rent.a.motorcycle (200৳/hr TVS/Gixxer/Scooty). Market rate signal: ৳120–250/hr
+  vs Red Scooty's former ৳2/min promo. UdHqUiRzXls ("Dhaka to Srimongol Bike
+  Tour") returned oEmbed 404 → video unavailable, excluded. Raw artifacts in
+  /tmp/research/*.json (search results, RSS, FB page reads).
+
+Stage Summary:
+- Deliverable 1 (creator/third-party videos JSON): 13 real videos verified with
+  URLs — 0 third-party videos mention Red Scooty; 3 Monsur27 videos are rental
+  promos tied to Explore Moto's contact (incl. the currently embedded one);
+  10+ genuine Sreemangal travel/rental-scene videos catalogued with dates/views.
+- Deliverable 2 (business facts JSON): FB page identity/contact/followers/
+  category VERIFIED-PUBLIC; ৳2/min Aug-2025 promo VERIFIED (posted via affiliate
+  page "Boy from Sreemangal"); Mini Scooty + Jalalia Road post 2026-03-19
+  VERIFIED-PUBLIC; hours/reviews/news = none found (UNCLEAR/absent).
+- Deliverable 3: 8 public FB post/page URLs (page, about, 4 page videos,
+  2 posts incl. ৳2/min pair).
+- ACTION ITEMS for owner/integrator: (1) confirm vk0oyKnZVPs embedding given its
+  Explore Moto booking contact; (2) treat Monsur27 as a contactable local creator
+  for a real Red Scooty feature video; (3) pricing story "৳2/minute" belongs to
+  Aug 2025 (affiliate-posted) — do not present as current price; (4) Mini Scooty
+  is real (Mar 2026 post) — keep as verified fleet item.
+
+---
+Task ID: 7-c
+Agent: Z.ai Code (design-language migration agent)
+Task: Design-language migration (Task 6+ brief v2) for how-it-works, rental-guide,
+about (+VideoBand), contact, book (+booking-form/ride-status), journal (+article
+pages), mobile-cta-bar. Structure/copy/logic preserved; styling upgraded to the
+premium editorial language (card-soft, hairlines, display/btn utilities, Reveal
+motion, ≤1 sticker per frame, shadow-hard only on stickers).
+
+Work Log:
+- Read worklog.md, agent-ctx/style-guide.md in full, exemplars (hero, final-cta,
+  social-proof, map-section, globals.css) and every scoped file before editing.
+- how-it-works/process-steps.tsx: removed border-b-2 separators and ad-hoc clamps;
+  alternating bg-paper/bg-cream with rule-soft; step numbers → display-hero
+  text-brand; headlines → display-1; step links → btn-base btn-outline with
+  group arrow motion. Kept STEPS copy, TrackedLink events/sources/ariaLabel.
+- how-it-works/trust-strip.tsx: border-2 grid → one quiet hairline panel
+  (border-cream/15 + divide-x), hover:bg-cream/5; DemoBadge "DETAILS TO BE
+  CONFIRMED" kept.
+- how-it-works/cta-band.tsx: red band → band-ink, display-1 headline, btn-base
+  btn-red hero-size CTA with animated ArrowRight.
+- rental-guide/guide-sections.tsx: border-2+shadow-hard cards → card-soft with
+  -translate-y-1.5/shadow-lift hover; icon chip solid ink; ghost numbers; display-1
+  heading keeps the page's single text-outline accent; bullets keep red dots;
+  dashed divider → border-ink/10 hairline; Reveal → StaggerGroup/StaggerItem.
+- rental-guide/guide-cta-band.tsx: ink band, two hairline panels, display-2
+  headings, btn-red + btn-cream with group arrows.
+- app/about/page.tsx: section dividers border-2 → rule-soft; all ad-hoc clamps →
+  display-1/display-3; shop + owner photos softened to img-frame (kept rotate +
+  hover-straighten) with ONE sticker each (sticker class, no rotate conflicts);
+  owner role pill → quiet solid ink label-micro chip; WhatsApp CTA → btn-base
+  btn-primary (kept DemoBadge + "to be confirmed" note); facts card → card-soft
+  with link-underline contact links; band-ink stats card kept, inner boxes →
+  border-cream/15 hairlines; timeline cards → card-soft; quote → card-soft;
+  CTA band → btn-red/btn-cream. Avoided clip-path mask Reveal on rotated/stickered
+  frames (clip-path would clip stickers/corners); VideoObject JSON-LD untouched.
+- site/video-band.tsx: border-2/shadow-hard-lg frame → img-frame; click-to-play
+  logic, iframe attrs, poster, darkening, caption chip kept; play button → single
+  red "sticker" (sticker class + bg-brand, composes with Tailwind v4 translate/
+  scale properties); label chip → quiet bg-ink/cream.
+- app/contact/page.tsx: MethodCard → card-soft, hover lift exactly 6px
+  (-translate-y-1.5) + shadow-lift; grid → StaggerGroup/StaggerItem (h-full
+  chain intact); map panel → img-frame with the Google-embed iframe kept exactly
+  (src/title/loading/allowFullScreen/referrerPolicy/grayscale classes) + ONE
+  brand sticker; directions CTA → btn-base btn-red; address card → card-soft;
+  separators → rule-soft.
+- contact/quick-message-form.tsx: panel → card-soft; inputs → hairline
+  (border-ink/15, focus:border-brand, ring removed, shadow-none) via shared
+  inputClass; error box → border-brand/30; submit → btn-base btn-red w-full
+  (plain button; dropped shadcn Button to avoid utility conflicts); success
+  panel refined (hairline cream surface, display-2, link-underline reset).
+  Schema/validation/API contract/toasts/aria unchanged.
+- app/book/page.tsx: form wrapper border-2+hard shadows → card-soft overflow
+  hidden with quiet solid ink header strip; GOOD TO KNOW → card-soft; helpful
+  links → hairline rows with arrow motion; direct-contact card → band-ink with
+  btn-cream/btn-red; heading → display-1; all TrackedLink events (click_call,
+  click_whatsapp, book_rail sources) intact.
+- book/booking-form.tsx: ALL logic intact (prefill params vehicle/route/mood,
+  sync effect, start_booking/submit_booking tracking, zod schema, POST
+  /api/bookings, issue-keyed inline errors, WhatsApp handoff memo, reset).
+  Styling: hairline inputs, quiet SegmentOption chips (border-ink/20, selected
+  = solid ink), gap-6 grid, refined success panel (bg-cream inside card,
+  hairline summary tiles, btn-red WhatsApp CTA), pickup note kept as red left
+  accent.
+- book/ride-status.tsx: strip border-b-2 → border-ink/10 hairline; blocks →
+  card-soft; DEMO DATA badges + aria-live + fallback note untouched.
+- app/journal/page.tsx: grid separator → rule-soft; grid → StaggerGroup; note
+  strip → hairline; CTA band → band-ink + display-1 + btn-red.
+- journal/journal-card.tsx: card-soft, quiet category chip, display-3 title,
+  hover lift -translate-y-1.5 + shadow-lift, gentle image zoom, hairline image
+  divider; Reveal+delay → StaggerItem (grid stagger).
+- journal/journal-featured.tsx: hero image now Reveal variant="mask" (clip-path
+  wipe, safe: no rotation/no overflowing children) inside img-frame; content
+  side Reveal; display-1 title; quiet chip; btn-primary CTA; DemoBadge kept.
+- journal/[slug]/page.tsx: hero border → hairline; image → img-frame; title →
+  display-hero; meta chips quietened; body measure max-w-2xl → max-w-3xl with
+  Bebas drop-cap treatment on the first paragraph (first-letter utilities);
+  back link + internal links get link-underline; end band → band-ink with
+  btn-red; destination chips → hairline; JOURNAL_NOTE strip hairline; Article
+  JSON-LD + generateStaticParams/metadata untouched.
+- site/mobile-cta-bar.tsx: solid surfaces — bg-paper + border-t/ink/10 +
+  divide-x hairlines + shadow-lift; CALL|WHATSAPP|BOOK entries, events, aria,
+  safe-area (pb-safe) and 44px+ targets exactly preserved.
+- site/demo-badge.tsx / site/tracked-link.tsx: reviewed, no change needed (badge
+  already reads as quiet dashed hairline; TrackedLink carries no styling).
+- Verification: `bun run lint` → 0 errors, 1 pre-existing acceptable warning
+  (react-hook-form watch, booking-form). `bunx tsc --noEmit` → no errors in any
+  scoped file (remaining tsc errors live in files owned by other agents:
+  reveal.tsx, route-map.tsx, destinations.ts — untouched per scope). All scoped
+  routes return 200 from the dev server (/how-it-works, /rental-guide, /about,
+  /contact, /book, /journal, /journal/[slug]); rendered HTML spot-checked for
+  card-soft / hairline inputs / btn-red / img-frame / sticker / drop-cap tokens.
+  Note: /routes?route=lake-run 500 in dev.log originates in map/route-map.tsx +
+  /routes pages owned by another agent — not touched.
+- Honesty guards preserved everywhere: DemoBadges, "DETAILS TO BE CONFIRMED",
+  "DEMO DATA", JOURNAL_NOTE, "NOT YET VERIFIED", "to be confirmed" notes,
+  phone/WhatsApp/maps links and event names.
+
+Stage Summary: Scoped pages migrated to the Revision-B design language —
+70/20/10 premium-editorial balance, card-soft surfaces, hairline rules,
+display/btn/label utilities, staggered reveals, single-sticker frames, refined
+booking forms and magazine-style journal. Structure, copy, tracked links,
+forms, ARIA, JSON-LD and footer/mobile-bar behavior unchanged. Lint clean
+(1 pre-existing warning). No packages added; no forbidden files modified.
+
+---
+Task ID: 7-b
+Agent: Z.ai Code (frontend code agent — scooties + routes + route map)
+Task: Rebuild /scooties as a premium product catalog (fleet-showcase, specs-strip,
+included-ask, scooties-cross-links + page), rebuild /routes as an editorial route
+library with an interactive map (route-card, routes-own-band, new routes-explorer
++ page), and build src/components/map/route-map.tsx (Leaflet + OSRM real-road
+geometry with honest schematic fallback) per style-guide.md v2.
+
+Work Log:
+- Read worklog, style-guide v2, exemplars (hero, map-section, scooty-showcase,
+  globals.css), data files (vehicles, ride-routes with waypoints, destinations),
+  booking-form prefill contract (supports ?vehicle= and ?route= — kept both).
+- NEW src/components/map/route-map.tsx: one client Leaflet map bound to the
+  active route. Attempts REAL road geometry from OSRM public demo
+  (router.project-osrm.org, all waypoints joined into one
+  /route/v1/driving/{lng},{lat};… request, overview=full&geometries=geojson),
+  4s AbortController timeout, results cached in a module-level Map consumed via
+  useSyncExternalStore (no setState-in-effect). Real geometry = Polyline
+  #f5222d w3.5 o0.9; failure = straight dashed waypoints line (dashArray "6 8",
+  #111111). Honesty label overlay switches between "REAL ROAD GEOMETRY VIA
+  OSRM · OSM DATA" / "SCHEMATIC WAYPOINT LINE — NOT A NAVIGATION ROUTE" /
+  loading. Numbered L.divIcon pins (.smg-marker styles), HQ styled
+  .smg-marker-pin--hq; marker popups reverse-lookup destination names from
+  DESTINATIONS geo (no invented labels). fitBounds on mount, flyToBounds on
+  route change, env-configurable tile URL/attribution, attribution kept,
+  leaflet CSS imported only in the inner file. NEW lazy-route-map.tsx wraps it
+  via next/dynamic ssr:false (same pattern as lazy-map.tsx).
+- NEW src/components/routes/routes-explorer.tsx (client): sticky route selector
+  (desktop left list lg:sticky top-24 with radiogroup aria; mobile horizontal
+  scrollbar-brutal chip scroller), map h-[380px] lg:h-[480px], MapFootnote,
+  selected-route editorial detail (card-soft: tags, character, description,
+  distance + SOURCE micro-line, suggested start, highlights, RouteStops
+  mini-itinerary, BOOK THIS RIDE → /book?route=<id> + SEE DESTINATIONS), then
+  the full library of RouteCard entries wired with onSelect ("SHOW THIS ROUTE
+  ON THE MAP" → select + scrollIntoView, reduced-motion aware).
+- REBUILT route-card.tsx: premium editorial stacked card-soft entries,
+  alternating image side (mask reveal, hover zoom ≤1.03), tags as hairline
+  chips, duration chip, verified distanceLabel + tiny distanceSource text,
+  character, highlights, stops as vertical mini-itinerary with hairline
+  connectors (exported RouteStops, reused in the map detail), startTime,
+  related-destination chips → /explore, tracked booking CTA (click_booking).
+- REBUILT routes-own-band.tsx: band-ink end CTA (btn-red h-16) → /book +
+  ROUTE_METRICS_NOTE footnote above a cream/15 hairline.
+- REBUILT /routes page: async searchParams — honours ?route= (booking contract)
+  and ?dest= (map popups deep-link) to preselect the route; PageHeader meta
+  updated to 4 ROUTES / VERIFIED WAYPOINTS / APPROX. TIMING; metadata
+  description fixed to "Four".
+- REBUILT fleet-showcase.tsx (client): large portrait hero image per scooty
+  (Reveal variant="mask", img-frame, group-hover:scale-[1.03]), display type,
+  key characteristics as refined hairline spec rows (TRANSMISSION confirmed,
+  RIDES LIKE features, AVAILABILITY = "CONFIRM AVAILABILITY" only, DAY RATE =
+  priceLabel "৳ — / DAY" rendered exactly + "PRICING AVAILABLE ON REQUEST"),
+  btn-base btn-primary booking CTA → /book?vehicle=<id>, WhatsApp
+  "CONFIRM AVAILABILITY" secondary CTA, one sticker, historical promo note
+  "HISTORICAL PROMO (AUG 2025) WAS ৳2/MINUTE — CURRENT RATES ON REQUEST"
+  (clearly historical per Task 6-b finding), honest dashed "MORE MODELS ON
+  REQUEST" panel.
+- REBUILT specs-strip.tsx: hairline spec-sheet rows (not boxed grid) +
+  card-soft "WHY THE GAPS" explainer; text-outline used once per page.
+- REBUILT included-ask.tsx: card-soft INCLUDED column (leaf accents, hairline
+  items) + band-ink ASK column; DemoBadge "TO BE CONFIRMED" kept.
+- REBUILT scooties-cross-links.tsx: band-ink with three hairline tiles
+  (routes / rental-guide / tracked booking tile).
+- UPDATED /scooties page: section order + meta strip "CONFIRM AVAILABILITY",
+  FLEET_NOTE footnote kept on a rule-soft strip.
+- INTEGRATION FIX (cross-task, minimal): MapFootnote moved out of
+  sreemangal-map.tsx into NEW server-safe src/components/map/map-footnote.tsx.
+  Reason: sreemangal-map statically imports Leaflet, which throws
+  "window is not defined" when its module graph is evaluated during SSR — a
+  cold dev-server start 500'd every page importing it (/, /explore, /routes).
+  Updated importers: home/map-section.tsx, explore-map-section.tsx (import
+  line only — later superseded by the parallel agent's footnote-prop refactor),
+  app/explore/page.tsx (one import line, aligning with that refactor),
+  routes-explorer.tsx. sreemangal-map.tsx otherwise untouched. No npm packages
+  added; no data files touched.
+
+Verification:
+- bun run lint: 0 errors (only pre-existing react-hook-form warning in
+  booking-form.tsx). tsc --noEmit: no errors in Task 7-b files.
+- Live-tested with headless browser: /routes renders, Leaflet map shows real
+  OSRM geometry ("REAL ROAD GEOMETRY VIA OSRM · OSM DATA"), route switching
+  updates pins (3→4) via flyToBounds with cache hits, OSRM-blocked reload
+  falls back to dashed schematic + correct label, "SHOW THIS ROUTE ON THE MAP"
+  from a library card selects + scrolls, mobile 375px has zero horizontal
+  overflow with scrollable chips. All routes (/ /scooties /routes /explore
+  /book /journal) return 200 on a cold dev-server start.
+
+Stage Summary:
+- /scooties is now a premium catalog with honest pricing/availability language
+  (priceLabel placeholders intact, Aug-2025 ৳2/min promo framed as history).
+- /routes is now a route-map-first editorial library: verified waypoints drawn
+  with real OSRM road geometry or a clearly-labelled schematic fallback,
+  sourced distances, sticky selector + mobile chip scroller, cross-linked
+  destinations, band-ink booking CTA with ROUTE_METRICS_NOTE footnote.
+- MapFootnote extraction fixed a site-wide cold-start SSR crash (leaflet in
+  server graph); documented for future agents: NEVER statically import
+  sreemangal-map.tsx / route-map.tsx from SSR-rendered modules — import
+  footnotes from @/components/map/map-footnote and maps via the lazy wrappers.
+- Files: NEW src/components/map/route-map.tsx, src/components/map/lazy-route-map.tsx,
+  src/components/map/map-footnote.tsx, src/components/routes/routes-explorer.tsx;
+  REBUILT src/components/scooties/{fleet-showcase,specs-strip,included-ask,
+  scooties-cross-links}.tsx, src/components/routes/{route-card,routes-own-band}.tsx,
+  src/app/scooties/page.tsx, src/app/routes/page.tsx; one-line import fixes in
+  src/components/home/map-section.tsx, src/components/explore/explore-map-section.tsx,
+  src/app/explore/page.tsx; MapFootnote export removed from
+  src/components/map/sreemangal-map.tsx.
+
+---
+Task ID: 7-a
+Agent: Z.ai Code (explore experience cluster)
+Task: Build the /explore experience for the v2 design language — real map
+section, premium editorial destination rows, restyled Ride Passport, soft
+booking CTA band. Adapts to the changed data model (verified geo, geoSource,
+access, roadNote; old SVG coords gone).
+
+Work Log:
+- Read worklog (1–6), style-guide.md fully, exemplars (hero, home
+  map-section, build-your-ride, route-card, final-cta, globals.css) and the
+  updated data files (destinations.ts, site.ts, ride-routes.ts) before coding.
+- src/components/explore/explore-map-section.tsx (NEW, client): the defining
+  real-map section — LazySreemangalMap at h-[340px] sm:h-[420px]
+  lg:h-[560px] (min 340px mobile per overflow rule), overlay chip, ACCESS KEY
+  legend (SCOOTY-FRIENDLY / ROUGH LAST STRETCH / JEEP + TREK ONLY in
+  leaf/brand/ink chips), and a synced card-soft detail panel (tablist
+  quick-switch like home, aria-live, distance + ride time with DEMO badge,
+  geoSource micro-label with full source in title attr, roadNote, whyGo
+  pull-quote, GET DIRECTIONS TrackedLink + SEE ROUTES) with an empty state
+  (TAP A MARKER + verified HQ card + tracked OPEN IN GOOGLE MAPS).
+- src/components/explore/access-chip.tsx (NEW, server-safe): shared
+  AccessChip + geoSourceLabel helpers. Plain helpers cannot live in a "use
+  client" module — calling geoSourceLabel() from the server component threw
+  "Attempted to call ... from the server"; moved here and both the map
+  section (client) and destination rows (server) import it.
+- src/components/explore/destination-entry.tsx (REWRITE): premium editorial
+  rows — alternating lg:grid-cols-12 image/text, Reveal variant="mask"
+  imagery with img-frame and group-hover:scale-[1.04] zoom, quiet N°+access
+  chip meta row, type kicker, display-2 name, description, whyGo pull-quote
+  (muted for trek), distance + ride time with DemoBadge "DEMO", geoSource
+  authenticity micro-line, roadNote with access icon (bike/warn/footprints),
+  GOOD FOR refined chips, CTAs (GET DIRECTIONS TrackedLink external via
+  mapsQueryUrl; SEE ROUTES → /routes; BOOK A SCOOTY… link-underline →
+  /book), PAIRED ROUTES micro-links derived from RIDE_ROUTES
+  .relatedDestinations (→ /routes?dest=<slug>, same convention as the map
+  popup), PassportStampButton on passport destinations. Ham Ham: quieter
+  card (steel kicker/quote, portrait image, "NOT BY SCOOTY" instead of ride
+  time, no stamp button, "BOOK A SCOOTY FOR YOUR OTHER RIDES").
+- src/components/explore/ride-passport.tsx (RESTYLE): storage mechanic kept
+  byte-identical (rs-passport-v1 + change event + useSyncExternalStore +
+  snapshot cache; PassportStampButton/aria-pressed, aria-live progress
+  preserved). New presentation: full-width rule-soft bg-cream band — left
+  editorial copy (kicker, display-1, 3-step how-to, honesty micro-note),
+  right card-soft panel with ONE sticker ("STAMP GAME", leaf), leaf-green
+  stamp language (slots, segments, complete banner in ink with DEMO FUN
+  badge), refined chips (border + ink/15-25, no border-2, no hard shadows).
+  Collapsible fixed quick-bar kept below lg (same offsets/aria as before,
+  restyled to ink + shadow-lift; sheet = card-soft + scrollbar-brutal).
+- src/components/explore/explore-cta-band.tsx (NEW, client): soft band-ink
+  closing band — btn-red BOOK A SCOOTY (tracked click_booking) +
+  link-underline WhatsApp (tracked click_whatsapp) + honesty micro-line.
+- src/app/explore/page.tsx (REWRITE): PageHeader (kicker EXPLORE SREEMANGAL,
+  meta adds VERIFIED COORDINATES), ItemList JSON-LD upgraded to
+  TouristAttraction items with VERIFIED GeoCoordinates from d.geo, map
+  section, bg-paper destinations section with display-1 heading + honest
+  intro + RIDE_METRICS_NOTE role="note" footnote, RidePassport band,
+  ExploreCtaBand. All grids collapse to single column <lg; no negative
+  margins/rotations → no horizontal overflow.
+- MAP IMPORT CONSTRAINT (important for future tasks): MapFootnote from
+  "@/components/map/sreemangal-map" must NOT be imported by any second
+  route. Verified live: a static client import from /explore pulled Leaflet
+  into shared SSR chunks → "window is not defined" → 500 on ALL routes
+  (home/routes/explore); rendering it as a client-reference from the server
+  page → "Element type is invalid: got: undefined" (ssr:false stub).
+  Explore therefore ships a byte-identical local footnote (same
+  "REAL MAP DATA © OPENSTREETMAP CONTRIBUTORS · RIDE_METRICS_NOTE" text
+  sourced from the same constant). home/map-section keeps its original
+  single-importer pattern — untouched.
+- Verification: bun run lint → 0 errors (only the pre-existing benign
+  RHF watch warning). tsc --noEmit → no errors in explore files. Dev server
+  was down at session start, came back via system supervisor; HTTP-verified
+  /explore ×5 200-stable + / , /routes, /book all 200; SSR HTML spot-checked
+  (access chips, 7 entries, ham-ham honesty markers, 4 aria-pressed stamp
+  buttons, paired routes, passport band, CTA band, 7 GeoCoordinates in
+  JSON-LD, footnote text). No errors in dev.log tail.
+- Flag for data owner (NOT touched per rules): src/data/destinations.ts
+  entries carry `distanceSource` but the Destination type doesn't declare
+  it → 5 pre-existing TS2353 errors; add `distanceSource?: string;` next
+  to distanceLabel when data files are next edited.
+
+Stage Summary:
+- /explore now leads with the real verified map + synced panel, premium
+  alternating editorial rows with honest access language, the restyled Ride
+  Passport stamp game (mechanic unchanged), and a tracked booking handoff.
+- Style-guide compliant: card-soft/band-ink/img-frame/btn-* utilities only;
+  no border-2 cards, no shadow-hard on cards/buttons, 1 sticker, 0
+  text-outline, one display-1 per section, mask reveals + ≤1.04 zooms.
+- Honesty guards intact: DEMO tags on ride times, RIDE_METRICS_NOTE
+  footnote, Ham Ham explicitly not a scooty destination, geoSource
+  attribution surfaced, nothing invented.
+
+---
+Task ID: 6
+Agent: Z.ai Code (main agent)
+Task: MAJOR UX/UI + CONTENT + DATA revision per brief v2 — premium editorial
+direction, rail removal, real maps, motion system, research integration.
+
+Work Log (foundation + coordination by main agent):
+- Research (6-a/6-b subagents): verified coords for all destinations
+  (OSM/Wikipedia sources); Google listing has NO rating/hours (unclaimed —
+  do not fabricate); no third-party videos mention Red Scooty (no fake
+  endorsements); verified FB slogans; Madhabpur is Kamalganj/Moulvibazar
+  (not Habiganj); Ham Ham NOT scooty-accessible (jeep + trek).
+- CRITICAL LAYOUT: deleted scroll-rail.tsx ("01 / 05" rail + left vertical
+  label + reserved width). Fixed root-cause horizontal overflow: scooty
+  showcase used -mx-4/-mx-6 negative margins on a full-width parent
+  (24px overflow at 1280) — rebuilt scroller with plain padding.
+  Overflow sweep: 10 pages x 5 widths (1280/1440/1600/768/390) all OK.
+- DESIGN SYSTEM (globals.css rewritten): 70/20/10 language — new soft
+  elevation tokens (shadow-soft/lift/deep), card-soft/img-frame/rule-soft/
+  band-ink utilities, type scale (display-hero/1/2/3, copy-body), button
+  system (btn-base/primary/outline/red/cream with hover/press/focus/
+  disabled + animated arrows), link-underline animated underline, sticker
+  utility, ultra-subtle grain overlay, Leaflet brand styles. Reduced-motion
+  coverage extended.
+- MOTION: Reveal upgraded (up/mask/fade/scale variants + StaggerGroup/
+  StaggerItem), template.tsx page transition (fade+rise 0.45s), IntroReveal
+  branded first-visit wipe (~1.2s, sessionStorage-gated, rAF-deferred).
+  Fixed TS types (TargetAndTransition) and a REAL BUG: mask variant's
+  zero-area clip-path blocked IntersectionObserver -> whileInView never
+  fired (map invisible on mobile); fixed with 99.9% hairline clip.
+- REAL MAPS (Leaflet + react-leaflet + OSM): new components/map/ —
+  sreemangal-map (HQ + verified destination markers, brand popups w/
+  distance + DEMO ride time + Explore Route/Directions), lazy-map (ssr
+  false), route-map (per-route geometry via OSRM demo w/ 4s timeout +
+  module cache, honest dashed-waypoint fallback, numbered pins,
+  flyToBounds), map-footnote extracted server-safe (SSR crash fix).
+  Tile URL configurable via NEXT_PUBLIC_MAP_TILE_URL; OSM attribution kept.
+- DATA: destinations.ts rebuilt with verified geo/geoSource/access/roadNote
+  (Ham Ham reclassified as trek-only; distanceSource fields); ride-routes.ts
+  enriched with verified waypoints + sourced distances + new LAKE RUN route
+  (Madhabpur); site.ts: removed unverified Instagram, added verified FB
+  slogans, marquee now uses them.
+- REAL BUG: /api/bookings rejected routeRef:null (schema .optional() vs
+  .nullish()) — every booking WITHOUT a route prefill failed 400.
+  Fixed; end-to-end booking verified + DB row checked + test row cleaned.
+- Delegated page clusters: 7-a (explore + passport + access chips),
+  7-b (scooties catalog + routes explorer + route-map), 7-c (how-it-works,
+  rental-guide, about, contact, book, journal, video-band, mobile bar).
+  Style guide at agent-ctx/style-guide.md; all agents verified + worklogged.
+- Images: all 18 PNGs -> WebP (q82 + gentle unsharp), unused journal PNGs
+  removed, all references migrated.
+- Fixes post-merge: map labels moved bottom-left (zoom-control overlap),
+  hero stickers tucked inside image frame, "RIDES LIKE" spec repetition
+  collapsed to single row, route-map Polyline remount keys (Leaflet
+  setStyle keeps stale dashArray across state swaps).
+
+Stage Summary:
+- Site-wide: no rail, no reserved dead space, no horizontal overflow at
+  any tested width; premium editorial surface system with restrained
+  brutalist accents; coherent motion (page transitions, scroll reveals,
+  masks, stagger, tactile buttons, marquee, branded intro).
+- Real geographic integrity everywhere: Leaflet/OSM maps on Home + Explore
+  + Routes with verified coords only, sourced distances, DEMO-tagged ride
+  times, real OSRM road geometry with honest fallback labeling.
+- Booking pipeline bug fixed (routeRef) — verified end-to-end with DB.
+- Lint 0 errors (1 benign pre-existing warning); tsc clean for src/.

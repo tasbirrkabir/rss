@@ -84,7 +84,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     readTime: "6 MIN READ",
     excerpt:
       "The garden roads are the signature ride of this region. Here is how to string them together - short loop, long loop and the photo strategy.",
-    image: "/images/dest-tea-gardens.png",
+    image: "/images/dest-tea-gardens.webp",
     imageAlt: "Rolling green tea garden rows near Sreemangal",
     relatedDestinations: ["tea-gardens", "hidden-roads", "sreemangal-town"],
     relatedRoute: "tea-garden-loop",
@@ -129,7 +129,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     readTime: "4 MIN READ",
     excerpt:
       "Licenses, deposits, helmets and return times - the honest checklist before your first ride in Sreemangal.",
-    image: "/images/scooter-standard.png",
+    image: "/images/scooter-standard.webp",
     imageAlt: "Red automatic scooty photographed from the front three-quarter angle",
     relatedDestinations: ["sreemangal-town"],
     content: [
@@ -213,7 +213,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     readTime: "5 MIN READ",
     excerpt:
       "Lawachara, Madhabpur, Baikka Beel, Ham Ham and the gardens themselves - what each one is actually like, and which ones pair well.",
-    image: "/images/dest-baikka.png",
+    image: "/images/dest-baikka.webp",
     imageAlt: "Baikka Beel wetland at sunrise with water lilies",
     relatedDestinations: ["lawachara", "madhabpur-lake", "baikka-beel", "ham-ham"],
     relatedRoute: "forest-escape",
@@ -258,7 +258,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     readTime: "4 MIN READ",
     excerpt:
       "Two ways to move around Sreemangal - the hired three-wheeler and the rented scooty. An honest comparison from the scooty side of the fence.",
-    image: "/images/journal-cng.png",
+    image: "/images/journal-cng.webp",
     imageAlt: "Red scooter parked beside a green CNG auto rickshaw on a town street",
     relatedDestinations: ["sreemangal-town"],
     content: [

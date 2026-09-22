@@ -85,7 +85,7 @@ export default function BookPage() {
 
         <section
           aria-labelledby="booking-heading"
-          className="py-14 md:py-20"
+          className="py-20 md:py-28"
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <div className="grid gap-10 lg:grid-cols-12">
@@ -94,27 +94,29 @@ export default function BookPage() {
                 <Reveal>
                   <h2
                     id="booking-heading"
-                    className="font-display text-[clamp(40px,5vw,64px)] leading-none text-ink"
+                    className="display-1 text-ink"
                   >
                     SEND A REQUEST.
                   </h2>
-                  <p className="mt-3 max-w-xl text-base text-ink-soft">
+                  <p className="mt-3 max-w-xl text-base leading-relaxed text-ink-soft">
                     Two minutes now saves a day of guessing. We reply with
                     availability, the rate and pickup details - usually fastest
                     on WhatsApp.
                   </p>
                 </Reveal>
 
-                <div className="mt-8 border-2 border-ink bg-paper shadow-hard">
-                  <div className="border-b-2 border-ink bg-ink px-6 py-3">
-                    <p className="label-micro text-cream">
-                      BOOKING REQUEST · NO PAYMENT ONLINE
-                    </p>
+                <Reveal delay={0.08}>
+                  <div className="card-soft mt-8 overflow-hidden">
+                    <div className="bg-ink px-6 py-3">
+                      <p className="label-micro text-cream">
+                        BOOKING REQUEST · NO PAYMENT ONLINE
+                      </p>
+                    </div>
+                    <Suspense fallback={null}>
+                      <BookingForm />
+                    </Suspense>
                   </div>
-                  <Suspense fallback={null}>
-                    <BookingForm />
-                  </Suspense>
-                </div>
+                </Reveal>
 
                 <p className="label-micro mt-4 text-center text-steel">
                   BOOKING BY REQUEST · CONFIRMED PERSONALLY · NO ONLINE PAYMENT
@@ -128,9 +130,9 @@ export default function BookPage() {
                 className="space-y-8 lg:col-span-4"
               >
                 <Reveal>
-                  <div className="border-2 border-ink bg-cream p-6 shadow-hard">
+                  <div className="card-soft p-6 sm:p-8">
                     <p className="label-micro text-brand">GOOD TO KNOW</p>
-                    <h3 className="mt-2 font-display text-3xl leading-tight tracking-wide text-ink">
+                    <h3 className="display-3 mt-2 text-ink">
                       HOW BOOKING WORKS.
                     </h3>
                     <ul className="mt-6 space-y-5">
@@ -155,7 +157,7 @@ export default function BookPage() {
                       })}
                     </ul>
 
-                    <div className="mt-7 border-t-2 border-ink pt-5">
+                    <div className="mt-7 border-t border-ink/10 pt-5">
                       <p className="label-micro text-steel">KEEP READING</p>
                       <nav
                         aria-label="Helpful pages"
@@ -165,11 +167,11 @@ export default function BookPage() {
                           <Link
                             key={link.href}
                             href={link.href}
-                            className="group flex min-h-11 items-center justify-between border-2 border-ink bg-paper px-4 py-2.5 font-display text-xl tracking-wide text-ink transition-all hover:-translate-y-0.5 hover:bg-ink hover:text-cream"
+                            className="group flex min-h-11 items-center justify-between border border-ink/15 bg-paper px-4 py-2.5 font-display text-lg tracking-wide text-ink transition-all hover:border-ink/40 hover:bg-cream"
                           >
                             {link.label}
                             <ArrowRight
-                              className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                              className="h-5 w-5 text-brand transition-transform group-hover:translate-x-1"
                               aria-hidden="true"
                             />
                           </Link>
@@ -180,9 +182,9 @@ export default function BookPage() {
                 </Reveal>
 
                 <Reveal delay={0.1}>
-                  <div className="border-2 border-ink bg-ink p-6 text-cream shadow-hard-red">
+                  <div className="band-ink p-6 sm:p-8">
                     <p className="label-micro text-cream/60">PREFER TO TALK?</p>
-                    <h3 className="mt-2 font-display text-3xl leading-tight tracking-wide text-cream">
+                    <h3 className="display-3 mt-2 text-cream">
                       CALL OR MESSAGE US DIRECTLY.
                     </h3>
                     <p className="mt-2 text-sm text-cream/80">
@@ -193,7 +195,7 @@ export default function BookPage() {
                         event="click_call"
                         source="book_rail"
                         href={SITE.telUrl}
-                        className="flex h-14 items-center justify-center gap-2 border-2 border-cream bg-cream font-display text-xl tracking-wider text-ink transition-all hover:-translate-y-0.5 hover:bg-brand hover:text-white"
+                        className="btn-base btn-cream w-full"
                       >
                         <Phone className="h-5 w-5" aria-hidden="true" />
                         CALL {SITE.phoneDisplay}
@@ -205,7 +207,7 @@ export default function BookPage() {
                           "Hi Red Scooty! I have a question about renting a scooty in Sreemangal.",
                         )}
                         external
-                        className="flex h-14 items-center justify-center gap-2 border-2 border-cream bg-brand font-display text-xl tracking-wider text-white transition-all hover:-translate-y-0.5 hover:bg-cream hover:text-ink"
+                        className="btn-base btn-red w-full"
                       >
                         <MessageCircle className="h-5 w-5" aria-hidden="true" />
                         WHATSAPP US

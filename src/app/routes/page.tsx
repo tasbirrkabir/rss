@@ -4,22 +4,53 @@ import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { MobileCtaBar } from "@/components/site/mobile-cta-bar";
 import { PageHeader } from "@/components/site/page-header";
-import { RouteCard } from "@/components/routes/route-card";
+import { RoutesExplorer } from "@/components/routes/routes-explorer";
 import { RoutesOwnBand } from "@/components/routes/routes-own-band";
-import { RIDE_ROUTES, ROUTE_METRICS_NOTE } from "@/data/ride-routes";
+import { RIDE_ROUTES, findRoute } from "@/data/ride-routes";
 
 export const metadata: Metadata = {
   title: "Ride Routes — Rides Worth Taking | Red Scooty Sreemangal",
   description:
-    "Three suggested scooty routes through Sreemangal — tea garden loops, Lawachara forest roads and wetland sunsets. Approximate demo timing; the real plan is confirmed personally when you book.",
+    "Four suggested scooty routes through Sreemangal — tea garden loops, Lawachara forest roads, the Madhabpur lake run and wetland sunsets. Sourced distances, honest timings; the real plan is confirmed personally when you book.",
 };
 
+type RoutesPageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
+function firstParam(
+  value: string | string[] | undefined,
+): string | undefined {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+/** Resolve the preselected route: /book contract (?route=) or ?dest= links. */
+function resolveInitialRouteId(
+  searchParams: Record<string, string | string[] | undefined>,
+): string | undefined {
+  const routeParam = findRoute(firstParam(searchParams.route));
+  if (routeParam) return routeParam.id;
+
+  const destParam = firstParam(searchParams.dest);
+  if (destParam) {
+    const match = RIDE_ROUTES.find((r) =>
+      r.relatedDestinations.includes(destParam),
+    );
+    if (match) return match.id;
+  }
+  return undefined;
+}
+
 /**
- * /routes — the route library. Three editorial route cards from RIDE_ROUTES,
- * alternating image/text on desktop, honest metrics footnotes, custom-route
- * band at the bottom.
+ * /routes — the route library. Sticky selector + one real Leaflet map bound
+ * to the active route (real OSRM road geometry with an honest schematic
+ * fallback), then the full library as premium editorial entries, closed by
+ * the band-ink booking CTA and the ROUTE_METRICS_NOTE footnote.
  */
-export default function RoutesPage() {
+export default async function RoutesPage({ searchParams }: RoutesPageProps) {
+  const params = await searchParams;
+  const initialRouteId = resolveInitialRouteId(params);
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -33,24 +64,11 @@ export default function RoutesPage() {
               TAKING.
             </>
           }
-          intro="Three rides built for a scooty and Sreemangal's back roads — short, scenic and easy to adapt. Timings are approximate demo estimates; the real plan is confirmed when you book."
-          meta={["DEMO ROUTES", "APPROX. TIMING", "CONFIRMED ON REQUEST"]}
+          intro="Four rides built for a scooty and Sreemangal's back roads — short, scenic and easy to adapt. Distances quote published sources; timings are estimates confirmed when you book."
+          meta={["4 ROUTES", "VERIFIED WAYPOINTS", "APPROX. TIMING"]}
         />
 
-        <section
-          aria-label="Route library"
-          className="bg-paper py-20 md:py-24"
-        >
-          <div className="mx-auto max-w-7xl space-y-10 px-4 sm:px-6">
-            {RIDE_ROUTES.map((route, i) => (
-              <RouteCard key={route.slug} route={route} index={i} />
-            ))}
-
-            <p className="label-micro max-w-3xl text-steel">
-              {ROUTE_METRICS_NOTE}
-            </p>
-          </div>
-        </section>
+        <RoutesExplorer initialRouteId={initialRouteId} />
 
         <RoutesOwnBand />
       </main>

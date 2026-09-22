@@ -11,6 +11,7 @@ import {
 
 import { DESTINATIONS } from "@/data/destinations";
 import { DemoBadge } from "@/components/site/demo-badge";
+import { Reveal } from "@/components/site/reveal";
 import { cn } from "@/lib/utils";
 
 const STORAGE_KEY = "rs-passport-v1";
@@ -134,10 +135,10 @@ export function PassportStampButton({
       }
       onClick={() => toggle(slug)}
       className={cn(
-        "label-micro inline-flex min-h-11 items-center gap-2 border-2 px-4 py-2.5 transition-all duration-200 active:translate-y-0",
+        "label-micro inline-flex min-h-11 items-center gap-2 border px-4 py-2.5 transition-all duration-200 active:translate-y-px",
         stamped
-          ? "-rotate-2 border-brand bg-brand text-white shadow-hard-red-sm"
-          : "border-dashed border-ink bg-paper text-ink hover:-translate-y-0.5 hover:shadow-hard-sm",
+          ? "-rotate-1 border-leaf bg-leaf text-cream"
+          : "border-dashed border-ink/40 bg-paper text-ink hover:border-ink hover:bg-cream",
       )}
     >
       {stamped ? (
@@ -160,7 +161,7 @@ function PassportProgress({ stamps }: { stamps: string[] }) {
 }
 
 function PassportSlots({ stamps }: { stamps: string[] }) {
-  const rotations = ["-rotate-2", "rotate-1", "-rotate-1", "rotate-2"];
+  const rotations = ["-rotate-1", "rotate-1", "-rotate-[0.5deg]", "rotate-[0.75deg]"];
 
   return (
     <ul className="grid grid-cols-2 gap-3">
@@ -170,13 +171,13 @@ function PassportSlots({ stamps }: { stamps: string[] }) {
           <li
             key={item.slug}
             className={cn(
-              "flex min-h-20 flex-col items-center justify-center gap-1.5 border-2 px-2 py-3 text-center transition-transform duration-200",
+              "flex min-h-20 flex-col items-center justify-center gap-1.5 border px-2 py-3 text-center transition-all duration-200",
               filled
                 ? cn(
-                    "border-brand bg-cream text-brand shadow-hard-red-sm",
+                    "border-leaf/40 bg-leaf/10 text-leaf",
                     rotations[i % rotations.length],
                   )
-                : "border-dashed border-steel text-steel",
+                : "border-dashed border-ink/25 text-steel",
             )}
           >
             <span className="font-display text-xl leading-tight tracking-wide">
@@ -205,7 +206,7 @@ function PassportBody({
 
   return (
     <div>
-      <div className="flex items-center justify-between gap-3 border-b-2 border-ink pb-3">
+      <div className="flex items-center justify-between gap-3 border-b border-ink/10 pb-3">
         <p className="label-micro text-brand">PROGRESS</p>
         <PassportProgress stamps={stamps} />
       </div>
@@ -215,31 +216,29 @@ function PassportBody({
           <span
             key={item.slug}
             className={cn(
-              "h-1.5",
-              stamps.includes(item.slug) ? "bg-brand" : "bg-ink/15",
+              "h-1",
+              stamps.includes(item.slug) ? "bg-leaf" : "bg-ink/10",
             )}
           />
         ))}
       </div>
 
-      <div className="mt-4">
+      <div className="mt-5">
         <PassportSlots stamps={stamps} />
       </div>
 
       {complete ? (
-        <div className="mt-4 border-2 border-brand bg-brand p-4 text-white shadow-hard">
-          <p className="font-display text-3xl leading-none tracking-wide">
-            PASSPORT COMPLETE.
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-white/90">
+        <div className="mt-5 bg-ink p-5 text-cream">
+          <p className="display-3 text-cream">PASSPORT COMPLETE.</p>
+          <p className="mt-2 text-sm leading-relaxed text-cream/80">
             Show this screen at pickup — demo fun, real perks to be confirmed.
           </p>
-          <DemoBadge className="mt-3 border-white/70 text-white">
+          <DemoBadge className="mt-3 border-cream/50 text-cream/80">
             DEMO FUN
           </DemoBadge>
         </div>
       ) : (
-        <p className="label-micro mt-4 leading-relaxed text-steel">
+        <p className="label-micro mt-5 leading-relaxed text-steel">
           TAP &ldquo;COLLECT STAMP&rdquo; ON THE FOUR ICON DESTINATIONS AS YOU
           RIDE.
         </p>
@@ -249,13 +248,13 @@ function PassportBody({
         type="button"
         onClick={onReset}
         aria-label="Reset ride passport stamps"
-        className="label-micro mt-4 inline-flex items-center gap-1.5 border-2 border-ink bg-paper px-3 py-2 text-ink transition-all hover:-translate-y-0.5 hover:shadow-hard-sm active:translate-y-0"
+        className="label-micro mt-5 inline-flex min-h-11 items-center gap-1.5 border border-ink/20 bg-paper px-4 py-2.5 text-ink transition-colors hover:border-ink hover:bg-cream active:translate-y-px"
       >
         <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
         RESET
       </button>
 
-      <p className="label-micro mt-3 leading-relaxed text-steel">
+      <p className="label-micro mt-4 leading-relaxed text-steel">
         PROGRESS IS SAVED ON THIS DEVICE ONLY.
       </p>
     </div>
@@ -266,7 +265,7 @@ function PassportHeading() {
   return (
     <div>
       <p className="label-micro text-brand">RIDE PASSPORT</p>
-      <h2 className="mt-1 font-display text-3xl leading-[0.95] tracking-wide text-ink xl:text-4xl">
+      <h2 className="display-3 mt-1.5 text-ink">
         YOUR SREEMANGAL RIDE PASSPORT
       </h2>
     </div>
@@ -274,10 +273,10 @@ function PassportHeading() {
 }
 
 /**
- * The Ride Passport panel.
- * - xl and up: sticky sidebar (place inside the passport grid column).
- * - below xl: fixed, collapsible bottom bar that expands into a sheet,
- *   offset to clear the fixed mobile CTA bar.
+ * The Ride Passport — a full-width editorial band on /explore.
+ * Left: how the stamp game works. Right: the card-soft passport panel.
+ * Below lg a collapsible fixed quick-bar keeps the passport reachable
+ * while scrolling the destination rows (offset to clear the mobile CTA bar).
  */
 export function RidePassport() {
   const { stamps, reset } = usePassportStamps();
@@ -285,23 +284,74 @@ export function RidePassport() {
 
   return (
     <>
-      {/* Desktop: sticky sidebar panel */}
-      <aside
-        aria-label="Your Sreemangal ride passport"
-        className="hidden xl:sticky xl:top-24 xl:block"
+      <section
+        id="passport"
+        aria-labelledby="passport-heading"
+        className="rule-soft bg-cream py-20 md:py-28"
       >
-        <div className="border-2 border-ink bg-paper p-6 shadow-hard-lg">
-          <PassportHeading />
-          <div className="mt-5">
-            <PassportBody stamps={stamps} onReset={reset} />
-          </div>
-        </div>
-      </aside>
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:gap-14">
+          {/* Copy column */}
+          <Reveal className="lg:col-span-5">
+            <p className="label-micro text-brand">THE STAMP GAME</p>
+            <h2
+              id="passport-heading"
+              className="display-1 mt-2 text-ink"
+            >
+              COLLECT
+              <br />
+              EVERY <span className="text-brand">STAMP.</span>
+            </h2>
+            <p className="mt-4 max-w-md text-base leading-relaxed text-ink-soft">
+              Four icon destinations, one scooty. Collect a stamp at each stop,
+              fill the passport, show us at pickup — real perks are still being
+              dreamed up, the fun is already real.
+            </p>
 
-      {/* Mobile / tablet: collapsible fixed bottom bar */}
-      <div className="fixed inset-x-3 bottom-[calc(3.5rem+env(safe-area-inset-bottom,0px))] z-40 md:bottom-4 xl:hidden">
+            <ol className="mt-8 max-w-md">
+              <li className="flex items-baseline gap-4 border-t border-ink/10 py-3.5">
+                <span className="label-micro text-leaf">01</span>
+                <span className="text-sm leading-relaxed text-ink-soft">
+                  Ride there — the map up top shows every verified stop.
+                </span>
+              </li>
+              <li className="flex items-baseline gap-4 border-t border-ink/10 py-3.5">
+                <span className="label-micro text-leaf">02</span>
+                <span className="text-sm leading-relaxed text-ink-soft">
+                  Tap &ldquo;COLLECT STAMP&rdquo; on the destination card.
+                </span>
+              </li>
+              <li className="flex items-baseline gap-4 border-y border-ink/10 py-3.5">
+                <span className="label-micro text-leaf">03</span>
+                <span className="text-sm leading-relaxed text-ink-soft">
+                  Show the passport at pickup and collect a knowing nod.
+                </span>
+              </li>
+            </ol>
+
+            <p className="label-micro mt-6 max-w-md leading-relaxed text-steel">
+              NO ACCOUNT · NO TRACKING · PROGRESS STAYS ON THIS DEVICE.
+            </p>
+          </Reveal>
+
+          {/* Passport panel */}
+          <Reveal delay={0.1} className="lg:col-span-6 lg:col-start-7">
+            <div className="card-soft relative h-full p-6 sm:p-8">
+              <p className="sticker absolute -top-3.5 right-6 bg-leaf px-3 py-1.5">
+                <span className="label-micro text-cream">STAMP GAME</span>
+              </p>
+              <p className="label-micro text-brand">YOUR RIDE PASSPORT</p>
+              <div className="mt-4">
+                <PassportBody stamps={stamps} onReset={reset} />
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Mobile / tablet: collapsible fixed quick-bar */}
+      <div className="fixed inset-x-3 bottom-[calc(3.5rem+env(safe-area-inset-bottom,0px))] z-40 md:bottom-4 lg:hidden">
         {open ? (
-          <div className="scrollbar-brutal mb-2 max-h-[62vh] overflow-y-auto border-2 border-ink bg-paper p-5 shadow-hard-lg">
+          <div className="card-soft scrollbar-brutal mb-2 max-h-[62vh] overflow-y-auto p-5">
             <PassportHeading />
             <div className="mt-4">
               <PassportBody stamps={stamps} onReset={reset} />
@@ -313,7 +363,7 @@ export function RidePassport() {
           aria-expanded={open}
           aria-label={open ? "Close ride passport" : "Open ride passport"}
           onClick={() => setOpen((v) => !v)}
-          className="flex min-h-12 w-full items-center justify-between gap-3 border-2 border-ink bg-ink px-4 py-3 text-cream shadow-hard transition-colors hover:bg-ink-soft"
+          className="flex min-h-12 w-full items-center justify-between gap-3 border border-ink bg-ink px-4 py-3 text-cream shadow-lift transition-colors hover:bg-ink-soft"
         >
           <span className="flex items-center gap-2">
             <Stamp className="h-4 w-4 text-brand" aria-hidden="true" />

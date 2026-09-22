@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 import { DemoBadge } from "@/components/site/demo-badge";
-import { Reveal } from "@/components/site/reveal";
+import { StaggerGroup, StaggerItem } from "@/components/site/reveal";
 
 type GuideSection = {
   n: string;
@@ -94,79 +94,82 @@ const SECTIONS: GuideSection[] = [
 ];
 
 /**
- * /rental-guide — six numbered bordered cards (sm:grid-cols-2), each with a
- * lucide icon, "what to expect" bullets and a DEMO badge. No invented policy.
+ * /rental-guide — six card-soft guide cards (sm:grid-cols-2), each with a
+ * quiet ink icon chip, "what to expect" bullets and a DEMO badge.
+ * No invented policy. One text-outline accent in the section heading.
  */
 export function GuideSections() {
   return (
     <section
       aria-labelledby="guide-sections-heading"
-      className="bg-cream py-20 md:py-24"
+      className="bg-cream py-20 md:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <Reveal>
-          <p className="label-micro text-brand">THE GUIDE</p>
-          <h2
-            id="guide-sections-heading"
-            className="mt-2 font-display text-[clamp(48px,7vw,96px)] leading-[0.9] text-ink"
-          >
-            SIX THINGS. <span className="text-outline">NO FINE PRINT.</span>
-          </h2>
-          <p className="mt-4 max-w-2xl text-base text-ink-soft sm:text-lg">
-            Everything below is what to expect — the exact details are
-            confirmed personally when your booking is confirmed.
-          </p>
-        </Reveal>
+        <StaggerGroup>
+          <StaggerItem>
+            <p className="label-micro text-brand">THE GUIDE</p>
+            <h2
+              id="guide-sections-heading"
+              className="display-1 mt-2 text-ink"
+            >
+              SIX THINGS. <span className="text-outline">NO FINE PRINT.</span>
+            </h2>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
+              Everything below is what to expect — the exact details are
+              confirmed personally when your booking is confirmed.
+            </p>
+          </StaggerItem>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2">
-          {SECTIONS.map((s, i) => {
-            const Icon = s.icon;
-            return (
-              <Reveal key={s.n} delay={(i % 2) * 0.08} className="h-full">
-                <article
-                  aria-labelledby={`guide-${s.n}-title`}
-                  className="flex h-full flex-col border-2 border-ink bg-paper p-6 shadow-hard sm:p-8"
-                >
-                  <div className="flex items-start justify-between">
-                    <span className="flex h-12 w-12 items-center justify-center border-2 border-ink bg-brand text-white">
-                      <Icon className="h-6 w-6" aria-hidden="true" />
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className="font-display text-5xl leading-none text-outline"
-                    >
-                      {s.n}
-                    </span>
-                  </div>
-                  <h3
-                    id={`guide-${s.n}-title`}
-                    className="mt-5 font-display text-3xl tracking-wide text-ink sm:text-4xl"
+          <div className="mt-12 grid gap-6 sm:grid-cols-2">
+            {SECTIONS.map((s) => {
+              const Icon = s.icon;
+              return (
+                <StaggerItem key={s.n} className="h-full">
+                  <article
+                    aria-labelledby={`guide-${s.n}-title`}
+                    className="card-soft flex h-full flex-col p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lift sm:p-8"
                   >
-                    {s.title}
-                  </h3>
-                  <p className="mt-1 text-sm text-steel">{s.intro}</p>
-                  <ul className="mt-4 flex-1 space-y-2.5">
-                    {s.points.map((p) => (
-                      <li
-                        key={p}
-                        className="flex items-start gap-2.5 text-sm leading-relaxed text-ink-soft"
+                    <div className="flex items-start justify-between">
+                      <span className="flex h-11 w-11 items-center justify-center bg-ink text-cream">
+                        <Icon className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="font-display text-4xl leading-none text-ink/10"
                       >
-                        <span
-                          className="mt-1.5 h-2 w-2 shrink-0 bg-brand"
-                          aria-hidden="true"
-                        />
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-6 border-t-2 border-dashed border-steel/40 pt-4">
-                    <DemoBadge>DETAILS TO BE CONFIRMED</DemoBadge>
-                  </div>
-                </article>
-              </Reveal>
-            );
-          })}
-        </div>
+                        {s.n}
+                      </span>
+                    </div>
+                    <h3
+                      id={`guide-${s.n}-title`}
+                      className="display-3 mt-5 text-ink"
+                    >
+                      {s.title}
+                    </h3>
+                    <p className="mt-1 text-sm text-steel">{s.intro}</p>
+                    <ul className="mt-4 flex-1 space-y-2.5">
+                      {s.points.map((p) => (
+                        <li
+                          key={p}
+                          className="flex items-start gap-2.5 text-sm leading-relaxed text-ink-soft"
+                        >
+                          <span
+                            className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-brand"
+                            aria-hidden="true"
+                          />
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-6 border-t border-ink/10 pt-4">
+                      <DemoBadge>DETAILS TO BE CONFIRMED</DemoBadge>
+                    </div>
+                  </article>
+                </StaggerItem>
+              );
+            })}
+          </div>
+        </StaggerGroup>
       </div>
     </section>
   );

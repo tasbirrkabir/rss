@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { AlertCircle, ArrowRight, CheckCircle2 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -36,6 +35,9 @@ const messageSchema = z.object({
 });
 
 type MessageValues = z.infer<typeof messageSchema>;
+
+const inputClass =
+  "h-12 rounded-none border border-ink/15 bg-paper text-base text-ink shadow-none transition-colors placeholder:text-steel/60 focus-visible:border-brand focus-visible:ring-0 md:text-base";
 
 function FieldErrorLine({ message }: { message?: string }) {
   if (!message) return null;
@@ -120,13 +122,11 @@ export function QuickMessageForm() {
     return (
       <div
         aria-live="polite"
-        className="border-2 border-ink bg-cream p-6 shadow-hard sm:p-8"
+        className="border border-ink/10 bg-cream p-6 shadow-soft sm:p-8"
       >
         <CheckCircle2 className="h-10 w-10 text-brand" aria-hidden="true" />
-        <h3 className="mt-3 font-display text-4xl leading-none tracking-wide text-ink sm:text-5xl">
-          MESSAGE RECEIVED.
-        </h3>
-        <p className="mt-3 max-w-md text-base text-ink-soft">
+        <h3 className="display-2 mt-4 text-ink">MESSAGE RECEIVED.</h3>
+        <p className="mt-3 max-w-md text-base leading-relaxed text-ink-soft">
           We will get back to you — usually fastest on WhatsApp.
         </p>
         <button
@@ -137,7 +137,7 @@ export function QuickMessageForm() {
             setServerIssues(null);
             reset();
           }}
-          className="label-micro mt-6 text-steel underline-offset-4 hover:text-brand hover:underline"
+          className="label-micro link-underline mt-6 w-fit text-steel transition-colors hover:text-brand"
         >
           SEND ANOTHER MESSAGE
         </button>
@@ -149,7 +149,7 @@ export function QuickMessageForm() {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="border-2 border-ink bg-paper p-6 shadow-hard sm:p-8"
+      className="card-soft p-6 sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
@@ -162,7 +162,7 @@ export function QuickMessageForm() {
             autoComplete="name"
             placeholder="e.g. Rakib Hasan"
             aria-invalid={!!errorFor("name")}
-            className="mt-2 h-12 rounded-none border-2 border-ink bg-paper text-base text-ink placeholder:text-steel/60 shadow-hard-sm focus-visible:ring-brand"
+            className={`mt-2 ${inputClass}`}
             {...register("name")}
           />
           <FieldErrorLine message={errorFor("name")} />
@@ -179,7 +179,7 @@ export function QuickMessageForm() {
             autoComplete="tel"
             placeholder="01XXXXXXXXX"
             aria-invalid={!!errorFor("phone")}
-            className="mt-2 h-12 rounded-none border-2 border-ink bg-paper text-base text-ink placeholder:text-steel/60 shadow-hard-sm focus-visible:ring-brand"
+            className={`mt-2 ${inputClass}`}
             {...register("phone")}
           />
           <FieldErrorLine message={errorFor("phone")} />
@@ -195,7 +195,7 @@ export function QuickMessageForm() {
             maxLength={500}
             placeholder="What do you want to ask or arrange?"
             aria-invalid={!!errorFor("message")}
-            className="mt-2 resize-none rounded-none border-2 border-ink bg-paper text-base text-ink placeholder:text-steel/60 shadow-hard-sm focus-visible:ring-brand"
+            className={`mt-2 ${inputClass} min-h-12 resize-none py-2.5`}
             {...register("message")}
           />
           <FieldErrorLine message={errorFor("message")} />
@@ -205,7 +205,7 @@ export function QuickMessageForm() {
       {serverError ? (
         <div
           role="alert"
-          className="mt-5 flex items-start gap-2 border-2 border-brand bg-brand/10 px-4 py-3"
+          className="mt-5 flex items-start gap-2 border border-brand/30 bg-brand/10 px-4 py-3"
         >
           <AlertCircle
             className="mt-0.5 h-4 w-4 shrink-0 text-brand"
@@ -215,14 +215,17 @@ export function QuickMessageForm() {
         </div>
       ) : null}
 
-      <Button
+      <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-6 h-14 w-full rounded-none border-2 border-ink bg-brand font-display text-2xl tracking-wider text-white shadow-hard transition-all hover:-translate-y-0.5 hover:bg-ink hover:shadow-hard-red disabled:translate-y-0 disabled:opacity-70"
+        className="btn-base btn-red group mt-6 w-full"
       >
         {isSubmitting ? "SENDING..." : "SEND MESSAGE"}
-        <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
-      </Button>
+        <ArrowRight
+          className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1"
+          aria-hidden="true"
+        />
+      </button>
 
       <p className="label-micro mt-4 text-center text-steel">
         READ BY A PERSON · REPLIED BY A PERSON

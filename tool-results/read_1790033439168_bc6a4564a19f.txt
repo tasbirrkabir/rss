@@ -1,0 +1,542 @@
+     1→     1→# Worklog
+     2→     2→
+     3→     3→---
+     4→     4→Task ID: 1
+     5→     5→Agent: Z.ai Code (main agent)
+     6→     6→Task: Build the Red Scooty Sreemangal demo website (demo v1) from the uploaded PRD
+     7→     7→(upload/Red-Scooty-Sreemangal-Website-Research-PRD.md), per PRD section 36
+     8→     8→"Demo Scope". Single-page, mobile-first, Tourism Editorial x Mid Brutalism.
+     9→     9→
+    10→    10→Work Log:
+    11→    11→- Read the full 1,765-line PRD; extracted design tokens (red #F5222D, ink #111111,
+    12→    12→  cream #F4F1EA), typography (Bebas Neue + DM Sans), section flow, booking spec,
+    13→    13→  data model, and honesty rules (no invented prices/reviews/scarcity).
+    14→    14→- Generated 9 brand images via z-ai CLI into public/images/ (hero scooty in tea
+    15→    15→  garden, 2 fleet shots, rider shot, 5 destination shots).
+    16→    16→- src/app/globals.css: rebuilt Tailwind 4 theme — brand tokens (brand/ink/cream/
+    17→    17→  paper/steel/leaf), shadcn var remap, brutalist utilities (shadow-hard[-red],
+    18→    18→  text-outline, label-micro), marquee keyframes, reduced-motion support, custom
+    19→    19→  scrollbar, safe-area helper.
+    20→    20→- src/app/layout.tsx: Bebas Neue + DM Sans via next/font, full SEO metadata
+    21→    21→  (PRD section 30 titles/description/OG/Twitter), AutoRental JSON-LD, viewport.
+    22→    22→- src/data/: site.ts (verified contact facts; WhatsApp derived as flagged demo
+    23→    23→  placeholder), vehicles.ts (Mini Scooty verified; Standard Scooty generic;
+    24→    24→  priceLabel "CONTACT FOR CURRENT RATE"), destinations.ts (5 destinations, approx
+    25→    25→  distances per PRD sources), route-planner.ts (deterministic HALF/FULL DAY +
+    26→    26→  TEA/FOREST/LAKE/PHOTOS generator).
+    27→    27→- Components (src/components/site/): Header (sticky, mobile Sheet), Hero, Marquee,
+    28→    28→  BrandValue, Fleet (black section, red price blocks, honest "MORE MODELS" tile),
+    29→    29→  Explore (5 destination cards + red conversion tile, tracked Google Maps links),
+    30→    30→  RoutePlanner (interactive, aria radiogroup/pressed), HowItWorks, SocialProof
+    31→    31→  (screenshot-sourced stats only), About, BookingSection (inline form on black),
+    32→    32→  BookingForm (RHF + zod, POST /api/bookings, success panel + WhatsApp handoff,
+    33→    33→  toasts), BookingOverlay (Drawer on mobile / Dialog on desktop via zustand
+    34→    34→  store + useBookingStore), LocationSection, Footer (pb-24 mobile clearance for
+    35→    35→  CTA bar), MobileCtaBar (CALL|WHATSAPP|BOOK, 48px+ targets, safe-area).
+    36→    36→- Client-wrapper pattern: BookRideButton + TrackedLink so sections stay server
+    37→    37→  components; analytics lib pushes to window.dataLayer (PRD section 29 events).
+    38→    38→- Backend: prisma/schema.prisma BookingRequest (status pipeline NEW->CONTACTED->
+    39→    39→  CONFIRMED->COMPLETED->CANCELLED), db push ok; src/app/api/bookings/route.ts
+    40→    40→  (zod validation, past-date guard, 201/400/500 shape). No server actions.
+    41→    41→- page.tsx assembly + sitemap.ts + robots.ts.
+    42→    42→
+    43→    43→Fixes during verification:
+    44→    44→- lucide `Scooter` export doesn't exist -> replaced with Bike (page 500 fixed).
+    45→    45→- Stale Turbopack CSS cache served old globals.css after edits (custom utilities
+    46→    46→  missing, fonts not applying visually) -> cleared .next, restarted dev server.
+    47→    47→- Route planner produced duplicate "AFTERNOON" labels (5 mid stops vs 5 labels)
+    48→    48→  -> FULL DAY picks reduced to 3 so stops+return map 1:1 to time labels.
+    49→    49→- Generated "standard scooty" image was a sport motorcycle -> regenerated as a
+    50→    50→  step-through scooter (Honda Activa style), renamed to scooter-standard.png to
+    51→    51→  bust image cache.
+    52→    52→- Radix Dialog aria-describedby warning -> aria-describedby={undefined}.
+    53→    53→- Mobile menu anchor clicks: sheet scroll-lock release cancelled smooth scroll ->
+    54→    54→  preventDefault, close sheet, scrollIntoView after 350ms.
+    55→    55→- public/robots.txt (template static file) conflicted with app/robots.ts ->
+    56→    56→  removed static file; app route now serves robots with sitemap reference.
+    57→    57→
+    58→    58→Browser verification (agent-browser, desktop 1440x900 + mobile 390x844):
+    59→    59→- Hero/typography/palette render correctly; all sections present.
+    60→    60→- Route planner: FULL DAY + interests -> correct route, unique time labels.
+    61→    61→- Fleet card "BOOK THIS RIDE" -> dialog opens with MINI SCOOTY preselected.
+    62→    62→- Form: empty date blocked with explicit error; valid submit -> "REQUEST
+    63→    63→  RECEIVED." + date/duration summary + CONTINUE ON WHATSAPP + toast.
+    64→    64→- DB row confirmed via Prisma: rideDate 2026-09-23, FULL_DAY, mini-scooty,
+    65→    65→  name/phone/message stored, status NEW.
+    66→    66→- Mobile: sticky bottom bar, booking drawer, menu sheet, footer clearance ok.
+    67→    67→- Endpoints: / 200, /sitemap.xml 200, /robots.txt 200, /api/bookings 405 (GET,
+    68→    68→  POST-only by design). Lint: 0 errors (1 benign RHF watch() warning). Console:
+    69→    69→  no page errors.
+    70→    70→
+    71→    71→Stage Summary:
+    72→    72→- Demo v1 complete and browser-verified at / (single page, anchor nav).
+    73→    73→- Stack: Next.js 16 + TS + Tailwind 4 + shadcn/ui + Prisma/SQLite + zustand +
+    74→    74→  framer-motion (reduced-motion aware).
+    75→    75→- Honesty guards kept: no prices, no invented reviews/stats/scarcity, demo
+    76→    76→  imagery disclaimer, "pending owner validation" footer note.
+    77→    77→- Open items for production (PRD section 50): owner-confirmed pricing, WhatsApp
+    78→    78→  number, real customer media, Bangla/bilingual decision, robots/sitemap domain
+    79→    79→  (NEXT_PUBLIC_SITE_URL), analytics tooling (GTM/GA4 keys).
+    80→    80→
+    81→    81→---
+    82→    82→Task ID: 2
+    83→    83→Agent: Z.ai Code (main agent)
+    84→    84→Task: Multi-page transformation foundation — data layer, shared shell, backend contracts, image pipeline.
+    85→    85→
+    86→    86→Work Log:
+    87→    87→- Read existing demo v1 codebase fully (header/footer/sections/data/api/prisma).
+    88→    88→- site.ts: NAV_LINKS -> page routes (/explore /scooties /routes /how-it-works), added ALL_PAGES (10 pages) + SITE.bookingUrl="/book".
+    89→    89→- destinations.ts: extended Destination type (rideTimeLabel, routeType, whyGo, coords for stylized SVG map, passport flag); added HAM HAM FALLS + SREEMANGAL TOWN; PASSPORT_SLUGS + RIDE_METRICS_NOTE exports.
+    90→    90→- vehicles.ts: priceLabel -> "৳ — / DAY" (brief placeholder pricing).
+    91→    91→- NEW ride-moods.ts: 5 Build-Your-Ride moods (tea-chill, forest-adventure, photo-day, slow-explorer, half-day-escape) w/ stop plans, est "—".
+    92→    92→- NEW ride-routes.ts: route library (tea-garden-loop, forest-escape, slow-sreemangal-ride) w/ tags, highlights, start time, related destinations.
+    93→    93→- NEW journal.ts: 6 complete articles (content blocks, categories, read times, demo dates) + JOURNAL_NOTE.
+    94→    94→- header.tsx rewritten: next/link multi-page nav + usePathname active state, mobile sheet lists ALL_PAGES, BOOK -> /book (booking-store no longer used by shell).
+    95→    95→- mobile-cta-bar.tsx: BOOK cell -> Link to /book.
+    96→    96→- footer.tsx: giant "SEE YOU ON THE ROAD." statement + ALL_PAGES grid nav (2 cols) + WhatsApp row; demo disclaimer kept.
+    97→    97→- NEW src/app/template.tsx: subtle 0.28s page transition (reduced-motion aware).
+    98→    98→- NEW components/site/page-header.tsx (shared interior page header) + demo-badge.tsx (honesty marker).
+    99→    99→- prisma/schema.prisma: BookingRequest + type/riders/routeRef, rideDate+duration now nullable; db push OK.
+   100→   100→- api/bookings: extended zod (type BOOKING|MESSAGE, riders, routeRef, pickup enum + station/town, MULTI_DAY); conditional validation.
+   101→   101→- NEW api/rides-status: demo-labelled live-status payload.
+   102→   102→- sitemap.ts: all 10 pages + 6 journal slugs.
+   103→   103→- scripts/gen-images-mp.ts launched in background (9 new images: dest-town, dest-hamham, story-freedom, story-road, journal-one-day, journal-tea-break, journal-cng, about-shop, journal-guide).
+   104→   104→- Wrote agent-ctx/red-scooty-multi-page.md (shared design system + conventions + contracts for all page agents).
+   105→   105→
+   106→   106→Stage Summary:
+   107→   107→- Shell is multi-page ready; data layer covers all 10 pages; backend accepts booking + message types with route prefill refs.
+   108→   108→- Agents must follow agent-ctx/red-scooty-multi-page.md. BOOK CTAs = Link to /book (optionally ?route=|?vehicle=|?mood=).
+   109→   109→- Legacy single-page pieces (booking-overlay, booking-section, old booking-form, book-button, route-planner, fleet/explore/about/location sections) are retired from home; agent clusters may adapt fleet.tsx/explore.tsx/how-it-works.tsx/about.tsx/location-section.tsx for their pages.
+   110→   110→
+   111→   111→---
+   112→   112→Task ID: 3-b
+   113→   113→Agent: fleet-cluster-builder
+   114→   114→Task: Build 4 pages of the Red Scooty Sreemangal multi-page site:
+   115→   115→/scooties, /routes, /how-it-works, /rental-guide (pages + fresh components
+   116→   116→in dedicated folders, no edits to existing files).
+   117→   117→
+   118→   118→Work Log:
+   119→   119→- Read agent-ctx/red-scooty-multi-page.md + worklog.md + pattern files
+   120→   120→  (page-header, fleet, how-it-works, vehicles/ride-routes/site data, page.tsx
+   121→   121→  shell). Verified public/images (scooter-02, scooter-standard, dest-tea-gardens,
+   122→   122→  dest-lawachara, rider-road all on disk) and lucide exports (IdCard,
+   123→   123→  ScrollText, HandCoins, ShieldCheck, Wrench, Undo2 exist; Scooter avoided).
+   124→   124→- /scooties (src/app/scooties/page.tsx + src/components/scooties/):
+   125→   125→  fleet-showcase.tsx (ink section, VEHICLES cards w/ "RED SCOOTY 01/02" index,
+   126→   126→  aspect-[4/5] fill images, feature chips, red price block from data
+   127→   127→  "৳ — / DAY" + "rate confirmed on booking — no online payment" micro,
+   128→   128→  BOOK THIS RIDE -> /book?vehicle={id}, ASK ABOUT THIS SCOOTY ->
+   129→   129→  whatsappMessageUrl tracked external, honest dashed MORE MODELS tile);
+   130→   130→  specs-strip.tsx (4-cell bordered grid: TRANSMISSION AUTOMATIC CONFIRMED,
+   131→   131→  ENGINE/STORAGE "TO BE CONFIRMED" + DemoBadge, HELMETS ask on booking);
+   132→   132→  included-ask.tsx (generic "WHAT IS INCLUDED" / "ASK WHEN YOU BOOK" columns,
+   133→   133→  no invented policies + DemoBadge micro); scooties-cross-links.tsx
+   134→   134→  (/routes, /rental-guide, red /book cell); FLEET_NOTE as micro text footer.
+   135→   135→- /routes (src/app/routes/page.tsx + src/components/routes/):
+   136→   136→  route-card.tsx (md:grid-cols-12, image col-span-7 alternating sides,
+   137→   137→  bordered tilted figure w/ ROUTE 0n flag, tag chips + duration chip,
+   138→   138→  character/description, square-bullet highlights, SUGGESTED START dashed
+   139→   139→  chip, numbered mini timeline of stops, BOOK THIS RIDE -> /book?route={slug}
+   140→   140→  + SEE DESTINATIONS -> /explore); ROUTE_METRICS_NOTE footnote as label-micro;
+   141→   141→  routes-own-band.tsx (PREFER YOUR OWN ROUTE? ink band -> /book, planning on
+   142→   142→  request note).
+   143→   143→- /how-it-works (src/app/how-it-works/page.tsx + components/how-it-works/):
+   144→   144→  process-steps.tsx (5 stacked min-h-[60vh] steps CHOOSE/BOOK/PICK UP/RIDE/
+   145→   145→  RETURN, alternating md:flex-row[-reverse] alignment on alternating
+   146→   146→  paper/cream, giant numbers text-[clamp(80px,14vw,200px)] alternating
+   147→   147→  text-brand/text-outline, Reveal per step, maps TrackedLink (get_directions)
+   148→   148→  on step 03 + /explore link on step 04); trust-strip.tsx (ink, three bordered
+   149→   149→  cells BOOKING BY REQUEST / CONFIRMED PERSONALLY / NO ONLINE PAYMENT REQUIRED
+   150→   150→  + DemoBadge small print for deposit/documents/delivery); cta-band.tsx
+   151→   151→  (red band, START WITH STEP 01. -> /book).
+   152→   152→- /rental-guide (src/app/rental-guide/page.tsx + components/rental-guide/):
+   153→   153→  guide-sections.tsx (6 numbered bordered cards sm:grid-cols-2 — REQUIREMENTS/
+   154→   154→  RENTAL RULES/DEPOSIT/SAFETY/DAMAGE POLICY/RETURN POLICY — lucide IdCard/
+   155→   155→  ScrollText/HandCoins/ShieldCheck/Wrench/Undo2, square-bullet "what to
+   156→   156→  expect" lines, DemoBadge DETAILS TO BE CONFIRMED on every card, no invented
+   157→   157→  policies); FAQPage JSON-LD with 5 honest Q&As (request->personal
+   158→   158→  confirmation, no online payment, licence + deposit confirmed personally,
+   159→   159→  Jalalia Road pickup, rates on request); guide-cta-band.tsx (/book + /contact).
+   160→   160→- All 4 pages: server components only (Reveal/TrackedLink are the client
+   161→   161→  boundary), exact shell div>Header>main.flex-1>Footer>MobileCtaBar, next/link
+   162→   162→  for internal, TrackedLink external for WhatsApp/maps, next/image fill+sized
+   163→   163→  parents with explicit sizes attrs, metadata per spec.
+   164→   164→- Verification: curls returned 200 for all four routes; dev.log shows clean
+   165→   165→  compiles (no errors, only pre-existing benign Fast Refresh warnings);
+   166→   166→  spot-checked rendered HTML (price placeholder, route titles, JSON-LD,
+   167→   167→  demo badges, step labels all present). No lint/build run per task rules.
+   168→   168→- Deviation (minor): route card titles rendered as h2 (not h3) to keep
+   169→   169→  heading order h1->h2 on /routes.
+   170→   170→
+   171→   171→Stage Summary:
+   172→   172→- /scooties, /routes, /how-it-works, /rental-guide built and rendering 200,
+   173→   173→  consistent with the mid-brutalist system (border-2, shadow-hard, Bebas
+   174→   174→  display, label-micro) and the booking prefill contract
+   175→   175→  (?vehicle= / ?route=).
+   176→   176→- Honesty kept: no prices, no fleet count, no policies, no reviews; unknowns
+   177→   177→  carry DemoBadge / "to be confirmed" / "ask on booking" framing; route
+   178→   178→  metrics footnoted with ROUTE_METRICS_NOTE.
+   179→   179→- New files only: 4 pages + 11 components under src/components/{scooties,
+   180→   180→  routes,how-it-works,rental-guide}. Zero edits to existing files.
+   181→   181→
+   182→   182→---
+   183→   183→Task ID: 3-a
+   184→   184→Agent: home-builder
+   185→   185→Task: Rebuild HOME (/) for the multi-page site — hero refresh + 10 new home
+   186→   186→components (src/components/home/) + page.tsx assembly, per
+   187→   187→agent-ctx/red-scooty-multi-page.md design system and honesty rules.
+   188→   188→
+   189→   189→Work Log:
+   190→   190→- Read agent-ctx, worklog (tasks 1-2), existing site components (hero,
+   191→   191→  brand-value, route-planner, reveal, social-proof, marquee-strip), data layer
+   192→   192→  (site, vehicles, destinations, ride-moods) and globals.css tokens.
+   193→   193→- components/home/hero.tsx (client): stacked clamp(64px,10vw,150px) headline
+   194→   194→  "DON'T JUST VISIT / SREEMANGAL. / RIDE IT." (last line brand red); SITE.heroSub
+   195→   195→  sub; primary Link /book "BOOK A SCOOTY →" (ink→red hover, shadow-hard,
+   196→   196→  press active state, start_booking tracked) + secondary Link /explore outline;
+   197→   197→  hero-scooty.png 864x1152 priority in rotated border-2 shadow-hard-lg frame;
+   198→   198→  floating tags "SCOOTY RENTAL" (ink) + "SREEMANGAL / 3210" (red, rotated);
+   199→   199→  subtle parallax text -30px / image +30px via useScroll+useTransform
+   200→   200→  (useReducedMotion → offsets 0); kept micro-location strip (location + CALL).
+   201→   201→- components/home/scroll-rail.tsx (client): fixed right rail lg+ (hidden below)
+   202→   202→  "01/05..05/05" + current section label + thin progress line (page scroll %);
+   203→   203→  rAF-throttled scroll listener, last-section-past-40%-viewport logic over
+   204→   204→  [top, the-ride, routes, the-story, your-turn]; fixed left vertical
+   205→   205→  "RIDE — EXPLORE — DISCOVER" (writing-mode vertical-rl, steel); both
+   206→   206→  pointer-events-none, z-30 (below header z-50).
+   207→   207→- components/home/brand-intro.tsx (server): "SREEMANGAL / IS BETTER (outlined) /
+   208→   208→  FROM A SEAT." clamp 48-110; two-column editorial body (kicker + three
+   209→   209→  sentences); full-bleed h-2/h-3 bg-brand rule; compact 3 benefit minis row
+   210→   210→  (FREEDOM / EASY RENTAL / LOCAL ACCESS, small bordered tiles).
+   211→   211→- components/home/scooty-showcase.tsx (client, id=the-ride): ink band, "PICK /
+   212→   212→  YOUR RIDE." (outlined cream); overflow-x-auto + snap-x scrollbar-brutal
+   213→   213→  gallery (min-w 340/400px cards) from VEHICLES; cards: RED SCOOTY 01/02 index,
+   214→   214→  AUTOMATIC/EASY TO RIDE/TOURIST FRIENDLY tag chips, aspect-[4/5] image,
+   215→   215→  "৳ — / DAY" price block, VIEW SCOOTY → → /scooties; desktop hover: image
+   216→   216→  scale-105, card -translate-y-1.5, red spec panel (features + "FULL
+   217→   217→  SPECIFICATIONS TO BE CONFIRMED") slides over card bottom (also on
+   218→   218→  focus-within for keyboard); static overlay on mobile; dashed "MORE MODELS ON
+   219→   219→  REQUEST." tile → /scooties.
+   220→   220→- components/home/map-section.tsx (client, id=routes): "ONE SCOOTY. / ENDLESS
+   221→   221→  ROUTES." (outlined); bordered cream panel with hand-drawn-feel SVG
+   222→   222→  (preserveAspectRatio none + non-scaling-stroke: 4 wobbly tea-area blobs,
+   223→   223→  5 dashed routes from town marker, ink strokes); 7 DESTINATIONS pins at
+   224→   224→  coords % (aria-pressed buttons, red squares + bordered labels, labels flip
+   225→   225→  side for right-edge pins); default lawachara; aria-live info card: DISTANCE /
+   226→   226→  EST. RIDE TIME / TYPE OF ROUTE / WHY GO; "STYLIZED MAP — NOT TO SCALE"
+   227→   227→  micro-label + RIDE_METRICS_NOTE; CTA "SEE THE ROUTES →" → /routes.
+   228→   228→- components/home/build-your-ride.tsx (client, id=build-your-ride): "WHAT KIND /
+   229→   229→  OF RIDE / DO YOU WANT?"; 5 RIDE_MOODS radio buttons (aria-checked, selected =
+   230→   230→  brand red); ink result panel (shadow-hard-red, aria-live): tagline, planTitle,
+   231→   231→  vertical stop timeline (connector + square markers per old route-planner),
+   232→   232→  EST. TIME "—" / DISTANCE "—" rendered literally from data + honesty micro
+   233→   233→  line; CTA "BOOK THIS ROUTE →" → /book?mood={bookQuery} (click_booking) +
+   234→   234→  "ASK ABOUT IT ON WHATSAPP" via whatsappMessageUrl; start_booking tracked on
+   235→   235→  mood select (source build_your_ride).
+   236→   236→- components/home/scroll-story.tsx (client, id=the-story): 350vh section +
+   237→   237→  sticky 100vh viewport; 4 stages (TEA/dest-tea-gardens → FOREST/dest-lawachara
+   238→   238→  → ROAD/story-road → FREEDOM/story-freedom) crossfade via useScroll
+   239→   239→  (start start→end end) + useTransform with short keyframe ranges, subtle
+   240→   240→  1.04→1.1 zoom per stage, duration-free; giant Bebas words solid cream /
+   241→   241→  text-outline-cream; "YOUR TURN." + BOOK A RIDE → /book in final 20%
+   242→   242→  (opacity + pointerEvents driven by scroll progress so the invisible link
+   243→   243→  never blocks); useReducedMotion → static 2x2 grid + CTA fallback.
+   244→   244→- components/home/process-strip.tsx (server): 01 CHOOSE … 05 RETURN bordered
+   245→   245→  tiles, trust line "BOOKING BY REQUEST · CONFIRMED PERSONALLY · NO ONLINE
+   246→   246→  PAYMENT REQUIRED", "SEE HOW IT WORKS →" → /how-it-works (does NOT import
+   247→   247→  site/how-it-works.tsx).
+   248→   248→- components/home/final-cta.tsx (server, id=your-turn): ink band, kicker "NO
+   249→   249→  FORMS TO STUDY", "READY? / LET'S GO." (red), BOOK A SCOOTY → /book, call
+   250→   250→  link with SITE.phoneDisplay, WhatsApp handoff link.
+   251→   251→- page.tsx rewritten as shell: Header + ScrollRail + main(Hero, MarqueeStrip,
+   252→   252→  BrandIntro, ScootyShowcase, MapSection, BuildYourRide, ScrollStory,
+   253→   253→  ProcessStrip, SocialProof, FinalCta) + Footer + MobileCtaBar. Retired home
+   254→   254→  pieces (Fleet/Explore/RoutePlanner/About/BookingSection/LocationSection/
+   255→   255→  BookingOverlay/BookRideButton) no longer imported.
+   256→   256→- Browser-verified (agent-browser 1440x900 + 390x844): page 200, no page
+   257→   257→  errors; parallax containers given `relative` after framer-motion dev warning
+   258→   258→  investigation (remaining dev-only console notice is FM 12's known
+   259→   259→  scrollingElement check — offsets verified working); rail state 02/05→05/05 +
+   260→   260→  fill % correct; map pin click swaps info card (BAIKKA verified); mood select
+   261→   261→  renders plan, 2 "—" stats, /book?mood=forest-adventure link; story crossfade
+   262→   262→  at 50% shows ROAD only, final stage opacity/pointer-events correct at 90%;
+   263→   263→  showcase swipe scrollable on mobile, rail hidden, CTA bar visible.
+   264→   264→
+   265→   265→Stage Summary:
+   266→   266→- Home is fully multi-page: all CTAs are next/link routes (no anchor nav, no
+   267→   267→  booking overlay); sections 01-05 map to the scroll rail ids.
+   268→   268→- Honesty kept: "৳ — / DAY" prices, "—"/"WHENEVER" metrics from data files,
+   269→   269→  RIDE_METRICS_NOTE + NOT-TO-SCALE labels, no invented reviews/availability,
+   270→   270→  "FULL SPECIFICATIONS TO BE CONFIRMED" on hover panels, dashed more-models
+   271→   271→  tile, process strip trusts personal confirmation only.
+   272→   272→- Images: hero + both scooties + dest-tea-gardens + dest-lawachara exist;
+   273→   273→  MISSING ON DISK at build time: /images/story-road.png and
+   274→   274→  /images/story-freedom.png (referenced by scroll-story per manifest — Task 2
+   275→   275→  generator still pending); also missing (not used by home): dest-town.png,
+   276→   276→  dest-hamham.png, journal-*.png, about-shop.png. Story stage 3/4 will 404
+   277→   277→  until the generator lands.
+   278→   278→- Dev-only notice: framer-motion 12 "non-static position" console warning
+   279→   279→  (checks document.scrollingElement when using useScroll({target}) with window
+   280→   280→  scroll) — benign, dev-only, verified parallax/crossfade work correctly.
+   281→   281→
+   282→   282→---
+   283→   283→Task ID: 3-d
+   284→   284→Agent: conversion-cluster-builder
+   285→   285→Task: Build the conversion cluster pages /book, /contact, /about for the Red
+   286→   286→Scooty multi-page site (Next.js 16 App Router + TS + Tailwind 4 + Prisma),
+   287→   287→following agent-ctx/red-scooty-multi-page.md (design system, data APIs,
+   288→   288→honesty rules, backend contract). No edits to existing files.
+   289→   289→
+   290→   290→Work Log:
+   291→   291→- Read shared context + worklog + all reference implementations (api/bookings,
+   292→   292→  legacy booking-form, location-section, about, page-header, demo-badge,
+   293→   293→  data files, analytics, use-toast). `ls public/images/` checked first:
+   294→   294→  about-shop.png NOT yet on disk (gen script still running) - referenced the
+   295→   295→  path anyway per agent-ctx section 5; flagged below.
+   296→   296→- /book (src/app/book/page.tsx + src/components/book/{ride-status,booking-form}.tsx):
+   297→   297→  * PageHeader "BOOK A RIDE / LET'S GET YOU MOVING." + LIVE RIDE STATUS strip
+   298→   298→    (client, fetch GET /api/rides-status, two stat blocks RIDES TODAY /
+   299→   299→    SCOOTIES READY with DemoBadge + API note as micro text, loading = "—",
+   300→   300→    fetch fail = numbers hidden + fallback note, aria-live polite).
+   301→   301→  * Fresh BookingForm (RHF + zod, mirrors legacy patterns): NAME, PHONE,
+   302→   302→    DATE (min = today via local-date helper), DURATION segmented
+   303→   303→    (HALF_DAY/FULL_DAY/MULTI_DAY, default FULL_DAY), PREFERRED SCOOTY
+   304→   304→    segmented (none/mini-scooty/standard-scooty), NUMBER OF RIDERS free text,
+   305→   305→    "WHERE ARE YOU RIDING FROM?" segmented (station/hotel/town/shop/unsure)
+   306→   306→    with aria-pressed buttons + aria-live contextual line per choice,
+   307→   307→    MESSAGE optional. Hidden inputs + setValue for segment fields (legacy
+   308→   308→    pattern). Client zod + inline role=alert errors matched to API issue keys
+   309→   309→    (server 400 issues merged into the same inline lines). Toast on error and
+   310→   310→    success. POST /api/bookings {type:"BOOKING", ...} -> 201.
+   311→   311→  * useSearchParams prefill wrapped in <Suspense fallback={null}> on the page
+   312→   312→    (Next 16 requirement): ?vehicle= -> preselect scooty; ?route= ->
+   313→   313→    findRoute() -> message "I want to ride: {title} ({tags})" + routeRef;
+   314→   314→    ?mood= -> findMood() -> "I want the {label} ride." + routeRef. Chip
+   315→   315→    "PRE-FILLED FROM: {sources}" (verified SSR: "RIDE ROUTE + SCOOTY PAGE").
+   316→   316→  * Success state: bordered panel "REQUEST RECEIVED." + confirmation copy +
+   317→   317→    summary grid (date/duration/scooty/route if present) + tracked
+   318→   318→    CONTINUE ON WHATSAPP (whatsappMessageUrl prefilled summary) + MAKE
+   319→   319→    ANOTHER REQUEST reset. Trust line under card: "BOOKING BY REQUEST ·
+   320→   320→    CONFIRMED PERSONALLY · NO ONLINE PAYMENT REQUIRED".
+   321→   321→  * Analytics: track("start_booking") once on mount, track("submit_booking")
+   322→   322→    on success; WhatsApp handoff via TrackedLink click_whatsapp.
+   323→   323→  * Right rail (server): GOOD TO KNOW card (booking by request / confirmed
+   324→   324→    personally / no online payment / deposit & documents "Details to be
+   325→   325→    confirmed." + DemoBadge), Link rows RENTAL GUIDE / HOW IT WORKS /
+   326→   326→    CONTACT, bordered PREFER TO TALK? card with CALL (tel, tracked) +
+   327→   327→    WHATSAPP (external, tracked).
+   328→   328→- /contact (src/app/contact/page.tsx + src/components/contact/quick-message-form.tsx):
+   329→   329→  * PageHeader "CONTACT / TALK TO A HUMAN."; six brutal method cards
+   330→   330→    (sm:2 lg:3, hover lift): CALL, WHATSAPP (DemoBadge - derived number),
+   331→   331→    FACEBOOK ("fastest reply"), EMAIL (mailto, plain anchor - no matching
+   332→   332→    analytics event by design), GOOGLE MAPS (get_directions), HOURS
+   333→   333→    (DemoBadge, no fake opening hours).
+   334→   334→  * Address block (addressLine1/2 + plusCode) + deep-green stylized map panel
+   335→   335→    reusing location-section's bg-leaf + repeating-linear-gradient tea-rows
+   336→   336→    pattern with OPEN IN GOOGLE MAPS tracked CTA.
+   337→   337→  * QUICK MESSAGE FORM (client): NAME/PHONE/MESSAGE -> POST /api/bookings
+   338→   338→    {type:"MESSAGE"}; inline validation (phone required), toast, success
+   339→   339→    inline panel "MESSAGE RECEIVED." + "We will get back to you — usually
+   340→   340→    fastest on WhatsApp." + SEND ANOTHER MESSAGE reset.
+   341→   341→- /about (src/app/about/page.tsx, server):
+   342→   342→  * PageHeader "ABOUT RED SCOOTY / WE'RE NOT JUST RENTING SCOOTIES."
+   343→   343→    (brand red on SCOOTIES.); mission story two-col: "MAKING SREEMANGAL
+   344→   344→    EASIER TO EXPLORE — INDEPENDENTLY." + 3 mission-level paragraphs (no
+   345→   345→    founder/history invented); /images/about-shop.png (1344x768) in rotated
+   346→   346→    bordered frame shadow-hard-lg + floating tag "JALALIA ROAD / SREEMANGAL".
+   347→   347→  * Facts card: VERIFIED micro row (phone tel-tracked, address, Facebook
+   348→   348→    tracked, category from SITE.stats) + "NOT YET VERIFIED" dashed section
+   349→   349→    (WhatsApp + opening hours with DemoBadges).
+   350→   350→  * Stats strip from SITE.stats (3.1K+ / 108 / SMG) on ink card + micro note
+   351→   351→    "SCREENSHOT-SOURCED NUMBERS — NEVER INFLATED."
+   352→   352→  * Qualitative TIMELINE (no dates, honesty rule): STARTED -> GROWING ->
+   353→   353→    MORE RIDES -> MORE EXPLORATION as connected bordered squares with red
+   354→   354→    arrows.
+   355→   355→  * Quote block (bg-cream border-2): "SREEMANGAL IS NOT A PLACE TO RUSH
+   356→   356→    THROUGH." + tea-capital identity paragraph; ink CTA band -> /book
+   357→   357→    primary + /explore secondary.
+   358→   358→- Infrastructure repair (no file edits): first live POSTs returned 500
+   359→   359→  "could not save" - prisma schema (task 2) was pushed but the generated
+   360→   360→  Prisma Client in node_modules was stale ("Unknown argument `type`").
+   361→   361→  Ran `bun run db:push` (regenerated client v6.19.2; DB already in sync),
+   362→   362→  then restarted the dev server with the same system command (`bun run dev`
+   363→   363→  on :3000, detached) because the running process kept the stale client.
+   364→   364→  Retested end-to-end, then deleted all test rows from BookingRequest
+   365→   365→  (deleteMany where name in Probe/Test Rider/Test Sender -> count 4).
+   366→   366→
+   367→   367→Stage Summary:
+   368→   368→- /book, /contact, /about live and verified: all routes 200; BOOKING +
+   369→   369→  MESSAGE POSTs return 201 {ok,id,status:"NEW"}; invalid payloads return 400
+   370→   370→  with issue keys matching the form's inline error mapping; /api/rides-status
+   371→   371→  demo payload renders with DemoBadge; prefill chip renders server-side.
+   372→   372→- Honesty rules held: no prices, no availability claims, no invented
+   373→   373→  founder/history/dates, WhatsApp + hours + deposit demo-flagged, ride-status
+   374→   374→  demo-labelled, stats screenshot-sourced note.
+   375→   375→- Files created (8): src/app/book/page.tsx, src/app/contact/page.tsx,
+   376→   376→  src/app/about/page.tsx, src/components/book/ride-status.tsx,
+   377→   377→  src/components/book/booking-form.tsx,
+   378→   378→  src/components/contact/quick-message-form.tsx (+ this worklog entry and
+   379→   379→  agent-ctx/3-d-conversion-cluster-builder.md). Zero edits to existing files.
+   380→   380→- OPEN FLAG: /images/about-shop.png was still missing from public/images at
+   381→   381→  build time (scripts/gen-images-mp.ts still running, 7/9 images done).
+   382→   382→  /about references the path and will render once the file lands - verify on
+   383→   383→  the /about page.
+   384→   384→- NOTE FOR INTEGRATOR: dev server was restarted to load the regenerated
+   385→   385→  Prisma Client; if any process sees Prisma "Unknown argument `type`" 500s,
+   386→   386→  rerun `bun run db:push` and restart `bun run dev`.
+   387→   387→
+   388→   388→---
+   389→   389→Task ID: 3-c
+   390→   390→Agent: content-cluster-builder
+   391→   391→Task: Build the content cluster — /explore (with Ride Passport), /journal,
+   392→   392→/journal/[slug] article pages. No edits to existing files; fresh components in
+   393→   393→src/components/explore/ + src/components/journal/.
+   394→   394→
+   395→   395→Work Log:
+   396→   396→- Read agent-ctx/red-scooty-multi-page.md, worklog.md, pattern files
+   397→   397→  (page-header/explore/reveal, destinations/journal/site data, home shell).
+   398→   398→- /explore (src/app/explore/page.tsx): PageHeader (WHERE WILL YOU RIDE?), Tourist
+   399→   399→  attraction ItemList JSON-LD, RIDE_METRICS_NOTE footnote. Destination list =
+   400→   400→  7 giant editorial entries (components/explore/destination-entry.tsx): alternating
+   401→   401→  md:grid-cols-12 composition, image left/right, py-16/24 spacing, rotated frames
+   402→   402→  (±1.25deg desktop only), negative-margin bleed into the gutter, oversized outline
+   403→   403→  index numbers overlapping frames, routeType figcaption chip, goodFor slash tags,
+   404→   404→  distance/ride-time chips, whyGo red-rule pull-quote, GET DIRECTIONS (TrackedLink
+   405→   405→  external, event get_directions, source explore:{slug}) + RIDE IT (Link /book).
+   406→   406→  Ham Ham uses portrait aspect-[3/4] (864x1152); others aspect-[7/4].
+   407→   407→- RIDE PASSPORT (components/explore/ride-passport.tsx, client): localStorage key
+   408→   408→  "rs-passport-v1" (array of slugs, sanitized), read in useEffect (no hydration
+   409→   409→  mismatch), write + window CustomEvent sync on toggle so 4 card buttons and the
+   410→   410→  panel stay in sync. Card toggle: aria-pressed, dashed→red stamp w/ slight rotate.
+   411→   411→  Panel: 4 stamp slots (filled = red border/rotate/check, empty = dashed + name),
+   412→   412→  progress "X / 4 STAMPS" (aria-live), segment bar, complete state = "PASSPORT
+   413→   413→  COMPLETE." + pickup line + DemoBadge, reset button w/ aria-label, "saved on this
+   414→   414→  device only" honesty note. Desktop xl: sticky top-24 panel in col-span-4 beside
+   415→   415→  col-span-8 list; below xl: fixed collapsible bottom bar/sheet
+   416→   416→  (bottom-[calc(3.5rem+env(safe-area-inset-bottom))] to clear MobileCtaBar,
+   417→   417→  md:bottom-4, hidden at xl, max-h-62vh scroll area).
+   418→   418→- /journal (src/app/journal/page.tsx + journal-featured.tsx + journal-card.tsx):
+   419→   419→  PageHeader (NOTES FROM THE ROAD.), featured = first article split layout
+   420→   420→  (image 7 cols shadow-hard-lg, category/title/excerpt/date·readTime + DEMO badge,
+   421→   421→  READ THE NOTE →), grid sm:2/lg:3 of remaining 5 cards (aspect-4/3 image,
+   422→   422→  line-clamp-3 excerpt, hover -translate-y-1 + shadow-hard-lg), JOURNAL_NOTE
+   423→   423→  footnote, black CTA band → /book.
+   424→   424→- /journal/[slug] (src/app/journal/[slug]/page.tsx, server): generateStaticParams
+   425→   425→  from JOURNAL_ARTICLES, generateMetadata (title pattern, excerpt description, OG
+   426→   426→  image), notFound() on unknown slug (verified 404). Breadcrumb "← ALL NOTES",
+   427→   427→  full-width hero image (sizes 100vw, shadow-hard-lg), meta row w/ DEMO CONTENT
+   428→   428→  badge, giant title, editorial body (max-w-2xl, red-rule h2s, 17px prose, lead
+   429→   429→  paragraph larger), Article JSON-LD (Organization author), GO RIDE IT end band
+   430→   430→  (RIDE {route.title} → /book?route={id} when relatedRoute exists, else /book),
+   431→   431→  related destination chips → /explore, JOURNAL_NOTE footnote.
+   432→   432→- Images: relaunch of scripts/gen-images-mp.ts regenerated the 8 missing files
+   433→   433→  (dest-town, dest-hamham, story-freedom, story-road, journal-one-day,
+   434→   434→  journal-tea-break, journal-cng, about-shop). journal-guide.png FAILED at
+   435→   435→  1440x720 (API requires 32px multiples) → regenerated at 1408x704 (~2:1), no
+   436→   436→  code change needed (object-cover). NOTE: all generated files are JPEG-encoded
+   437→   437→  with .png extensions (same as the original 9; next/image serves them fine).
+   438→   438→- Verified: /explore /journal /journal/{slug} all 200, unknown slug 404, JSON-LD
+   439→   439→  present in HTML, route-prefill link /book?route=tea-garden-loop rendered,
+   440→   440→  aria-pressed toggles SSR'd. No lint/build runs per task rules (integrator runs).
+   441→   441→
+   442→   442→Stage Summary:
+   443→   443→- Content cluster complete: /explore w/ working Ride Passport persistence,
+   444→   444→  /journal index, /journal/[slug] static article pages (6 slugs prebuilt).
+   445→   445→- Honesty rules kept: DEMO badges on demo dates, ride metrics footnote, no
+   446→   446→  invented facts; passport complete-state explicitly labelled demo fun.
+   447→   447→- All images referenced by these pages now exist on disk (see journal-guide
+   448→   448→  size deviation above). No existing files were modified.
+   449→   449→
+   450→   450→---
+   451→   451→Task ID: 4
+   452→   452→Agent: Z.ai Code (main agent)
+   453→   453→Task: Multi-page integration — cleanup, lint, end-to-end browser verification.
+   454→   454→
+   455→   455→Work Log:
+   456→   456→- Integrated 4 agent clusters (10 pages live). Fixed 2 issues:
+   457→   457→  (1) ride-passport.tsx refactored from useState-in-effect to useSyncExternalStore
+   458→   458→  (cached snapshot vs raw localStorage string to keep referential stability);
+   459→   459→  restored missing useState import for the mobile collapsible.
+   460→   460→  (2) fleet priceLabel -> "৳ — / DAY" (brief placeholder pricing).
+   461→   461→- Deleted 14 retired single-page legacy files (book-button, booking-overlay/
+   462→   462→  section/form, hero, brand-value, fleet, explore, route-planner, how-it-works,
+   463→   463→  about, location-section, lib/booking-store, data/route-planner). social-proof
+   464→   464→  + marquee-strip kept (still used by home).
+   465→   465→- Verified all 18 images on disk (9 generated this phase).
+   466→   466→- Lint: 0 errors, 1 benign warning (RHF watch() in live booking form).
+   467→   467→- Browser verification (agent-browser, desktop 1440x900 + mobile 390x844):
+   468→   468→  * Home: hero typography/parallax, floating labels, scroll rail 01→05, map
+   469→   469→    pin click switches info panel, mood builder renders plan + honest — stats,
+   470→   470→    scroll story crossfade (ROAD stage at 45%), social proof, final CTA.
+   471→   471→  * /book: ?mood=forest-adventure prefill chip + message, form submit →
+   472→   472→    "REQUEST RECEIVED." + summary + WhatsApp handoff; DB row verified
+   473→   473→    (type BOOKING, routeRef forest-adventure, pickup station, status NEW).
+   474→   474→  * /contact: MESSAGE form → "MESSAGE RECEIVED." (API 201).
+   475→   475→  * /explore: passport stamps → localStorage rs-passport-v1, panel 2/4,
+   476→   476→    sticky desktop panel renders.
+   477→   477→  * All routes 200 + correct metadata titles: / /scooties /routes
+   478→   478→    /how-it-works /rental-guide /journal /journal/[slug] /contact /about.
+   479→   479→  * /sitemap.xml 200 (16 URLs), /robots.txt 200, /api/rides-status 200 (demo-flagged).
+   480→   480→  * Mobile: bottom CTA bar (CALL|WHATSAPP|BOOK) fixed + footer clears it,
+   481→   481→    hero stacks correctly, menu sheet lists all pages.
+   482→   482→- Cleaned 2 test rows from BookingRequest.
+   483→   483→
+   484→   484→Stage Summary:
+   485→   485→- Premium multi-page experience complete: 10 pages + journal article pages,
+   486→   486→  4 extraordinary features (ride passport, ride status strip, cinematic scroll
+   487→   487→  story, build-your-ride moods), booking + contact backends with real persistence.
+   488→   488→- Visual DNA preserved site-wide: cream bg, red strategic accents, Bebas/DM Sans,
+   489→   489→  2px black borders, hard offset shadows, editorial asymmetry.
+   490→   490→- Honesty guards intact everywhere: ৳ — / DAY pricing, — distances/times,
+   491→   491→  DemoBadge markers, NOT TO SCALE map, no invented reviews/policies/hours.
+   492→   492→
+   493→   493→---
+   494→   494→Task ID: 5
+   495→   495→Agent: Z.ai Code (main agent)
+   496→   496→Task: Integrate owner-supplied materials — owner photo (Radiyan Hossen),
+   497→   497→YouTube tour video (youtu.be/vk0oyKnZVPs) and verified Google Maps listing
+   498→   498→(maps.app.goo.gl/ZE53GmbXSVHsUJQJ7) into the finished multi-page site.
+   499→   499→
+   500→   500→Work Log:
+   501→   501→- Extracted info: Maps share link resolves to place "Red Scooty Sreemangal"
+   502→   502→  at coords 24.3040891, 91.7342349; video metadata (title, publish date
+   503→   503→  2025-11-01, ~1.9K views); fetched real 1280x720 video stills via ytimg
+   504→   504→  (yt-dlp blocked by YouTube bot check).
+   505→   505→- Assets: optimized owner photo -> public/images/owner-radiyan-hossen.jpg
+   506→   506→  (960px JPEG, 138KB); video thumbnail -> video-sreemangal-tour.jpg (poster);
+   507→   507→  two real frames -> real-tea-break.jpg (Finlay tea-garden tea stop) and
+   508→   508→  real-town-ride.jpg (POV town riding).
+   509→   509→- src/data/site.ts: added owner block (name/role/photo/alt), verified
+   510→   510→  coords, youtube block (id/embedUrl/watchUrl/poster), mapsUrl upgraded from
+   511→   511→  search-query fallback to owner's verified share link; added MAPS_EMBED_URL.
+   512→   512→- New src/components/site/video-band.tsx: click-to-play, privacy-enhanced
+   513→   513→  YouTube embed (youtube-nocookie), brutalist frame, zero YT requests until play.
+   514→   514→- About page: new "THE PERSON BEHIND THE PHONE" owner section (rotated photo
+   515→   515→  card + THE OWNER sticker + honest copy + WhatsApp CTA with demo badge);
+   516→   516→  new "SEE SREEMANGAL IN MOTION" video section; VideoObject JSON-LD with
+   517→   517→  real upload date 2025-11-01.
+   518→   518→- Contact page: stylized plus-code panel replaced with REAL Google Maps embed
+   519→   519→  (grayscale -> color on hover, red sticker label, verified-listing note,
+   520→   520→  plus code kept); OPEN IN GOOGLE MAPS buttons now hit the verified share link.
+   521→   521→- Footer: added YouTube + Google Maps icon buttons; footer address now links
+   522→   522→  to the Maps listing.
+   523→   523→- Journal: swapped AI images for real video stills on "one day" (real tea
+   524→   524→  break) and "travel guide" (real town ride) with accurate alt text.
+   525→   525→- layout.tsx JSON-LD: added founder (Radiyan Hossen), GeoCoordinates, hasMap,
+   526→   526→  expanded sameAs (FB, IG, YouTube, Maps).
+   527→   527→- analytics.ts: added click_youtube event.
+   528→   528→- Lint: 0 errors (1 known benign RHF warning). Browser-verified (desktop
+   529→   529→  1440x900 + mobile 390x844): owner section, video poster -> click -> iframe
+   530→   530→  loads youtube-nocookie embed, contact map renders pin at verified coords,
+   531→   531→  journal real images load, footer icons present; all 14 routes 200; no
+   532→   532→  dev-log errors.
+   533→   533→
+   534→   534→Stage Summary:
+   535→   535→- All owner-supplied material is now live: owner identity + photo on About,
+   536→   536→  business tour video embedded (click-to-play), verified Maps listing
+   537→   537→  embedded on Contact and linked everywhere.
+   538→   538→- Real footage stills replace two AI journal images for authenticity.
+   539→   539→- Structured data enriched (founder, geo, hasMap, VideoObject) — SEO benefit.
+   540→   540→- Honesty guards preserved: WhatsApp still demo-badged, no invented facts;
+   541→   541→  video publish date sourced from the actual YouTube page.
+   542→   542→

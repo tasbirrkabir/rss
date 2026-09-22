@@ -90,15 +90,12 @@ export default function AboutPage() {
         />
 
         {/* Story */}
-        <section aria-labelledby="story-heading" className="py-14 md:py-20">
+        <section aria-labelledby="story-heading" className="py-20 md:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <div className="grid items-start gap-12 lg:grid-cols-12">
               <Reveal className="lg:col-span-7">
                 <p className="label-micro text-brand">THE MISSION</p>
-                <h2
-                  id="story-heading"
-                  className="mt-2 font-display text-[clamp(40px,5.5vw,76px)] leading-[0.95] text-ink"
-                >
+                <h2 id="story-heading" className="display-1 mt-2 text-ink">
                   MAKING SREEMANGAL EASIER TO EXPLORE —{" "}
                   <span className="text-brand">INDEPENDENTLY.</span>
                 </h2>
@@ -125,22 +122,24 @@ export default function AboutPage() {
               </Reveal>
 
               <Reveal delay={0.12} className="lg:col-span-5">
-                <div className="relative pt-6">
-                  <div className="rotate-2 border-2 border-ink bg-paper p-3 shadow-hard-lg transition-transform duration-300 hover:rotate-0">
+                <div className="relative pt-4">
+                  <div className="rotate-2 img-frame transition-transform duration-300 hover:rotate-0">
                     <Image
-                      src="/images/about-shop.png"
+                      src="/images/about-shop.webp"
                       alt="Red scooters parked outside the Red Scooty shop on Jalalia Road, Sreemangal"
                       width={1344}
                       height={768}
-                      className="h-auto w-full border-2 border-ink"
+                      className="h-auto w-full object-cover"
                     />
-                    <p className="label-micro mt-3 flex items-center justify-between text-steel">
+                    <p className="label-micro flex items-center justify-between px-4 py-3 text-steel">
                       <span>THE SHOP</span>
                       <span>RED SCOOTY</span>
                     </p>
                   </div>
-                  <p className="absolute -top-1 left-4 -rotate-3 border-2 border-ink bg-brand px-3 py-1.5 font-display text-lg tracking-wider text-white shadow-hard-sm">
-                    JALALIA ROAD / SREEMANGAL
+                  <p className="sticker absolute -top-2 left-4 bg-brand px-3 py-1.5">
+                    <span className="font-display text-lg tracking-wider text-white">
+                      JALALIA ROAD / SREEMANGAL
+                    </span>
                   </p>
                 </div>
               </Reveal>
@@ -151,40 +150,37 @@ export default function AboutPage() {
         {/* Owner — supplied and approved by the owner */}
         <section
           aria-labelledby="owner-heading"
-          className="border-t-2 border-ink bg-cream py-14 md:py-20"
+          className="rule-soft bg-cream py-20 md:py-28"
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <div className="grid items-center gap-12 lg:grid-cols-12">
               <Reveal className="lg:col-span-5">
-                <div className="relative pt-6">
-                  <div className="-rotate-2 border-2 border-ink bg-paper p-3 shadow-hard-lg transition-transform duration-300 hover:rotate-0">
+                <div className="relative pt-4">
+                  <div className="-rotate-2 img-frame transition-transform duration-300 hover:rotate-0">
                     <Image
                       src={SITE.owner.photo}
                       alt={SITE.owner.photoAlt}
                       width={960}
                       height={960}
-                      className="h-auto w-full border-2 border-ink object-cover"
+                      className="h-auto w-full object-cover"
                     />
-                    <p className="label-micro mt-3 flex items-center justify-between text-steel">
+                    <p className="label-micro flex items-center justify-between px-4 py-3 text-steel">
                       <span>{SITE.owner.name}</span>
                       <span>RED SCOOTY SREEMANGAL</span>
                     </p>
                   </div>
-                  <p className="absolute -top-1 right-4 -rotate-3 border-2 border-ink bg-brand px-3 py-1.5 font-display text-lg tracking-wider text-white shadow-hard-sm">
-                    THE OWNER
+                  <p className="sticker absolute -top-2 right-4 bg-ink px-3 py-1.5">
+                    <span className="label-micro text-cream">THE OWNER</span>
                   </p>
                 </div>
               </Reveal>
 
               <Reveal delay={0.12} className="lg:col-span-7">
                 <p className="label-micro text-brand">THE PERSON BEHIND THE PHONE</p>
-                <h2
-                  id="owner-heading"
-                  className="mt-2 font-display text-[clamp(40px,5.5vw,76px)] leading-[0.95] text-ink"
-                >
+                <h2 id="owner-heading" className="display-1 mt-2 text-ink">
                   {SITE.owner.name}.
                 </h2>
-                <p className="mt-2 inline-block border-2 border-ink bg-ink px-3 py-1 font-display text-lg tracking-widest text-cream shadow-hard-sm">
+                <p className="label-micro mt-3 inline-block bg-ink px-3 py-1.5 text-cream">
                   {SITE.owner.role}
                 </p>
                 <div className="mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-ink-soft">
@@ -212,7 +208,7 @@ export default function AboutPage() {
                       "Hi Radiyan! I'd like to ask about renting a scooty in Sreemangal.",
                     )}`}
                     external
-                    className="inline-flex h-13 items-center gap-2 border-2 border-ink bg-ink px-6 py-3 font-display text-xl tracking-wider text-cream transition-all hover:-translate-y-0.5 hover:bg-brand hover:text-white hover:shadow-hard"
+                    className="btn-base btn-primary group"
                   >
                     <MessageCircle className="h-5 w-5" aria-hidden="true" />
                     MESSAGE HIM DIRECTLY <DemoBadge className="ml-1" />
@@ -229,23 +225,20 @@ export default function AboutPage() {
         {/* Verified facts + stats */}
         <section
           aria-labelledby="facts-heading"
-          className="border-t-2 border-ink py-14 md:py-20"
+          className="rule-soft py-20 md:py-28"
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <Reveal>
               <p className="label-micro text-brand">STRAIGHT FACTS</p>
-              <h2
-                id="facts-heading"
-                className="mt-2 font-display text-[clamp(40px,5.5vw,72px)] leading-[0.95] text-ink"
-              >
+              <h2 id="facts-heading" className="display-1 mt-2 text-ink">
                 WHAT WE KNOW FOR SURE.
               </h2>
             </Reveal>
 
             <div className="mt-10 grid gap-8 lg:grid-cols-2">
               {/* Verified facts card */}
-              <Reveal>
-                <div className="h-full border-2 border-ink bg-paper p-6 shadow-hard sm:p-8">
+              <Reveal className="h-full">
+                <div className="card-soft h-full p-6 sm:p-8">
                   <div className="flex items-center justify-between gap-3">
                     <p className="label-micro text-steel">CONTACT &amp; IDENTITY</p>
                     <span className="label-micro inline-flex items-center gap-1 text-ink">
@@ -268,7 +261,7 @@ export default function AboutPage() {
                           event="click_call"
                           source="about_facts"
                           href={SITE.telUrl}
-                          className="mt-0.5 block font-display text-2xl tracking-wide text-ink underline-offset-4 hover:text-brand hover:underline"
+                          className="link-underline mt-0.5 block w-fit font-display text-2xl tracking-wide text-ink"
                         >
                           {SITE.phoneDisplay}
                         </TrackedLink>
@@ -301,7 +294,7 @@ export default function AboutPage() {
                           source="about_facts"
                           href={SITE.facebook}
                           external
-                          className="mt-0.5 block font-display text-xl tracking-wide text-ink underline-offset-4 hover:text-brand hover:underline"
+                          className="link-underline mt-0.5 block w-fit font-display text-xl tracking-wide text-ink"
                         >
                           Red Scooty Sreemangal
                         </TrackedLink>
@@ -321,7 +314,7 @@ export default function AboutPage() {
                     </li>
                   </ul>
 
-                  <div className="mt-7 border-t-2 border-dashed border-steel/50 pt-5">
+                  <div className="mt-7 border-t border-ink/10 pt-5">
                     <p className="label-micro text-steel">NOT YET VERIFIED</p>
                     <ul className="mt-4 space-y-4">
                       <li className="flex items-start gap-4">
@@ -359,15 +352,15 @@ export default function AboutPage() {
               </Reveal>
 
               {/* Stats strip */}
-              <Reveal delay={0.1}>
-                <div className="flex h-full flex-col justify-between border-2 border-ink bg-ink p-6 text-cream shadow-hard sm:p-8">
+              <Reveal delay={0.1} className="h-full">
+                <div className="band-ink flex h-full flex-col justify-between p-6 sm:p-8">
                   <div>
                     <p className="label-micro text-brand">BY THE NUMBERS</p>
-                    <h3 className="mt-2 font-display text-3xl leading-tight tracking-wide text-cream">
+                    <h3 className="display-3 mt-2 text-cream">
                       FROM THE FACEBOOK PAGE.
                     </h3>
                     <dl className="mt-6 grid gap-4 sm:grid-cols-3">
-                      <div className="border-2 border-cream/30 p-4">
+                      <div className="border border-cream/15 p-4 transition-colors hover:border-cream/30">
                         <dt className="label-micro text-cream/60">
                           FACEBOOK FOLLOWERS
                         </dt>
@@ -375,13 +368,13 @@ export default function AboutPage() {
                           {SITE.stats.followers}
                         </dd>
                       </div>
-                      <div className="border-2 border-cream/30 p-4">
+                      <div className="border border-cream/15 p-4 transition-colors hover:border-cream/30">
                         <dt className="label-micro text-cream/60">POSTS</dt>
                         <dd className="mt-1 font-display text-4xl tracking-wide text-cream">
                           {SITE.stats.posts}
                         </dd>
                       </div>
-                      <div className="border-2 border-cream/30 p-4">
+                      <div className="border border-cream/15 p-4 transition-colors hover:border-cream/30">
                         <dt className="label-micro text-cream/60">HOME BASE</dt>
                         <dd className="mt-1 font-display text-4xl tracking-wide text-cream">
                           SMG
@@ -401,15 +394,12 @@ export default function AboutPage() {
         {/* Timeline (qualitative, no dates) */}
         <section
           aria-labelledby="timeline-heading"
-          className="border-y-2 border-ink bg-cream py-14 md:py-20"
+          className="rule-soft bg-cream py-20 md:py-28"
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <Reveal>
               <p className="label-micro text-brand">HOW IT&apos;S GOING</p>
-              <h2
-                id="timeline-heading"
-                className="mt-2 font-display text-[clamp(40px,5.5vw,72px)] leading-[0.95] text-ink"
-              >
+              <h2 id="timeline-heading" className="display-1 mt-2 text-ink">
                 NO DATES. JUST DIRECTION.
               </h2>
               <p className="mt-3 max-w-xl text-sm text-steel">
@@ -425,17 +415,15 @@ export default function AboutPage() {
                   className="flex flex-col lg:flex-1 lg:flex-row lg:items-center"
                 >
                   <Reveal delay={i * 0.08} className="lg:flex-1">
-                    <div className="h-full border-2 border-ink bg-paper p-5 shadow-hard-sm">
+                    <div className="card-soft h-full p-5">
                       <div className="flex items-center gap-3">
                         <span
                           aria-hidden="true"
-                          className="flex h-11 w-11 shrink-0 items-center justify-center border-2 border-ink bg-ink font-display text-xl tracking-wide text-cream"
+                          className="flex h-10 w-10 shrink-0 items-center justify-center bg-ink font-display text-lg tracking-wide text-cream"
                         >
                           {String(i + 1).padStart(2, "0")}
                         </span>
-                        <h3 className="font-display text-2xl tracking-wide text-ink">
-                          {step.label}
-                        </h3>
+                        <h3 className="display-3 text-ink">{step.label}</h3>
                       </div>
                       <p className="mt-3 text-sm leading-relaxed text-ink-soft">
                         {step.text}
@@ -457,14 +445,14 @@ export default function AboutPage() {
         </section>
 
         {/* Quote + local identity */}
-        <section aria-labelledby="quote-heading" className="py-14 md:py-20">
+        <section aria-labelledby="quote-heading" className="py-20 md:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <Reveal>
-              <figure className="border-2 border-ink bg-cream p-6 shadow-hard sm:p-10">
+              <figure className="card-soft p-6 sm:p-10">
                 <p className="label-micro text-brand">LOCAL KNOWLEDGE</p>
                 <blockquote
                   id="quote-heading"
-                  className="mt-3 font-display text-[clamp(36px,5vw,64px)] leading-[0.95] tracking-wide text-ink"
+                  className="display-1 mt-3 text-ink"
                 >
                   &ldquo;SREEMANGAL IS NOT A PLACE TO RUSH THROUGH.&rdquo;
                 </blockquote>
@@ -483,15 +471,12 @@ export default function AboutPage() {
         {/* Video — real roads, real ride */}
         <section
           aria-labelledby="video-heading"
-          className="border-t-2 border-ink bg-cream py-14 md:py-20"
+          className="rule-soft bg-cream py-20 md:py-28"
         >
           <div className="mx-auto max-w-5xl px-4 sm:px-6">
             <Reveal>
               <p className="label-micro text-brand">STRAIGHT FROM THE ROAD</p>
-              <h2
-                id="video-heading"
-                className="mt-2 font-display text-[clamp(40px,5.5vw,72px)] leading-[0.95] text-ink"
-              >
+              <h2 id="video-heading" className="display-1 mt-2 text-ink">
                 SEE SREEMANGAL <span className="text-brand">IN MOTION.</span>
               </h2>
               <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-soft">
@@ -509,15 +494,12 @@ export default function AboutPage() {
         {/* CTA band */}
         <section
           aria-labelledby="cta-heading"
-          className="border-t-2 border-ink bg-ink py-16 md:py-24"
+          className="band-ink py-20 md:py-24"
         >
           <div className="mx-auto max-w-7xl px-4 text-center sm:px-6">
             <Reveal>
               <p className="label-micro text-brand">READY WHEN YOU ARE</p>
-              <h2
-                id="cta-heading"
-                className="mt-3 font-display text-[clamp(48px,7.5vw,110px)] leading-[0.9] text-cream"
-              >
+              <h2 id="cta-heading" className="display-1 mt-3 text-cream">
                 YOUR SCOOTY IS WAITING.
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-base text-cream/80">
@@ -525,17 +507,14 @@ export default function AboutPage() {
                 first; the scooties aren&apos;t going anywhere.
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <Link
-                  href="/book"
-                  className="inline-flex h-14 items-center justify-center gap-2 border-2 border-cream bg-brand px-8 font-display text-2xl tracking-wider text-white transition-all hover:-translate-y-0.5 hover:shadow-hard"
-                >
+                <Link href="/book" className="btn-base btn-red group">
                   BOOK A RIDE
-                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                  <ArrowRight
+                    className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
                 </Link>
-                <Link
-                  href="/explore"
-                  className="inline-flex h-14 items-center justify-center gap-2 border-2 border-cream bg-transparent px-8 font-display text-2xl tracking-wider text-cream transition-all hover:-translate-y-0.5 hover:bg-cream hover:text-ink"
-                >
+                <Link href="/explore" className="btn-base btn-cream">
                   EXPLORE SREEMANGAL
                 </Link>
               </div>

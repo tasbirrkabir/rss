@@ -12,9 +12,9 @@ import { TrackedLink } from "@/components/site/tracked-link";
 import { Reveal } from "@/components/site/reveal";
 
 /**
- * Home hero - "DON'T JUST VISIT SREEMANGAL. RIDE IT."
- * Subtle scroll parallax between the typography block and the framed image
- * (+/- 30px, disabled when reduced motion is preferred).
+ * Home hero — "DON'T JUST VISIT SREEMANGAL. RIDE IT."
+ * Cinematic composition: oversized display type against a single dominant
+ * image, quiet parallax, one strong CTA and one exploration CTA.
  */
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -24,25 +24,27 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
   const textY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -30]);
-  const imageY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 30]);
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 36]);
 
   return (
     <section id="top" aria-label="Hero" className="relative overflow-hidden">
       <div
         ref={ref}
-        className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 pb-12 pt-10 sm:px-6 md:pt-14 lg:grid-cols-12 lg:gap-8"
+        className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 pb-16 pt-12 sm:px-6 md:pt-16 lg:grid-cols-12 lg:gap-10 lg:pb-20"
       >
         {/* Copy */}
         <motion.div style={{ y: textY }} className="lg:col-span-7">
           <Reveal>
             <div className="flex items-center gap-3">
-              <span className="h-0.5 w-10 bg-brand" aria-hidden="true" />
-              <p className="label-micro text-brand">SCOOTY RENTAL — SREEMANGAL</p>
+              <span className="h-px w-10 bg-brand" aria-hidden="true" />
+              <p className="label-micro text-brand">
+                SCOOTY RENTAL — SREEMANGAL
+              </p>
             </div>
           </Reveal>
 
           <Reveal delay={0.08}>
-            <h1 className="mt-4 font-display text-[clamp(64px,10vw,150px)] leading-[0.88] tracking-tight text-ink">
+            <h1 className="display-hero mt-5 text-ink">
               DON&apos;T JUST VISIT
               <br />
               SREEMANGAL.
@@ -52,45 +54,48 @@ export function Hero() {
           </Reveal>
 
           <Reveal delay={0.16}>
-            <p className="mt-6 max-w-xl text-base text-ink-soft sm:text-lg">
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
               {SITE.heroSub}
             </p>
           </Reveal>
 
           <Reveal delay={0.24}>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link
                 href="/book"
                 onClick={() => track("start_booking", { source: "hero" })}
-                className="inline-flex h-14 items-center justify-center border-2 border-ink bg-ink px-8 font-display text-2xl tracking-wider text-cream shadow-hard transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-brand hover:shadow-hard-red active:translate-x-0 active:translate-y-0 active:shadow-hard-sm"
+                className="btn-base btn-primary group"
               >
-                BOOK A SCOOTY{" "}
-                <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
+                BOOK A SCOOTY
+                <ArrowRight
+                  className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
               </Link>
-              <Link
-                href="/explore"
-                className="inline-flex h-14 items-center justify-center border-2 border-ink bg-transparent px-6 font-display text-2xl tracking-wider text-ink shadow-hard-sm transition-all hover:-translate-y-0.5 hover:bg-cream hover:text-brand hover:shadow-hard"
-              >
-                EXPLORE SREEMANGAL{" "}
-                <ArrowDown className="ml-2 h-5 w-5" aria-hidden="true" />
+              <Link href="/explore" className="btn-base btn-outline group">
+                EXPLORE SREEMANGAL
+                <ArrowDown
+                  className="h-5 w-5 transition-transform duration-200 group-hover:translate-y-0.5"
+                  aria-hidden="true"
+                />
               </Link>
             </div>
           </Reveal>
 
           <Reveal delay={0.3}>
-            <p className="label-micro mt-8 text-steel">
+            <p className="label-micro mt-9 text-steel">
               BOOKING BY REQUEST · CONFIRMED PERSONALLY · NO PAYMENT ONLINE
             </p>
           </Reveal>
         </motion.div>
 
-        {/* Framed image + floating tags */}
+        {/* Dominant visual */}
         <motion.div style={{ y: imageY }} className="lg:col-span-5">
-          <Reveal delay={0.15} y={32}>
-            <div className="relative mx-auto max-w-sm lg:max-w-none">
-              <div className="rotate-[1.5deg] border-2 border-ink bg-paper shadow-hard-lg">
+          <Reveal delay={0.15} y={32} variant="mask">
+            <div className="relative mx-auto max-w-md lg:max-w-none">
+              <div className="relative overflow-hidden img-frame">
                 <Image
-                  src="/images/hero-scooty.png"
+                  src="/images/hero-scooty.webp"
                   alt="Red scooty parked on a quiet road winding through the green tea gardens of Sreemangal"
                   width={864}
                   height={1152}
@@ -99,11 +104,11 @@ export function Hero() {
                   className="h-auto w-full object-cover"
                 />
               </div>
-              <p className="absolute -top-4 -right-2 rotate-2 border-2 border-ink bg-ink px-3 py-2 shadow-hard-red-sm sm:-right-5">
+              <p className="sticker absolute right-4 top-5 rotate-2 bg-ink px-3 py-1.5">
                 <span className="label-micro text-cream">SCOOTY RENTAL</span>
               </p>
-              <p className="absolute -bottom-4 -left-2 -rotate-2 border-2 border-ink bg-brand px-3 py-2 shadow-hard-sm sm:-left-5">
-                <span className="font-display text-xl tracking-wider text-white">
+              <p className="sticker absolute bottom-6 left-4 -rotate-2 bg-brand px-3 py-1.5">
+                <span className="font-display text-lg tracking-wider text-white">
                   SREEMANGAL / 3210
                 </span>
               </p>
@@ -113,16 +118,16 @@ export function Hero() {
       </div>
 
       {/* Micro-location strip */}
-      <div className="border-y-2 border-ink bg-cream">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 divide-y-2 divide-ink px-4 sm:px-6 md:grid-cols-2 md:divide-x-2 md:divide-y-0">
-          <p className="label-micro flex items-center justify-center gap-2 py-3 text-ink">
+      <div className="rule-soft bg-cream">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 divide-y divide-ink/10 px-4 sm:px-6 md:grid-cols-2 md:divide-x md:divide-y-0">
+          <p className="label-micro flex items-center justify-center gap-2 py-3.5 text-ink">
             {SITE.locationStrip}
           </p>
           <TrackedLink
             event="click_call"
             source="hero_strip"
             href={SITE.telUrl}
-            className="label-micro flex items-center justify-center gap-2 py-3 text-ink transition-colors hover:text-brand"
+            className="label-micro flex items-center justify-center gap-2 py-3.5 text-ink transition-colors hover:text-brand"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
             CALL {SITE.phoneDisplay}

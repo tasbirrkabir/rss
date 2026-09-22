@@ -29,21 +29,22 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* Red Scooty brand tokens (PRD section 11) */
+  /* Red Scooty brand tokens */
   --color-brand: var(--brand-red);
   --color-brand-foreground: #ffffff;
   --color-ink: #111111;
-  --color-ink-soft: #2a2a2a;
+  --color-ink-soft: #3d3d3d;
   --color-cream: #f4f1ea;
   --color-paper: #ffffff;
   --color-steel: #6f6f6f;
   --color-leaf: #1f4d2e;
+  --color-line: var(--line-soft);
 }
 
 :root {
   --radius: 0.25rem;
 
-  /* PRD color system: off-white 65-75%, black 15-20%, red 10-15% */
+  /* Color system: warm off-white canvas, ink type, red as strategic accent */
   --brand-red: #f5222d;
   --background: #f4f1ea;
   --foreground: #111111;
@@ -63,6 +64,19 @@
   --border: #111111;
   --input: #111111;
   --ring: #f5222d;
+
+  /* Soft structural hairline (the "editorial" border) */
+  --line-soft: rgba(17, 17, 17, 0.14);
+
+  /* Elevation — soft, layered, premium */
+  --shadow-soft: 0 1px 2px rgba(17, 17, 17, 0.05), 0 8px 24px rgba(17, 17, 17, 0.07);
+  --shadow-lift: 0 2px 4px rgba(17, 17, 17, 0.06), 0 16px 40px rgba(17, 17, 17, 0.12);
+  --shadow-deep: 0 4px 8px rgba(17, 17, 17, 0.07), 0 28px 64px rgba(17, 17, 17, 0.16);
+
+  /* Controlled brutalism — reserved for accents only */
+  --shadow-hard: 4px 4px 0 0 #111111;
+  --shadow-hard-red: 4px 4px 0 0 #f5222d;
+  --shadow-hard-sm: 2px 2px 0 0 #111111;
 }
 
 .dark {
@@ -97,11 +111,20 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
   }
   ::selection {
     background: var(--brand-red);
     color: #ffffff;
   }
+
+  /* Visible, brand-consistent focus states */
+  :focus-visible {
+    outline: 2px solid var(--brand-red);
+    outline-offset: 2px;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -116,47 +139,247 @@
   }
 }
 
-/* ---------- Brutalist UI language (PRD section 12) ---------- */
+/* ============================================================
+   TYPOGRAPHY SCALE — refined clamp system
+   ============================================================ */
 
-@utility shadow-hard {
-  box-shadow: 4px 4px 0 0 #111111;
+/* Hero display: dramatic but never breaking layout */
+@utility display-hero {
+  font-family: var(--font-bebas), sans-serif;
+  font-size: clamp(3.5rem, 9vw, 8.25rem);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
 }
 
-@utility shadow-hard-red {
-  box-shadow: 4px 4px 0 0 #f5222d;
+/* Section headlines */
+@utility display-1 {
+  font-family: var(--font-bebas), sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.015em;
 }
 
-@utility shadow-hard-sm {
-  box-shadow: 2px 2px 0 0 #111111;
+/* Sub-section headlines */
+@utility display-2 {
+  font-family: var(--font-bebas), sans-serif;
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
 }
 
-@utility shadow-hard-red-sm {
-  box-shadow: 2px 2px 0 0 #f5222d;
+/* Card / minor headlines */
+@utility display-3 {
+  font-family: var(--font-bebas), sans-serif;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: 0.03em;
 }
 
-@utility shadow-hard-lg {
-  box-shadow: 8px 8px 0 0 #111111;
-}
-
-@utility text-outline {
-  -webkit-text-stroke: 2px #111111;
-  color: transparent;
-}
-
-@utility text-outline-cream {
-  -webkit-text-stroke: 2px #f4f1ea;
-  color: transparent;
-}
-
+/* Editorial kicker / micro label (used sparingly) */
 @utility label-micro {
   font-size: 0.6875rem;
-  line-height: 1;
-  letter-spacing: 0.12em;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 700;
 }
 
-/* ---------- Marquee ---------- */
+/* Long-form body reading measure */
+@utility copy-body {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #3d3d3d;
+}
+
+/* ============================================================
+   BORDERS & SURFACES — editorial hairlines, occasional brutalism
+   ============================================================ */
+
+/* Soft hairline card — the default premium surface */
+@utility card-soft {
+  background: #ffffff;
+  border: 1px solid var(--line-soft);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Hairline rule between editorial blocks */
+@utility rule-soft {
+  border-top: 1px solid var(--line-soft);
+}
+
+/* Dark editorial band (ink section) */
+@utility band-ink {
+  background: #111111;
+  color: #f4f1ea;
+}
+
+/* ============================================================
+   SHADOWS
+   ============================================================ */
+
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+@utility shadow-lift {
+  box-shadow: var(--shadow-lift);
+}
+@utility shadow-deep {
+  box-shadow: var(--shadow-deep);
+}
+
+/* Controlled brutalism — use sparingly (stickers, hero CTA, owner frame) */
+@utility shadow-hard {
+  box-shadow: var(--shadow-hard);
+}
+@utility shadow-hard-red {
+  box-shadow: var(--shadow-hard-red);
+}
+@utility shadow-hard-sm {
+  box-shadow: var(--shadow-hard-sm);
+}
+@utility shadow-hard-lg {
+  box-shadow: 8px 8px 0 0 #111111;
+}
+
+/* ============================================================
+   BUTTONS — tactile states: rest / hover / press / focus
+   ============================================================ */
+
+@utility btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3.5rem;
+  padding: 0 2rem;
+  font-family: var(--font-bebas), sans-serif;
+  font-size: 1.375rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+
+  &:active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+@utility btn-primary {
+  background: #111111;
+  color: #f4f1ea;
+  border: 1px solid #111111;
+
+  &:hover {
+    background: var(--brand-red);
+    border-color: var(--brand-red);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(245, 34, 45, 0.28);
+  }
+}
+
+@utility btn-outline {
+  background: transparent;
+  color: #111111;
+  border: 1px solid rgba(17, 17, 17, 0.35);
+
+  &:hover {
+    border-color: #111111;
+    background: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+@utility btn-red {
+  background: var(--brand-red);
+  color: #ffffff;
+  border: 1px solid var(--brand-red);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(245, 34, 45, 0.32);
+  }
+}
+
+@utility btn-cream {
+  background: #f4f1ea;
+  color: #111111;
+  border: 1px solid #f4f1ea;
+
+  &:hover {
+    background: var(--brand-red);
+    border-color: var(--brand-red);
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+}
+
+@utility btn-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Animated underline for editorial links */
+@utility link-underline {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1.5px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.28s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* ============================================================
+   IMAGE TREATMENT — quiet frames, mask-ready
+   ============================================================ */
+
+@utility img-frame {
+  background: #ffffff;
+  border: 1px solid var(--line-soft);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+/* ============================================================
+   STICKERS — playful street character (10%)
+   ============================================================ */
+
+@utility sticker {
+  display: inline-block;
+  border: 1.5px solid #111111;
+  box-shadow: var(--shadow-hard-sm);
+  font-family: var(--font-bebas), sans-serif;
+  letter-spacing: 0.06em;
+  transform: rotate(-2deg);
+}
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
 
 @keyframes marquee-x {
   from {
@@ -168,10 +391,32 @@
 }
 
 @utility animate-marquee {
-  animation: marquee-x 28s linear infinite;
+  animation: marquee-x 32s linear infinite;
 }
 
-/* ---------- Custom scrollbar (long lists / drawer content) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   GRAIN — ultra-subtle film grain overlay (static, zero cost)
+   ============================================================ */
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* ============================================================
+   CUSTOM SCROLLBAR (long lists / drawer content)
+   ============================================================ */
 
 .scrollbar-brutal {
   scrollbar-width: thin;
@@ -182,7 +427,7 @@
 }
 .scrollbar-brutal::-webkit-scrollbar-track {
   background: #ebe7dd;
-  border-left: 1px solid #111111;
+  border-left: 1px solid rgba(17, 17, 17, 0.12);
 }
 .scrollbar-brutal::-webkit-scrollbar-thumb {
   background: #111111;
@@ -192,8 +437,80 @@
   background: #f5222d;
 }
 
-/* ---------- Safe area (mobile bottom bar) ---------- */
+/* ============================================================
+   SAFE AREA (mobile bottom bar)
+   ============================================================ */
 
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ============================================================
+   LEAFLET MAP — brand-tuned
+   ============================================================ */
+
+.leaflet-container {
+  font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  background: #e8e4da;
+  outline: none;
+}
+
+/* Brand marker */
+.smg-marker {
+  background: transparent;
+  border: none;
+}
+.smg-marker-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  border: 2.5px solid #111111;
+  background: #f5222d;
+  box-shadow: 0 2px 6px rgba(17, 17, 17, 0.35);
+  transition: transform 0.15s ease;
+}
+.smg-marker-pin:hover {
+  transform: scale(1.15);
+}
+.smg-marker-pin--hq {
+  background: #111111;
+  border-color: #f5222d;
+}
+.smg-marker-pin--trek {
+  background: #1f4d2e;
+}
+
+/* Popup tuned to the editorial language */
+.smg-popup .leaflet-popup-content-wrapper {
+  border-radius: 2px;
+  border: 1.5px solid #111111;
+  box-shadow: var(--shadow-lift);
+  padding: 0;
+}
+.smg-popup .leaflet-popup-content {
+  margin: 0;
+  width: 244px !important;
+  font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+}
+.smg-popup .leaflet-popup-tip {
+  border: 1.5px solid #111111;
+  box-shadow: none;
+}
+.smg-popup a.leaflet-popup-close-button {
+  color: #111111;
+  padding: 6px 8px 0 0;
+  font-size: 18px;
+}
+
+/* Attribution kept visible but quiet */
+.leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.82) !important;
+  font-size: 10px !important;
+  color: #6f6f6f;
+}
+.leaflet-control-attribution a {
+  color: #444;
 }

@@ -9,10 +9,10 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t-2 border-ink bg-ink pb-24 text-cream md:pb-0">
+    <footer className="band-ink pb-24 md:pb-0">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         {/* Giant statement */}
-        <div className="border-b-2 border-cream/20 py-12 md:py-16">
+        <div className="border-b border-cream/15 py-12 md:py-16">
           <p className="label-micro text-brand">UNTIL THEN</p>
           <p className="mt-3 font-display text-[clamp(56px,10vw,140px)] leading-[0.9] tracking-wide">
             SEE YOU
@@ -40,7 +40,7 @@ export function Footer() {
                 href={SITE.facebook}
                 external
                 ariaLabel="Red Scooty on Facebook"
-                className="inline-flex h-12 w-12 items-center justify-center border-2 border-cream text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
+                className="inline-flex h-12 w-12 items-center justify-center border border-cream/40 text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
               >
                 <Facebook className="h-5 w-5" aria-hidden="true" />
               </TrackedLink>
@@ -50,7 +50,7 @@ export function Footer() {
                 href={SITE.youtube.watchUrl}
                 external
                 ariaLabel="Featured Sreemangal tour video on YouTube"
-                className="inline-flex h-12 w-12 items-center justify-center border-2 border-cream text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
+                className="inline-flex h-12 w-12 items-center justify-center border border-cream/40 text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
               >
                 <Youtube className="h-5 w-5" aria-hidden="true" />
               </TrackedLink>
@@ -60,7 +60,7 @@ export function Footer() {
                 href={SITE.mapsUrl}
                 external
                 ariaLabel="Red Scooty Sreemangal on Google Maps"
-                className="inline-flex h-12 w-12 items-center justify-center border-2 border-cream text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
+                className="inline-flex h-12 w-12 items-center justify-center border border-cream/40 text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
               >
                 <MapPin className="h-5 w-5" aria-hidden="true" />
               </TrackedLink>
@@ -144,7 +144,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-2 border-t-2 border-cream/20 py-6 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-2 border-t border-cream/15 py-6 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
             &copy; {year} {SITE.fullName}. All rides confirmed personally.
           </p>

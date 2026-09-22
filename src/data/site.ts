@@ -31,15 +31,22 @@ export const SITE = {
   plusCode: "8P3M+JMQ",
 
   facebook: "https://www.facebook.com/redscootysmg/",
-  instagram: "https://www.instagram.com/redscootysmg/",
   // Owner-provided share link to the verified Google Maps listing.
   mapsUrl: "https://maps.app.goo.gl/ZE53GmbXSVHsUJQJ7",
 
-  /** Verified listing coordinates (from the owner's Maps share link). */
+  /** Verified listing coordinates (owner Maps share link + plus code 8P3M+JMQ). */
   coords: {
     lat: 24.3040891,
     lng: 91.7342349,
   },
+
+  /** Verified public slogans from the business's Facebook posts. */
+  slogans: [
+    "NO TENSION · NO FUEL COST · FULL FREEDOM",
+    "ECO-FRIENDLY · AFFORDABLE · FUN",
+    "RIDE SMART, RIDE GREEN",
+    "EXPLORE SREEMANGAL THE RED SCOOTY WAY",
+  ],
 
   /** The person behind the phone — supplied and approved by the owner. */
   owner: {

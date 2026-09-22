@@ -3,25 +3,25 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import type { JournalArticle } from "@/data/journal";
-import { Reveal } from "@/components/site/reveal";
+import { StaggerItem } from "@/components/site/reveal";
 
 type JournalCardProps = {
   article: JournalArticle;
-  delay?: number;
 };
 
 /**
- * Field note card for the journal grid. Hover: lift + hard shadow grow.
+ * Field note card for the journal grid. Card-soft surface, quiet chip
+ * category, subtle hover lift (≤6px) and a gentle image zoom.
  */
-export function JournalCard({ article, delay = 0 }: JournalCardProps) {
+export function JournalCard({ article }: JournalCardProps) {
   return (
-    <Reveal delay={delay} className="h-full">
-      <article className="group flex h-full flex-col border-2 border-ink bg-paper shadow-hard transition-all duration-200 hover:-translate-y-1 hover:shadow-hard-lg">
+    <StaggerItem className="h-full">
+      <article className="card-soft group flex h-full flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lift">
         <Link
           href={`/journal/${article.slug}`}
           aria-hidden="true"
           tabIndex={-1}
-          className="relative block aspect-[4/3] overflow-hidden border-b-2 border-ink"
+          className="relative block aspect-[4/3] overflow-hidden border-b border-ink/10"
         >
           <Image
             src={article.image}
@@ -32,9 +32,11 @@ export function JournalCard({ article, delay = 0 }: JournalCardProps) {
           />
         </Link>
 
-        <div className="flex flex-1 flex-col p-5">
-          <p className="label-micro text-brand">{article.category}</p>
-          <h3 className="mt-2 font-display text-3xl leading-[0.95] tracking-wide text-ink">
+        <div className="flex flex-1 flex-col p-5 sm:p-6">
+          <p className="label-micro inline-flex w-fit border border-ink/15 px-2 py-1 text-steel">
+            {article.category}
+          </p>
+          <h3 className="display-3 mt-3 text-ink">
             <Link
               href={`/journal/${article.slug}`}
               className="transition-colors hover:text-brand"
@@ -52,7 +54,7 @@ export function JournalCard({ article, delay = 0 }: JournalCardProps) {
             </p>
             <Link
               href={`/journal/${article.slug}`}
-              className="label-micro mt-3 inline-flex items-center gap-1.5 text-ink underline-offset-4 transition-colors hover:text-brand hover:underline"
+              className="label-micro link-underline mt-3 inline-flex w-fit items-center gap-1.5 text-ink transition-colors hover:text-brand"
               aria-label={`Read the note: ${article.title}`}
             >
               READ
@@ -64,6 +66,6 @@ export function JournalCard({ article, delay = 0 }: JournalCardProps) {
           </div>
         </div>
       </article>
-    </Reveal>
+    </StaggerItem>
   );
 }

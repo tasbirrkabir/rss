@@ -23,7 +23,7 @@ const bookingSchema = z.object({
   duration: z.enum(["HALF_DAY", "FULL_DAY", "MULTI_DAY"]).optional(),
   vehicleId: z.enum(["mini-scooty", "standard-scooty"]).nullish(),
   riders: z.string().trim().max(40, "Riders field is too long.").optional(),
-  routeRef: z.string().trim().max(80).optional(),
+  routeRef: z.string().trim().max(80).nullish(),
   name: z
     .string()
     .trim()

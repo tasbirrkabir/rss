@@ -29,7 +29,7 @@ type Stage = {
 const STAGES: Stage[] = [
   {
     word: "TEA",
-    image: "/images/dest-tea-gardens.png",
+    image: "/images/dest-tea-gardens.webp",
     alt: "Rolling green tea garden rows in Sreemangal",
     outlined: false,
     range: [0, 0.22],
@@ -38,7 +38,7 @@ const STAGES: Stage[] = [
   },
   {
     word: "FOREST",
-    image: "/images/dest-lawachara.png",
+    image: "/images/dest-lawachara.webp",
     alt: "Sunlit rainforest trail inside Lawachara National Park",
     outlined: true,
     range: [0.18, 0.44],
@@ -47,7 +47,7 @@ const STAGES: Stage[] = [
   },
   {
     word: "ROAD",
-    image: "/images/story-road.png",
+    image: "/images/story-road.webp",
     alt: "Open rural road stretching ahead through the greenery",
     outlined: false,
     range: [0.4, 0.62],
@@ -56,7 +56,7 @@ const STAGES: Stage[] = [
   },
   {
     word: "FREEDOM",
-    image: "/images/story-freedom.png",
+    image: "/images/story-freedom.webp",
     alt: "Rider on a scooty against a wide sunset sky",
     outlined: true,
     range: [0.58, 0.84],
@@ -133,15 +133,12 @@ export function ScrollStory() {
       <section
         id="the-story"
         aria-labelledby="story-heading"
-        className="border-y-2 border-ink bg-ink py-20 text-cream md:py-28"
+        className="band-ink py-20 md:py-28"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <Reveal>
             <p className="label-micro text-brand">THE STORY</p>
-            <h2
-              id="story-heading"
-              className="mt-2 font-display text-[clamp(48px,7vw,96px)] leading-[0.9] text-cream"
-            >
+            <h2 id="story-heading" className="display-1 mt-2 text-cream">
               TEA. FOREST. ROAD. <span className="text-brand">FREEDOM.</span>
             </h2>
           </Reveal>
@@ -149,7 +146,7 @@ export function ScrollStory() {
             {STAGES.map((s) => (
               <figure
                 key={s.word}
-                className="relative aspect-[4/3] overflow-hidden border-2 border-cream/40"
+                className="relative aspect-[4/3] overflow-hidden"
               >
                 <Image
                   src={s.image}
@@ -169,16 +166,13 @@ export function ScrollStory() {
             ))}
           </div>
           <Reveal delay={0.1}>
-            <div className="mt-12 flex flex-col items-start gap-6 border-2 border-cream/40 p-8">
-              <p className="font-display text-[clamp(48px,7vw,96px)] leading-[0.9] text-cream">
+            <div className="mt-12 flex flex-col items-start gap-6">
+              <p className="display-1 text-cream">
                 YOUR <span className="text-brand">TURN.</span>
               </p>
-              <Link
-                href="/book"
-                className="inline-flex h-14 items-center border-2 border-cream bg-brand px-8 font-display text-2xl tracking-wider text-white shadow-hard transition-all hover:-translate-y-0.5"
-              >
-                BOOK A RIDE{" "}
-                <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
+              <Link href="/book" className="btn-base btn-red">
+                BOOK A RIDE
+                <ArrowRight className="ml-1 h-5 w-5" aria-hidden="true" />
               </Link>
             </div>
           </Reveal>
@@ -197,7 +191,7 @@ export function ScrollStory() {
 
           {/* Section marker */}
           <div className="pointer-events-none absolute top-24 left-4 z-10 sm:left-6">
-            <p className="label-micro inline-block border-2 border-cream/60 bg-ink/80 px-2 py-1.5 text-cream">
+            <p className="label-micro inline-block bg-ink/75 px-2.5 py-1.5 text-cream/90 backdrop-blur-sm">
               THE STORY — RIDE THROUGH SREEMANGAL
             </p>
           </div>
@@ -208,15 +202,18 @@ export function ScrollStory() {
             className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-ink px-4 text-center"
             aria-hidden="false"
           >
-            <p className="font-display text-[clamp(72px,14vw,200px)] leading-[0.9] text-cream">
+            <p className="font-display text-[clamp(64px,12vw,180px)] leading-[0.9] text-cream">
               YOUR <span className="text-brand">TURN.</span>
             </p>
             <Link
               href="/book"
-              className="mt-8 inline-flex h-16 items-center border-2 border-cream bg-brand px-10 font-display text-3xl tracking-wider text-white shadow-hard transition-all hover:-translate-y-0.5"
+              className="btn-base btn-red group mt-9 h-16 px-10 text-3xl"
             >
-              BOOK A RIDE{" "}
-              <ArrowRight className="ml-2 h-6 w-6" aria-hidden="true" />
+              BOOK A RIDE
+              <ArrowRight
+                className="h-6 w-6 transition-transform duration-200 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
             </Link>
           </motion.div>
         </div>

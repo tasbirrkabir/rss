@@ -7,7 +7,7 @@ const BENEFITS = [
     n: "01",
     icon: Eye,
     title: "FREEDOM",
-    body: "Explore on your own schedule. Take the scenic route - it is usually better.",
+    body: "Explore on your own schedule. Take the scenic route — it is usually better.",
   },
   {
     n: "02",
@@ -24,8 +24,8 @@ const BENEFITS = [
 ] as const;
 
 /**
- * Home brand intro - the editorial statement section.
- * Giant claim -> two-column editorial body -> full-bleed red rule -> benefit minis.
+ * Home brand intro — the editorial statement section.
+ * Giant claim -> editorial body -> full-bleed red rule -> benefit minis.
  */
 export function BrandIntro() {
   return (
@@ -34,13 +34,11 @@ export function BrandIntro() {
         <Reveal>
           <h2
             id="brand-intro-heading"
-            className="font-display text-[clamp(48px,7.5vw,110px)] leading-[0.9] text-ink"
+            className="max-w-4xl font-display text-[clamp(44px,6.5vw,100px)] leading-[0.92] text-ink"
           >
-            SREEMANGAL
-            <br />
-            <span className="text-outline">IS BETTER</span>
-            <br />
-            FROM A <span className="text-brand">SEAT.</span>
+            SREEMANGAL IS BETTER{" "}
+            <span className="text-steel/45">FROM A</span>{" "}
+            <span className="text-brand">SEAT.</span>
           </h2>
         </Reveal>
 
@@ -61,23 +59,27 @@ export function BrandIntro() {
         </Reveal>
       </div>
 
-      {/* Giant full-bleed red rule */}
-      <div className="mt-14 h-2 w-full bg-brand md:mt-20 md:h-3" aria-hidden="true" />
+      {/* Full-bleed red rule — the one loud brand gesture in this section */}
+      <div className="mt-14 h-1.5 w-full bg-brand md:mt-20" aria-hidden="true" />
 
-      {/* Benefit minis - compact row */}
-      <div className="mx-auto max-w-7xl px-4 pt-12 pb-4 sm:px-6 md:pb-8">
+      {/* Benefit minis — quiet editorial cards */}
+      <div className="mx-auto max-w-7xl px-4 pb-4 pt-12 sm:px-6 md:pb-8">
         <div className="grid gap-4 md:grid-cols-3">
           {BENEFITS.map((b, i) => (
             <Reveal key={b.n} delay={i * 0.08}>
-              <article className="flex h-full items-start gap-4 border-2 border-ink bg-paper p-4 shadow-hard-sm">
-                <b.icon
-                  className="mt-0.5 h-6 w-6 shrink-0 text-brand"
-                  strokeWidth={2.2}
-                  aria-hidden="true"
-                />
+              <article className="group flex h-full items-start gap-4 border-b border-ink/10 bg-transparent p-4 transition-colors hover:border-brand/50">
+                <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center border border-ink/10 bg-paper transition-colors group-hover:border-brand/40">
+                  <b.icon
+                    className="h-5 w-5 text-brand"
+                    aria-hidden="true"
+                  />
+                </span>
                 <div>
-                  <p className="font-display text-2xl leading-none tracking-wide text-ink">
-                    {b.title}
+                  <p className="flex items-baseline gap-2">
+                    <span className="label-micro text-steel">{b.n}</span>
+                    <span className="font-display text-2xl leading-none tracking-wide text-ink">
+                      {b.title}
+                    </span>
                   </p>
                   <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
                     {b.body}

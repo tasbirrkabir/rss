@@ -17,8 +17,10 @@ export const metadata: Metadata = {
 };
 
 /**
- * /scooties — the fleet page. Two real vehicles from the data layer plus an
- * honest "more models on request" tile. No invented third model, no prices.
+ * /scooties — the fleet page. Premium product-catalog feel: large hero image
+ * per scooty, refined hairline spec rows, honest pricing and availability.
+ * Two real vehicles from the data layer plus an honest "more models on
+ * request" tile. No invented third model, no prices.
  */
 export default function ScootiesPage() {
   return (
@@ -35,15 +37,17 @@ export default function ScootiesPage() {
             </>
           }
           intro="Automatic scooties sized for Sreemangal — tea-garden lanes, forest roads and everything in between. Rates and full specs are confirmed directly with Red Scooty; ask when you book."
-          meta={["AUTOMATIC", "TOURIST FRIENDLY", "BOOK BY REQUEST"]}
+          meta={["AUTOMATIC", "TOURIST FRIENDLY", "CONFIRM AVAILABILITY"]}
         />
         <FleetShowcase />
         <SpecsStrip />
         <IncludedAsk />
         <ScootiesCrossLinks />
-        <div className="bg-cream">
+        <div className="rule-soft bg-cream">
           <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-            <p className="label-micro text-steel">{FLEET_NOTE.toUpperCase()}</p>
+            <p className="label-micro max-w-4xl leading-relaxed text-steel">
+              {FLEET_NOTE.toUpperCase()}
+            </p>
           </div>
         </div>
       </main>

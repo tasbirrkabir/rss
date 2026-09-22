@@ -5,21 +5,21 @@ import { SITE, whatsappMessageUrl } from "@/data/site";
 import { Reveal } from "@/components/site/reveal";
 
 /**
- * Final home CTA band - the "YOUR TURN" moment (rail section 05).
+ * Final home CTA band — the "YOUR TURN" moment.
  */
 export function FinalCta() {
   return (
     <section
       id="your-turn"
       aria-labelledby="final-cta-heading"
-      className="bg-ink py-20 text-cream md:py-28"
+      className="band-ink py-20 md:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <Reveal>
           <p className="label-micro text-brand">NO FORMS TO STUDY</p>
           <h2
             id="final-cta-heading"
-            className="mt-3 font-display text-[clamp(64px,11vw,170px)] leading-[0.88] tracking-tight text-cream"
+            className="mt-3 font-display text-[clamp(56px,9vw,140px)] leading-[0.9] text-cream"
           >
             READY?
             <br />
@@ -29,18 +29,18 @@ export function FinalCta() {
 
         <Reveal delay={0.1}>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Link
-              href="/book"
-              className="inline-flex h-16 items-center justify-center border-2 border-cream bg-brand px-10 font-display text-3xl tracking-wider text-white shadow-hard transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hard-red active:translate-x-0 active:translate-y-0 active:shadow-hard-sm"
-            >
-              BOOK A SCOOTY{" "}
-              <ArrowRight className="ml-2 h-6 w-6" aria-hidden="true" />
+            <Link href="/book" className="btn-base btn-red group h-16 px-10 text-2xl sm:text-3xl">
+              BOOK A SCOOTY
+              <ArrowRight
+                className="h-6 w-6 transition-transform duration-200 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
             </Link>
             <a
               href={SITE.telUrl}
-              className="inline-flex h-16 items-center justify-center border-2 border-cream bg-transparent px-8 font-display text-3xl tracking-wider text-cream transition-all hover:-translate-y-0.5 hover:bg-cream hover:text-ink"
+              className="btn-base btn-cream h-16 px-8 text-2xl sm:text-3xl"
             >
-              <Phone className="mr-2 h-5 w-5" aria-hidden="true" />
+              <Phone className="mr-1 h-5 w-5" aria-hidden="true" />
               {SITE.phoneDisplay}
             </a>
           </div>
@@ -52,7 +52,7 @@ export function FinalCta() {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-bold text-brand underline decoration-2 underline-offset-4 hover:text-cream"
+              className="link-underline font-bold text-brand"
             >
               Message us on WhatsApp
             </a>{" "}

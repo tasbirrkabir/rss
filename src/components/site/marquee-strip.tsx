@@ -1,31 +1,29 @@
-const ITEMS = [
-  "DON'T JUST VISIT SREEMANGAL. RIDE IT.",
-  "TEA GARDENS",
-  "LAWACHARA",
-  "MADHABPUR LAKE",
-  "BAIKKA BEEL",
-  "HIDDEN ROADS",
-];
+import { SITE } from "@/data/site";
 
 function MarqueeRun() {
   return (
     <div className="flex shrink-0 items-center" aria-hidden="true">
-      {ITEMS.map((item, i) => (
+      {SITE.slogans.map((item, i) => (
         <span key={i} className="flex items-center">
-          <span className="whitespace-nowrap px-6 font-display text-2xl tracking-wider">
+          <span className="whitespace-nowrap px-7 font-display text-xl tracking-[0.12em]">
             {item}
           </span>
-          <span className="text-brand">{"///"}</span>
+          <span className="text-brand" aria-hidden="true">
+            ✦
+          </span>
         </span>
       ))}
     </div>
   );
 }
 
-/** Subtle micro-branding marquee (PRD sections 15 / 39). */
+/**
+ * Micro-branding marquee — the verified slogans from the business's
+ * public Facebook posts, on a quiet ink band (PRD sections 15 / 39).
+ */
 export function MarqueeStrip() {
   return (
-    <div className="overflow-hidden border-b-2 border-ink bg-ink py-3 text-cream">
+    <div className="overflow-hidden bg-ink py-3.5 text-cream">
       <div className="flex w-max animate-marquee">
         <MarqueeRun />
         <MarqueeRun />

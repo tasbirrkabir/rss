@@ -59,9 +59,9 @@ export function RideStatus() {
   return (
     <section
       aria-label="Live ride status (demo data)"
-      className="border-b-2 border-ink bg-paper"
+      className="border-b border-ink/10 bg-paper"
     >
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 md:py-10">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-12">
         <p className="label-micro flex items-center gap-3 text-brand">
           <span className="h-0.5 w-10 bg-brand" aria-hidden="true" />
           LIVE RIDE STATUS
@@ -97,7 +97,7 @@ function StatusBlock({
   note: string;
 }) {
   return (
-    <div className="border-2 border-ink bg-cream p-5 shadow-hard-sm">
+    <div className="card-soft p-5">
       <div className="flex items-center justify-between gap-3">
         <p className="label-micro text-steel">{label}</p>
         <DemoBadge>DEMO DATA</DemoBadge>
