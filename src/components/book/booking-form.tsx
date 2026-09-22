@@ -17,10 +17,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { TrackedLink } from "@/components/site/tracked-link";
+import { useSiteConfig } from "@/components/site/site-config-provider";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { track } from "@/lib/analytics";
-import { whatsappMessageUrl } from "@/data/site";
+import type { ScootyRecord } from "@/lib/cms";
 import { findRoute } from "@/data/ride-routes";
 import { findMood } from "@/data/ride-moods";
 
@@ -76,17 +77,6 @@ const DURATION_LABELS: Record<DurationValue, string> = {
   HALF_DAY: "HALF DAY",
   FULL_DAY: "FULL DAY",
   MULTI_DAY: "MULTI DAY",
-};
-
-const VEHICLE_OPTIONS = [
-  { value: "none", label: "NO PREFERENCE" },
-  { value: "mini-scooty", label: "MINI SCOOTY" },
-  { value: "standard-scooty", label: "STANDARD SCOOTY" },
-] as const;
-
-const VEHICLE_LABELS: Record<string, string> = {
-  "mini-scooty": "MINI SCOOTY",
-  "standard-scooty": "STANDARD SCOOTY",
 };
 
 const PICKUP_OPTIONS = [
@@ -163,7 +153,8 @@ function FieldErrorLine({ message }: { message?: string }) {
   );
 }
 
-export function BookingForm() {
+export function BookingForm({ vehicles }: { vehicles: ScootyRecord[] }) {
+  const { whatsappUrl: wa } = useSiteConfig();
   const { toast } = useToast();
   const searchParams = useSearchParams();
 
@@ -260,6 +251,15 @@ export function BookingForm() {
 
   const duration = watch("duration");
   const vehicleId = watch("vehicleId");
+  const vehicleOptions = useMemo(
+    () => [
+      { value: "none", label: "NO PREFERENCE" },
+      ...vehicles.map((v) => ({ value: v.id, label: v.name })),
+    ],
+    [vehicles],
+  );
+  const vehicleLabel = (id: string | null | undefined) =>
+    vehicles.find((v) => v.id === id)?.name ?? id ?? "";
   const pickupPreference = watch("pickupPreference");
 
   const errorFor = (field: keyof FormValues): string | undefined =>
@@ -325,7 +325,7 @@ export function BookingForm() {
 
   const whatsappHandoff = useMemo(() => {
     if (!success) {
-      return whatsappMessageUrl(
+      return wa(
         "Hi Red Scooty! I just sent a booking request on your website. Can you confirm it?",
       );
     }
@@ -335,7 +335,7 @@ export function BookingForm() {
       `Duration: ${DURATION_LABELS[success.duration]}`,
       `Scooty: ${
         success.vehicleId && success.vehicleId !== "none"
-          ? (VEHICLE_LABELS[success.vehicleId] ?? success.vehicleId)
+          ? vehicleLabel(success.vehicleId)
           : "No preference"
       }`,
     ];
@@ -346,7 +346,7 @@ export function BookingForm() {
     if (success.pickupPreference) {
       lines.push(`Pickup: ${PICKUP_LABELS[success.pickupPreference]}`);
     }
-    return whatsappMessageUrl(lines.join("\n"));
+    return wa(lines.join("\n"));
   }, [success]);
 
   const resetForAnother = () => {
@@ -393,7 +393,7 @@ export function BookingForm() {
               <dt className="label-micro text-steel">SCOOTY</dt>
               <dd className="font-display text-xl tracking-wide text-ink">
                 {success.vehicleId && success.vehicleId !== "none"
-                  ? (VEHICLE_LABELS[success.vehicleId] ?? success.vehicleId)
+                  ? vehicleLabel(success.vehicleId)
                   : "NO PREFERENCE"}
               </dd>
             </div>
@@ -532,7 +532,7 @@ export function BookingForm() {
             aria-labelledby="booking-vehicle-label"
             className="mt-2 flex flex-wrap gap-2"
           >
-            {VEHICLE_OPTIONS.map((opt) => (
+            {vehicleOptions.map((opt) => (
               <SegmentOption
                 key={opt.value}
                 selected={vehicleId === opt.value}

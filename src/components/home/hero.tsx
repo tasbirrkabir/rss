@@ -6,17 +6,18 @@ import Link from "next/link";
 import { ArrowDown, ArrowRight, Phone } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
-import { SITE } from "@/data/site";
+import { useSiteConfig } from "@/components/site/site-config-provider";
 import { track } from "@/lib/analytics";
 import { TrackedLink } from "@/components/site/tracked-link";
 import { Reveal } from "@/components/site/reveal";
 
 /**
- * Home hero — "DON'T JUST VISIT SREEMANGAL. RIDE IT."
+ * Home hero — headline, intro and image are all managed from /admin/home.
  * Cinematic composition: oversized display type against a single dominant
  * image, quiet parallax, one strong CTA and one exploration CTA.
  */
 export function Hero() {
+  const { home, config } = useSiteConfig();
   const ref = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
@@ -38,24 +39,24 @@ export function Hero() {
             <div className="flex items-center gap-3">
               <span className="h-px w-10 bg-brand" aria-hidden="true" />
               <p className="label-micro text-brand">
-                THE WAY YOU EXPLORE SREEMANGAL
+                {home.heroKicker}
               </p>
             </div>
           </Reveal>
 
           <Reveal delay={0.08}>
             <h1 className="display-hero mt-5 text-ink">
-              DON&apos;T JUST VISIT
+              {home.heroLine1}
               <br />
-              SREEMANGAL.
+              {home.heroLine2}
               <br />
-              <span className="text-brand">RIDE IT.</span>
+              <span className="text-brand">{home.heroLine3}</span>
             </h1>
           </Reveal>
 
           <Reveal delay={0.16}>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
-              {SITE.heroSub}
+              {home.heroSub}
             </p>
           </Reveal>
 
@@ -84,7 +85,7 @@ export function Hero() {
 
           <Reveal delay={0.3}>
             <p className="label-micro mt-9 text-steel">
-              BOOKING BY REQUEST · CONFIRMED PERSONALLY · NO PAYMENT ONLINE
+              {home.bookingNote}
             </p>
           </Reveal>
         </motion.div>
@@ -95,8 +96,8 @@ export function Hero() {
             <div className="relative mx-auto max-w-md lg:max-w-none">
               <div className="relative overflow-hidden img-frame">
                 <Image
-                  src="/images/hero-scooty.webp"
-                  alt="Red scooty parked on a quiet road winding through the green tea gardens of Sreemangal"
+                  src={home.heroImage}
+                  alt={home.heroImageAlt}
                   width={864}
                   height={1152}
                   priority
@@ -118,16 +119,16 @@ export function Hero() {
       <div className="rule-soft bg-cream">
         <div className="mx-auto grid max-w-7xl grid-cols-1 divide-y divide-ink/10 px-4 sm:px-6 md:grid-cols-2 md:divide-x md:divide-y-0">
           <p className="label-micro flex items-center justify-center gap-2 py-3.5 text-ink">
-            {SITE.locationStrip}
+            {home.locationStrip}
           </p>
           <TrackedLink
             event="click_call"
             source="hero_strip"
-            href={SITE.telUrl}
+            href={config.telUrl}
             className="label-micro flex items-center justify-center gap-2 py-3.5 text-ink transition-colors hover:text-brand"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
-            CALL {SITE.phoneDisplay}
+            CALL {config.phoneDisplay}
           </TrackedLink>
         </div>
       </div>

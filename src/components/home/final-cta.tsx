@@ -1,13 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, Phone } from "lucide-react";
 
-import { SITE, whatsappMessageUrl } from "@/data/site";
+import { useSiteConfig } from "@/components/site/site-config-provider";
 import { Reveal } from "@/components/site/reveal";
 
 /**
  * Final home CTA band — the "YOUR TURN" moment.
  */
 export function FinalCta() {
+  const { config, whatsappUrl: wa } = useSiteConfig();
   return (
     <section
       id="your-turn"
@@ -37,17 +40,17 @@ export function FinalCta() {
               />
             </Link>
             <a
-              href={SITE.telUrl}
+              href={config.telUrl}
               className="btn-base btn-cream h-16 px-8 text-2xl sm:text-3xl"
             >
               <Phone className="mr-1 h-5 w-5" aria-hidden="true" />
-              {SITE.phoneDisplay}
+              {config.phoneDisplay}
             </a>
           </div>
           <p className="mt-6 text-sm text-cream/70">
             Prefer chat?{" "}
             <a
-              href={whatsappMessageUrl(
+              href={wa(
                 "Hi Red Scooty! I'd like to book a scooty in Sreemangal.",
               )}
               target="_blank"

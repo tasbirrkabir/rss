@@ -14,7 +14,7 @@ model BookingRequest {
   type             String   @default("BOOKING") // BOOKING | MESSAGE (contact form)
   rideDate         String? // ISO date (yyyy-mm-dd) — stored as string: demo scope, timezone-safe
   duration         String? // HALF_DAY | FULL_DAY | MULTI_DAY
-  vehicleId        String? // mini-scooty | standard-scooty | null = no preference
+  vehicleId        String? // scooty slug or null = no preference
   riders           String? // "1", "2", "2 adults + 1 child", ... free text
   routeRef         String? // route/mood slug from the ride builders, e.g. "tea-garden-loop"
   name             String
@@ -24,4 +24,91 @@ model BookingRequest {
   status           String   @default("NEW")
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+// ---------- Admin / CMS ----------
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         String    @default("ADMIN") // OWNER | ADMIN
+  active       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  lastLoginAt  DateTime?
+  sessions     Session[]
+}
+
+model Session {
+  id        String   @id // opaque random token, stored in an httpOnly cookie
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+// Fleet — editable from /admin/scooties
+model Scooty {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  category    String   @default("")
+  tagline     String   @default("")
+  description String   @default("")
+  priceLabel  String   @default("৳ — / DAY")
+  priceNote   String   @default("")
+  features    String   @default("[]") // JSON array of strings (SQLite has no lists)
+  image       String   @default("")
+  imageAlt    String   @default("")
+  badge       String   @default("")
+  active      Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Global contact / site details — editable from /admin/settings (single row id=1)
+model SiteConfig {
+  id             Int      @id @default(1)
+  phoneDisplay   String
+  phoneIntl      String
+  whatsappNumber String
+  email          String
+  addressLine1   String
+  addressLine2   String
+  plusCode       String
+  facebookUrl    String
+  youtubeId      String
+  mapsUrl        String
+  lat            Float
+  lng            Float
+  updatedAt      DateTime @updatedAt
+}
+
+// Home page content — editable from /admin/home (single row id=1)
+model HomeContent {
+  id            Int      @id @default(1)
+  heroKicker    String
+  heroLine1     String
+  heroLine2     String
+  heroLine3     String // highlighted red line
+  heroSub       String
+  heroImage     String
+  heroImageAlt  String
+  bookingNote   String
+  locationStrip String
+  slogans       String // newline-separated marquee slogans
+  followers     String
+  posts         String
+  updatedAt     DateTime @updatedAt
+}
+
+// Audit trail shown on the admin dashboard
+model ActivityLog {
+  id        String   @id @default(cuid())
+  actor     String // user email (or "system")
+  action    String // LOGIN | LOGOUT | SCOOTY_CREATE | ...
+  detail    String   @default("")
+  createdAt DateTime @default(now())
 }

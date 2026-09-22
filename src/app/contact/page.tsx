@@ -19,7 +19,8 @@ import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/reveal";
 import { TrackedLink } from "@/components/site/tracked-link";
 import { QuickMessageForm } from "@/components/contact/quick-message-form";
 import { LazySreemangalMap } from "@/components/map/lazy-map";
-import { SITE, whatsappMessageUrl } from "@/data/site";
+import { getSiteConfig } from "@/lib/cms";
+import { whatsappUrl } from "@/lib/public-content";
 import type { AnalyticsEvent } from "@/lib/analytics";
 
 export const metadata: Metadata = {
@@ -88,7 +89,8 @@ function MethodCard({
   return <div className={cardClass}>{inner}</div>;
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const config = await getSiteConfig();
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -130,9 +132,9 @@ export default function ContactPage() {
                 <MethodCard
                   icon={Phone}
                   label="CALL"
-                  detail={SITE.phoneDisplay}
+                  detail={config.phoneDisplay}
                   note="Direct line - quick questions get quick answers."
-                  href={SITE.telUrl}
+                  href={config.telUrl}
                   event="click_call"
                 />
               </StaggerItem>
@@ -140,9 +142,9 @@ export default function ContactPage() {
                 <MethodCard
                   icon={MessageCircle}
                   label="WHATSAPP"
-                  detail={SITE.phoneDisplay}
+                  detail={config.phoneDisplay}
                   note="Message any time - we reply personally between rides."
-                  href={whatsappMessageUrl(
+                  href={whatsappUrl(config.whatsappNumber, 
                     "Hi Red Scooty! I'd like to ask about renting a scooty in Sreemangal.",
                   )}
                   event="click_whatsapp"
@@ -156,7 +158,7 @@ export default function ContactPage() {
                   label="FACEBOOK"
                   detail="Red Scooty Sreemangal"
                   note="Fastest reply - message the page and we'll get back to you."
-                  href={SITE.facebook}
+                  href={config.facebook}
                   event="click_facebook"
                   external
                 />
@@ -165,9 +167,9 @@ export default function ContactPage() {
                 <MethodCard
                   icon={Mail}
                   label="EMAIL"
-                  detail={SITE.email}
+                  detail={config.email}
                   note="For bookings and general questions - we read everything."
-                  href={`mailto:${SITE.email}`}
+                  href={`mailto:${config.email}`}
                 />
               </StaggerItem>
               <StaggerItem className="h-full">
@@ -176,7 +178,7 @@ export default function ContactPage() {
                   label="GOOGLE MAPS"
                   detail="GET DIRECTIONS"
                   note="Verified listing - find us on Jalalia Road, the tea capital is easy to navigate."
-                  href={SITE.mapsUrl}
+                  href={config.mapsUrl}
                   event="get_directions"
                   external
                 />
@@ -221,13 +223,13 @@ export default function ContactPage() {
                     <div>
                       <p className="label-micro text-steel">ADDRESS</p>
                       <p className="mt-1 font-display text-2xl leading-tight tracking-wide text-ink">
-                        {SITE.addressLine1}
+                        {config.addressLine1}
                       </p>
                       <p className="text-sm text-ink-soft">
-                        {SITE.addressLine2}
+                        {config.addressLine2}
                       </p>
                       <p className="label-micro mt-2 text-steel">
-                        PLUS CODE · {SITE.plusCode}
+                        PLUS CODE · {config.plusCode}
                       </p>
                     </div>
                   </div>
@@ -245,7 +247,7 @@ export default function ContactPage() {
                   </div>
                   <div className="flex flex-col gap-4 border-t border-ink/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
                     <div>
-                      <p className="label-micro text-steel">VERIFIED LISTING · PLUS CODE {SITE.plusCode}</p>
+                      <p className="label-micro text-steel">VERIFIED LISTING · PLUS CODE {config.plusCode}</p>
                       <p className="mt-1 text-sm text-ink-soft">
                         Jalalia Road, Sreemangal - the tea capital of Bangladesh.
                       </p>
@@ -253,7 +255,7 @@ export default function ContactPage() {
                     <TrackedLink
                       event="get_directions"
                       source="contact_map"
-                      href={SITE.mapsUrl}
+                      href={config.mapsUrl}
                       external
                       className="btn-base btn-red group shrink-0"
                     >

@@ -8,6 +8,7 @@ import { FleetShowcase } from "@/components/scooties/fleet-showcase";
 import { SpecsStrip } from "@/components/scooties/specs-strip";
 import { IncludedAsk } from "@/components/scooties/included-ask";
 import { ScootiesCrossLinks } from "@/components/scooties/scooties-cross-links";
+import { getPublicScooties } from "@/lib/cms";
 import { FLEET_NOTE } from "@/data/vehicles";
 
 export const metadata: Metadata = {
@@ -22,7 +23,9 @@ export const metadata: Metadata = {
  * Two real vehicles from the data layer plus an honest "more models on
  * request" tile. No invented third model, no prices.
  */
-export default function ScootiesPage() {
+export default async function ScootiesPage() {
+  const scooties = await getPublicScooties();
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -39,7 +42,7 @@ export default function ScootiesPage() {
           intro="Automatic scooties sized for Sreemangal — tea-garden lanes, forest roads and everything in between. Rates and full specs are confirmed directly with Red Scooty; ask when you book."
           meta={["AUTOMATIC", "TOURIST FRIENDLY", "CONFIRM AVAILABILITY"]}
         />
-        <FleetShowcase />
+        <FleetShowcase vehicles={scooties} />
         <SpecsStrip />
         <IncludedAsk />
         <ScootiesCrossLinks />

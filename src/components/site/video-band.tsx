@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Play } from "lucide-react";
 
 import { SITE } from "@/data/site";
+import { useSiteConfig } from "@/components/site/site-config-provider";
 
 /**
  * Click-to-play YouTube embed (privacy-enhanced, no cookies until played).
@@ -14,13 +15,14 @@ import { SITE } from "@/data/site";
  */
 export function VideoBand() {
   const [playing, setPlaying] = useState(false);
+  const { config } = useSiteConfig();
 
   return (
     <div className="img-frame p-3 sm:p-4">
       <div className="relative aspect-video w-full overflow-hidden bg-ink">
         {playing ? (
           <iframe
-            src={`${SITE.youtube.embedUrl}?autoplay=1&rel=0`}
+            src={`${config.youtube.embedUrl}?autoplay=1&rel=0`}
             title={`YouTube video: ${SITE.youtube.titleEn}`}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen

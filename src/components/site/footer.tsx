@@ -1,9 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Facebook, Mail, MapPin, MessageCircle, Phone, Youtube } from "lucide-react";
 
 import { LEGAL_LINKS } from "@/data/nav";
-import { SITE, whatsappMessageUrl } from "@/data/site";
+import { useSiteConfig } from "@/components/site/site-config-provider";
 import { TrackedLink } from "@/components/site/tracked-link";
 
 /** Page-level links only — no in-page anchors in the footer. */
@@ -25,6 +27,7 @@ const COMPANY_LINKS = [
 /** Footer - sticks to viewport bottom via flex layout (min-h-screen + flex-1 main). */
 export function Footer() {
   const year = new Date().getFullYear();
+  const { config, whatsappUrl: wa } = useSiteConfig();
 
   return (
     <footer className="band-ink pb-24 md:pb-0">
@@ -65,7 +68,7 @@ export function Footer() {
               <TrackedLink
                 event="click_facebook"
                 source="footer"
-                href={SITE.facebook}
+                href={config.facebook}
                 external
                 ariaLabel="Red Scooty on Facebook"
                 className="inline-flex h-12 w-12 items-center justify-center border border-cream/40 text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
@@ -75,7 +78,7 @@ export function Footer() {
               <TrackedLink
                 event="click_youtube"
                 source="footer"
-                href={SITE.youtube.watchUrl}
+                href={config.youtube.watchUrl}
                 external
                 ariaLabel="Featured Sreemangal tour video on YouTube"
                 className="inline-flex h-12 w-12 items-center justify-center border border-cream/40 text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
@@ -85,7 +88,7 @@ export function Footer() {
               <TrackedLink
                 event="get_directions"
                 source="footer"
-                href={SITE.mapsUrl}
+                href={config.mapsUrl}
                 external
                 ariaLabel="Red Scooty Sreemangal on Google Maps"
                 className="inline-flex h-12 w-12 items-center justify-center border border-cream/40 text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
@@ -99,18 +102,18 @@ export function Footer() {
                 <TrackedLink
                   event="click_call"
                   source="footer"
-                  href={SITE.telUrl}
+                  href={config.telUrl}
                   className="inline-flex items-center gap-2 hover:text-brand"
                 >
                   <Phone className="h-4 w-4" aria-hidden="true" />
-                  {SITE.phoneDisplay}
+                  {config.phoneDisplay}
                 </TrackedLink>
               </li>
               <li>
                 <TrackedLink
                   event="click_whatsapp"
                   source="footer"
-                  href={whatsappMessageUrl(
+                  href={wa(
                     "Hi Red Scooty! I want to rent a scooty in Sreemangal.",
                   )}
                   external
@@ -122,24 +125,24 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href={`mailto:${SITE.email}`}
+                  href={`mailto:${config.email}`}
                   className="inline-flex items-center gap-2 break-all hover:text-brand"
                 >
                   <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  {SITE.email}
+                  {config.email}
                 </a>
               </li>
               <li className="text-cream/70">
                 <TrackedLink
                   event="get_directions"
                   source="footer_address"
-                  href={SITE.mapsUrl}
+                  href={config.mapsUrl}
                   external
                   className="hover:text-brand"
                 >
-                  {SITE.addressLine1}
+                  {config.addressLine1}
                   <br />
-                  {SITE.addressLine2}
+                  {config.addressLine2}
                 </TrackedLink>
               </li>
             </ul>
@@ -205,7 +208,7 @@ export function Footer() {
 
         <div className="flex flex-col gap-3 border-t border-cream/15 py-6 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            &copy; {year} {SITE.fullName}. All rides confirmed personally.
+            &copy; {year} Red Scooty Sreemangal. All rides confirmed personally.
           </p>
           <p className="flex items-center gap-1.5">
             <span className="label-micro">DEVELOPED BY</span>

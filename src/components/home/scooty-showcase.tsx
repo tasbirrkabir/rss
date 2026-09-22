@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { VEHICLES } from "@/data/vehicles";
+import { useSiteConfig } from "@/components/site/site-config-provider";
+import type { ScootyRecord } from "@/lib/cms";
 import { Reveal } from "@/components/site/reveal";
 
 const CARD_TAGS = ["AUTOMATIC", "EASY TO RIDE", "TOURIST FRIENDLY"] as const;
@@ -14,7 +15,7 @@ const CARD_TAGS = ["AUTOMATIC", "EASY TO RIDE", "TOURIST FRIENDLY"] as const;
  * Desktop hover: image zooms subtly, a red spec panel slides over the
  * card bottom. Mobile: swipe the same scroll container.
  */
-export function ScootyShowcase() {
+export function ScootyShowcase({ vehicles }: { vehicles: ScootyRecord[] }) {
   return (
     <section
       id="the-ride"
@@ -40,7 +41,7 @@ export function ScootyShowcase() {
       {/* Horizontal scroll gallery — full bleed */}
       <div className="mt-12 overflow-x-auto pb-4">
         <ul className="scrollbar-brutal flex w-max snap-x snap-mandatory gap-6 px-4 pb-1 sm:px-6">
-          {VEHICLES.map((v, i) => (
+          {vehicles.map((v, i) => (
             <li
               key={v.id}
               className="w-[320px] shrink-0 snap-start sm:w-[380px]"

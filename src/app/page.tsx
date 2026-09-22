@@ -12,13 +12,16 @@ import { BuildYourRide } from "@/components/home/build-your-ride";
 import { ScrollStory } from "@/components/home/scroll-story";
 import { ProcessStrip } from "@/components/home/process-strip";
 import { FinalCta } from "@/components/home/final-cta";
+import { getPublicScooties } from "@/lib/cms";
 
 /**
  * Red Scooty Sreemangal - HOME.
  * HERO -> THE RIDE (showcase) -> ROUTES (real map + build your ride)
  * -> THE STORY (cinematic scroll) -> trust strip -> proof -> YOUR TURN.
  */
-export default function Home() {
+export default async function Home() {
+  const scooties = await getPublicScooties();
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -26,7 +29,7 @@ export default function Home() {
         <Hero />
         <MarqueeStrip />
         <BrandIntro />
-        <ScootyShowcase />
+        <ScootyShowcase vehicles={scooties} />
         <MapSection />
         <BuildYourRide />
         <ScrollStory />

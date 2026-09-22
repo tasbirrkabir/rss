@@ -21,7 +21,8 @@ import { Reveal } from "@/components/site/reveal";
 import { TrackedLink } from "@/components/site/tracked-link";
 import { RideStatus } from "@/components/book/ride-status";
 import { BookingForm } from "@/components/book/booking-form";
-import { SITE, whatsappMessageUrl } from "@/data/site";
+import { getPublicScooties, getSiteConfig } from "@/lib/cms";
+import { whatsappUrl } from "@/lib/public-content";
 
 export const metadata: Metadata = {
   title: "Book a Scooty — Request Your Ride | Red Scooty Sreemangal",
@@ -64,7 +65,8 @@ const HELPFUL_LINKS: { label: string; href: string }[] = [
   { label: "CONTACT", href: "/contact" },
 ];
 
-export default function BookPage() {
+export default async function BookPage() {
+  const [scooties, config] = await Promise.all([getPublicScooties(), getSiteConfig()]);
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -113,7 +115,7 @@ export default function BookPage() {
                       </p>
                     </div>
                     <Suspense fallback={null}>
-                      <BookingForm />
+                      <BookingForm vehicles={scooties} />
                     </Suspense>
                   </div>
                 </Reveal>
@@ -194,16 +196,16 @@ export default function BookPage() {
                       <TrackedLink
                         event="click_call"
                         source="book_rail"
-                        href={SITE.telUrl}
+                        href={config.telUrl}
                         className="btn-base btn-cream w-full"
                       >
                         <Phone className="h-5 w-5" aria-hidden="true" />
-                        CALL {SITE.phoneDisplay}
+                        CALL {config.phoneDisplay}
                       </TrackedLink>
                       <TrackedLink
                         event="click_whatsapp"
                         source="book_rail"
-                        href={whatsappMessageUrl(
+                        href={whatsappUrl(config.whatsappNumber, 
                           "Hi Red Scooty! I have a question about renting a scooty in Sreemangal.",
                         )}
                         external

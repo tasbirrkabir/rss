@@ -1,9 +1,11 @@
-import { SITE } from "@/data/site";
+"use client";
 
-function MarqueeRun() {
+import { useSiteConfig } from "@/components/site/site-config-provider";
+
+function MarqueeRun({ slogans }: { slogans: string[] }) {
   return (
     <div className="flex shrink-0 items-center" aria-hidden="true">
-      {SITE.slogans.map((item, i) => (
+      {slogans.map((item, i) => (
         <span key={i} className="flex items-center">
           <span className="whitespace-nowrap px-7 font-display text-xl tracking-[0.12em]">
             {item}
@@ -18,15 +20,16 @@ function MarqueeRun() {
 }
 
 /**
- * Micro-branding marquee — the verified slogans from the business's
- * public Facebook posts, on a quiet ink band (PRD sections 15 / 39).
+ * Micro-branding marquee — slogans managed from the admin panel, on a quiet
+ * ink band (PRD sections 15 / 39).
  */
 export function MarqueeStrip() {
+  const { home } = useSiteConfig();
   return (
     <div className="overflow-hidden bg-ink py-3.5 text-cream">
       <div className="flex w-max animate-marquee">
-        <MarqueeRun />
-        <MarqueeRun />
+        <MarqueeRun slogans={home.slogans} />
+        <MarqueeRun slogans={home.slogans} />
       </div>
     </div>
   );

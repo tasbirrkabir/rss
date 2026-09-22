@@ -21,8 +21,8 @@ const bookingSchema = z.object({
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Please choose a valid date.")
     .optional(),
   duration: z.enum(["HALF_DAY", "FULL_DAY", "MULTI_DAY"]).optional(),
-  vehicleId: z.enum(["mini-scooty", "standard-scooty"]).nullish(),
-  riders: z.string().trim().max(40, "Riders field is too long.").optional(),
+  vehicleId: z.string().trim().max(60).nullish(), // scooty slug or none
+  riders: z.string().trim().max(40, "Riders field is too long.").nullish(),
   routeRef: z.string().trim().max(80).nullish(),
   name: z
     .string()

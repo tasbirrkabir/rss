@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowRight } from "lucide-react";
 
 import { RIDE_MOODS } from "@/data/ride-moods";
-import { SITE, whatsappMessageUrl } from "@/data/site";
+import { useSiteConfig } from "@/components/site/site-config-provider";
 import { track } from "@/lib/analytics";
 import { Reveal } from "@/components/site/reveal";
 
@@ -15,6 +15,7 @@ import { Reveal } from "@/components/site/reveal";
  * data file deliberately; real numbers are confirmed when booking.
  */
 export function BuildYourRide() {
+  const { home, whatsappUrl: wa } = useSiteConfig();
   const [moodId, setMoodId] = useState<string | null>(null);
   const mood = RIDE_MOODS.find((m) => m.id === moodId);
 
@@ -160,7 +161,7 @@ export function BuildYourRide() {
                       />
                     </Link>
                     <a
-                      href={whatsappMessageUrl(
+                      href={wa(
                         `Hi Red Scooty! I'm interested in the "${mood.label}" ride in Sreemangal. Can you tell me more?`,
                       )}
                       target="_blank"
@@ -178,7 +179,7 @@ export function BuildYourRide() {
 
         <Reveal delay={0.2}>
           <p className="label-micro mt-8 text-steel">
-            BASED IN TOWN · {SITE.locationStrip} · RIDE TIMES ARE DEMO ESTIMATES
+            BASED IN TOWN · {home.locationStrip} · RIDE TIMES ARE DEMO ESTIMATES
           </p>
         </Reveal>
       </div>

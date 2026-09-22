@@ -6,8 +6,8 @@ import { ArrowRight, MessageCircle, Plus } from "lucide-react";
 
 import { Reveal } from "@/components/site/reveal";
 import { TrackedLink } from "@/components/site/tracked-link";
-import { whatsappMessageUrl } from "@/data/site";
-import { VEHICLES } from "@/data/vehicles";
+import { useSiteConfig } from "@/components/site/site-config-provider";
+import type { ScootyRecord } from "@/lib/cms";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +22,8 @@ import { cn } from "@/lib/utils";
  * - Availability is only ever "CONFIRM AVAILABILITY" — no fake in-stock.
  * - The Aug 2025 ৳2/minute promo is stated as clearly historical.
  */
-export function FleetShowcase() {
+export function FleetShowcase({ vehicles }: { vehicles: ScootyRecord[] }) {
+  const { whatsappUrl: wa } = useSiteConfig();
   return (
     <section
       aria-labelledby="fleet-showcase-heading"
@@ -44,7 +45,7 @@ export function FleetShowcase() {
         </Reveal>
 
         <div className="mt-4">
-          {VEHICLES.map((v, i) => {
+          {vehicles.map((v, i) => {
             const flip = i % 2 === 1;
             return (
               <article
@@ -181,7 +182,7 @@ export function FleetShowcase() {
                         <TrackedLink
                           event="click_whatsapp"
                           source={`scooties:confirm:${v.id}`}
-                          href={whatsappMessageUrl(
+                          href={wa(
                             `Hi Red Scooty! I would like to confirm availability of the ${v.name}.`,
                           )}
                           external
@@ -229,7 +230,7 @@ export function FleetShowcase() {
               <TrackedLink
                 event="click_whatsapp"
                 source="scooties:more-models"
-                href={whatsappMessageUrl(
+                href={wa(
                   "Hi Red Scooty! Could you tell me which scooty models you have available?",
                 )}
                 external

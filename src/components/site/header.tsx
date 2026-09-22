@@ -21,7 +21,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { NAV_ITEMS, type NavItem } from "@/data/nav";
-import { SITE, whatsappMessageUrl } from "@/data/site";
+import { useSiteConfig } from "@/components/site/site-config-provider";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -158,6 +158,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const pathname = usePathname();
+  const { config, whatsappUrl: wa } = useSiteConfig();
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -202,7 +203,7 @@ export function Header() {
             onClick={() => track("click_booking", { source: "header" })}
             className="group h-11 rounded-none bg-ink px-5 font-display text-lg tracking-wider text-cream transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand hover:shadow-[0_10px_24px_rgba(245,34,45,0.28)]"
           >
-            <Link href={SITE.bookingUrl}>
+            <Link href="/book">
               BOOK A RIDE
               <ArrowRight
                 className="ml-1.5 h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
@@ -324,7 +325,7 @@ export function Header() {
                   }}
                   className="mt-6 h-14 w-full rounded-none bg-brand font-display text-2xl tracking-wider text-white hover:bg-ink"
                 >
-                  <Link href={SITE.bookingUrl}>BOOK A RIDE</Link>
+                  <Link href="/book">BOOK A RIDE</Link>
                 </Button>
                 <div className="mt-6 grid grid-cols-2 gap-3">
                   <Button
@@ -336,7 +337,7 @@ export function Header() {
                     }}
                     className="h-12 rounded-none border border-ink/20 bg-cream text-ink hover:bg-cream hover:text-brand"
                   >
-                    <a href={SITE.telUrl} aria-label={`Call ${SITE.phoneDisplay}`}>
+                    <a href={config.telUrl} aria-label={`Call ${config.phoneDisplay}`}>
                       <Phone className="mr-2 h-4 w-4" /> CALL
                     </a>
                   </Button>
@@ -350,7 +351,7 @@ export function Header() {
                     className="h-12 rounded-none border border-ink/20 bg-cream text-ink hover:bg-cream hover:text-brand"
                   >
                     <a
-                      href={whatsappMessageUrl(
+                      href={wa(
                         "Hi Red Scooty! I want to ask about renting a scooty in Sreemangal.",
                       )}
                       target="_blank"

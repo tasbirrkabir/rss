@@ -1,7 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import { Facebook, MapPin, MessageCircle, ShieldCheck } from "lucide-react";
 
-import { SITE } from "@/data/site";
+import { useSiteConfig } from "@/components/site/site-config-provider";
 import { TrackedLink } from "@/components/site/tracked-link";
 import { Reveal } from "@/components/site/reveal";
 
@@ -11,6 +13,7 @@ import { Reveal } from "@/components/site/reveal";
  * ratings or quotes. Customer media replaces demo imagery after owner approval.
  */
 export function SocialProof() {
+  const { config, home } = useSiteConfig();
   return (
     <section
       id="riders"
@@ -58,14 +61,14 @@ export function SocialProof() {
                 <div className="card-soft p-4">
                   <dt className="label-micro text-steel">FACEBOOK</dt>
                   <dd className="mt-1 font-display text-4xl leading-none text-ink">
-                    {SITE.stats.followers}
+                    {home.followers}
                   </dd>
                   <dd className="label-micro mt-1 text-brand">FOLLOWERS</dd>
                 </div>
                 <div className="card-soft p-4">
                   <dt className="label-micro text-steel">PAGE</dt>
                   <dd className="mt-1 font-display text-4xl leading-none text-ink">
-                    {SITE.stats.posts}
+                    {home.posts}
                   </dd>
                   <dd className="label-micro mt-1 text-brand">POSTS</dd>
                 </div>
@@ -84,7 +87,7 @@ export function SocialProof() {
                 <TrackedLink
                   event="click_facebook"
                   source="social_proof"
-                  href={SITE.facebook}
+                  href={config.facebook}
                   external
                   className="btn-base btn-primary"
                 >
@@ -106,7 +109,7 @@ export function SocialProof() {
                 <TrackedLink
                   event="get_directions"
                   source="social_proof"
-                  href={SITE.mapsUrl}
+                  href={config.mapsUrl}
                   external
                   className="btn-base btn-outline"
                 >

@@ -3,7 +3,9 @@ import { Bebas_Neue, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { IntroReveal } from "@/components/site/intro-reveal";
-import { SITE } from "@/data/site";
+import { SiteConfigProvider } from "@/components/site/site-config-provider";
+import { getHomeContent, getSiteConfig } from "@/lib/cms";
+import { whatsappUrl } from "@/lib/public-content";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -71,8 +73,6 @@ const jsonLd = {
   description:
     "Scooty rental service for exploring the tea gardens and nature of Sreemangal, Bangladesh.",
   slogan: "Don't just visit Sreemangal. Ride it.",
-  telephone: SITE.phoneIntl,
-  email: SITE.email,
   url: siteUrl,
   founder: {
     "@type": "Person",
@@ -87,20 +87,30 @@ const jsonLd = {
     postalCode: "3210",
     addressCountry: "BD",
   },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: SITE.coords.lat,
-    longitude: SITE.coords.lng,
-  },
-  hasMap: SITE.mapsUrl,
-  sameAs: [SITE.facebook, SITE.youtube.watchUrl, SITE.mapsUrl],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Load CMS-managed content once per request; every client component below
+  // reads it through useSiteConfig(). Contact details come from the DB when
+  // available, otherwise the verified launch values are used.
+  const [config, home] = await Promise.all([getSiteConfig(), getHomeContent()]);
+  const jsonLdFull = {
+    ...jsonLd,
+    telephone: config.phoneIntl,
+    email: config.email,
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: config.coords.lat,
+      longitude: config.coords.lng,
+    },
+    hasMap: config.mapsUrl,
+    sameAs: [config.facebook, config.youtube.watchUrl, config.mapsUrl],
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -108,11 +118,13 @@ export default function RootLayout({
       >
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFull) }}
         />
-        <IntroReveal />
-        <div aria-hidden="true" className="grain-overlay" />
-        {children}
+        <SiteConfigProvider config={config} home={home}>
+          <IntroReveal />
+          <div aria-hidden="true" className="grain-overlay" />
+          {children}
+        </SiteConfigProvider>
         <Toaster />
       </body>
     </html>
