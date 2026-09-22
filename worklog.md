@@ -1140,3 +1140,25 @@ Stage Summary:
   src/app/{icon,apple-icon,opengraph-image}.png; REWRITTEN header/footer;
   EDITED hero, about, contact, explore/destination-entry, map components,
   layout.tsx, sitemap.ts, site.ts, globals.css, intro-reveal.
+
+---
+Task ID: 8-verify
+Agent: Z.ai Code (main agent)
+Task: Post-context-compaction re-verification — confirm Task 8 (nav dropdowns, footer Legal/Company + Tasbir Kabir credit, phone map/image fixes, badge cleanup, logo/favicon set) is actually live on disk and working in the browser.
+
+Work Log:
+- Re-read worklog + header.tsx/footer.tsx/site.ts: Task 8 was already implemented before the previous session ended; this pass independently verified every artifact rather than trusting the log.
+- On-disk verification: src/data/nav.ts, src/components/map/{tiles.ts,fallback-tile-layer.tsx}, src/components/site/legal-page.tsx, public/favicon.ico, public/logo/{mark,mark-white,logo-full}.png, src/app/{icon,apple-icon,opengraph-image}.png, and 3 legal page routes all present.
+- grep confirmed decorative badges ("SCOOTY RENTAL —", "JALALIA ROAD /", "THE OWNER") removed from src/.
+- bun run lint: 0 errors (1 pre-existing benign react-hook-form watch warning in booking-form.tsx).
+- Dev server healthy: all 13 routes HTTP 200; no errors in dev.log after full browsing session.
+- Agent Browser DESKTOP 1440x900: home renders with logo mark + EXPLORE/ROUTES/COMPANY chevron dropdowns; EXPLORE dropdown opens on hover with 8 destinations + red accent; footer has Explore/Company/Legal nav columns, /privacy-policy + /refund-policy + /terms-of-service links, and "DEVELOPED BY Tasbir Kabir" -> https://tasbirkabir.me; home Leaflet map tiles load (12 tiles), markers + honest demo-estimate labels present.
+- Agent Browser MOBILE (iPhone 14): home 14/14 images load after scroll sweep (initial "1 broken" was a below-fold lazy image not yet requested — false alarm), no horizontal overflow anywhere; home map 398px with tiles + markers; contact page Leaflet map 340px with tiles (Google iframe gone); explore map 338px with tiles; mobile sheet menu shows grouped destination/route chips; sticky bottom CTA bar (CALL/WHATSAPP/BOOK) intact.
+- Mobile route sweep (9 more routes: scooties/routes/how-it-works/rental-guide/book/about/journal/privacy/terms): 0 broken images, 0 overflow, all H1s present.
+- Deep links verified: /routes?route=forest-escape preselects "02 · THE FOREST ESCAPE"; /explore#lawachara scrolls to anchor (y=170, below sticky header).
+- Booking form intact on /book (name/phone/date/duration fields) and /api/rides-status returns honest demo payload.
+- Page errors: none across entire session; head contains icon + apple-touch-icon + og:image.
+
+Stage Summary:
+- Task 8 CONFIRMED COMPLETE and browser-verified end-to-end on desktop and mobile. No fixes were required this pass — implementation from the prior session is sound.
+- All 6 items from the user's latest request are live: (1) nav dropdowns, (2) footer credit link to tasbirkabir.me, (3) phone map/image reliability, (4) footer Legal+Company columns with 3 policy pages, (5) decorative badges removed, (6) owner logo wired into favicon/apple-icon/OG/header/footer/intro.
