@@ -72,8 +72,9 @@ export function DestinationEntry({ d, index }: DestinationEntryProps) {
 
   return (
     <article
+      id={d.slug}
       aria-labelledby={`dest-${d.slug}-title`}
-      className="rule-soft py-16 md:py-24"
+      className="rule-soft scroll-mt-24 py-16 md:py-24"
     >
       <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
         {/* Image column */}

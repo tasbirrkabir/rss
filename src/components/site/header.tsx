@@ -1,9 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, Menu, MessageCircle, Phone } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronDown,
+  Menu,
+  MessageCircle,
+  Phone,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,14 +20,139 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-  ALL_PAGES,
-  NAV_LINKS,
-  SITE,
-  whatsappMessageUrl,
-} from "@/data/site";
+import { NAV_ITEMS, type NavItem } from "@/data/nav";
+import { SITE, whatsappMessageUrl } from "@/data/site";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+
+function itemIsActive(item: NavItem, pathname: string) {
+  const matches = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  return matches(item.href) || (item.children ?? []).some((c) => matches(c.href));
+}
+
+/** One desktop nav item — plain link, or a hover/click dropdown. */
+function NavDropdown({ item, pathname }: { item: NavItem; pathname: string }) {
+  // Derived open state: "open at pathname X". Navigating to another route
+  // automatically closes the menu — no effect/setState needed.
+  const [openAt, setOpenAt] = useState<string | null>(null);
+  const open = openAt === pathname;
+  const closeTimer = useRef<number | null>(null);
+  const active = itemIsActive(item, pathname);
+  const hasChildren = !!item.children?.length;
+
+  if (!hasChildren) {
+    return (
+      <Link
+        href={item.href}
+        aria-current={active ? "page" : undefined}
+        className={cn(
+          "link-underline label-micro transition-colors hover:text-brand",
+          active ? "text-brand" : "text-ink",
+        )}
+      >
+        {item.label}
+      </Link>
+    );
+  }
+
+  const openNow = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    setOpenAt(pathname);
+  };
+  const closeSoon = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => setOpenAt(null), 140);
+  };
+  const toggle = () =>
+    setOpenAt((v) => (v === pathname ? null : pathname));
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={openNow}
+      onMouseLeave={closeSoon}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") setOpenAt(null);
+      }}
+    >
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="true"
+        onClick={toggle}
+        onFocus={openNow}
+        className={cn(
+          "label-micro flex items-center gap-1 py-2 transition-colors hover:text-brand",
+          active || open ? "text-brand" : "text-ink",
+        )}
+      >
+        {item.label}
+        <ChevronDown
+          aria-hidden="true"
+          className={cn(
+            "h-3.5 w-3.5 transition-transform duration-200",
+            open && "rotate-180",
+          )}
+        />
+      </button>
+
+      <div
+        className={cn(
+          "absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-2 transition-all duration-200",
+          open
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-1 opacity-0",
+        )}
+      >
+        <div className="border border-ink/10 bg-cream shadow-lift">
+          <span
+            aria-hidden="true"
+            className="block h-0.5 w-full bg-brand"
+          />
+          <ul className="py-2">
+            {item.children!.map((child) => {
+              // Only plain-path children (no #hash / ?query) can be "active";
+              // deep links would otherwise all highlight on their parent page.
+              const basePath = child.href.split("#")[0].split("?")[0];
+              const childActive =
+                !child.href.includes("#") &&
+                !child.href.includes("?") &&
+                (basePath === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(basePath));
+              return (
+                <li key={child.label + child.href}>
+                  <Link
+                    href={child.href}
+                    onClick={() => setOpenAt(null)}
+                    className={cn(
+                      "group flex flex-col gap-0.5 px-4 py-2.5 transition-colors hover:bg-ink/5",
+                      childActive ? "text-brand" : "text-ink",
+                    )}
+                  >
+                    <span className="flex items-center justify-between font-display text-base tracking-wide">
+                      {child.label}
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+                      />
+                    </span>
+                    {child.description ? (
+                      <span className="text-xs leading-snug text-steel">
+                        {child.description}
+                      </span>
+                    ) : null}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -35,14 +167,24 @@ export function Header() {
         {/* Wordmark */}
         <Link
           href="/"
-          className="group flex flex-col leading-none"
+          className="group flex items-center gap-2.5"
           aria-label="Red Scooty Sreemangal — home"
         >
-          <span className="font-display text-3xl tracking-wide text-ink transition-colors group-hover:text-brand">
-            RED SCOOTY
-          </span>
-          <span className="label-micro mt-0.5 text-steel">
-            SREEMANGAL / BANGLADESH
+          <Image
+            src="/logo/mark.png"
+            alt=""
+            width={368}
+            height={516}
+            priority
+            className="h-9 w-auto transition-transform duration-300 group-hover:-translate-y-0.5"
+          />
+          <span className="flex flex-col leading-none">
+            <span className="font-display text-3xl tracking-wide text-ink transition-colors group-hover:text-brand">
+              RED SCOOTY
+            </span>
+            <span className="label-micro mt-0.5 text-steel">
+              SREEMANGAL / BANGLADESH
+            </span>
           </span>
         </Link>
 
@@ -51,18 +193,8 @@ export function Header() {
           aria-label="Main navigation"
           className="hidden items-center gap-7 md:flex"
         >
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-current={isActive(link.href) ? "page" : undefined}
-              className={cn(
-                "link-underline label-micro transition-colors hover:text-brand",
-                isActive(link.href) ? "text-brand" : "text-ink",
-              )}
-            >
-              {link.label}
-            </Link>
+          {NAV_ITEMS.map((item) => (
+            <NavDropdown key={item.label} item={item} pathname={pathname} />
           ))}
           <Button
             asChild
@@ -97,8 +229,17 @@ export function Header() {
               className="w-80 border-l border-ink/10 bg-cream p-0"
             >
               <SheetHeader className="border-b border-ink/10 p-5 text-left">
-                <SheetTitle className="font-display text-3xl tracking-wide">
-                  RED SCOOTY
+                <SheetTitle className="flex items-center gap-2.5">
+                  <Image
+                    src="/logo/mark.png"
+                    alt=""
+                    width={368}
+                    height={516}
+                    className="h-8 w-auto"
+                  />
+                  <span className="font-display text-3xl tracking-wide">
+                    RED SCOOTY
+                  </span>
                 </SheetTitle>
                 <p className="label-micro mt-1 text-steel">
                   SREEMANGAL / BANGLADESH
@@ -106,21 +247,52 @@ export function Header() {
               </SheetHeader>
               <nav
                 aria-label="Mobile navigation"
-                className="flex max-h-[calc(100vh-11rem)] flex-col overflow-y-auto p-5"
+                className="max-h-[calc(100vh-11rem)] overflow-y-auto p-5"
               >
-                {ALL_PAGES.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    aria-current={isActive(link.href) ? "page" : undefined}
-                    className={cn(
-                      "border-b border-ink/10 py-3 font-display text-3xl tracking-wide transition-colors hover:text-brand",
-                      isActive(link.href) ? "text-brand" : "text-ink",
+                {NAV_ITEMS.map((item) => (
+                  <div key={item.label} className="border-b border-ink/10 py-2 last:border-b-0">
+                    {item.children?.length ? (
+                      <>
+                        <Link
+                          href={item.href}
+                          onClick={() => setMenuOpen(false)}
+                          aria-current={isActive(item.href) ? "page" : undefined}
+                          className={cn(
+                            "flex items-center justify-between py-1.5 font-display text-2xl tracking-wide transition-colors hover:text-brand",
+                            itemIsActive(item, pathname) ? "text-brand" : "text-ink",
+                          )}
+                        >
+                          {item.label}
+                          <ArrowRight className="h-4 w-4 text-steel" aria-hidden="true" />
+                        </Link>
+                        <ul className="mb-1 mt-1 flex flex-wrap gap-1.5">
+                          {item.children.map((child) => (
+                            <li key={child.label + child.href}>
+                              <Link
+                                href={child.href}
+                                onClick={() => setMenuOpen(false)}
+                                className="label-micro inline-block border border-ink/15 bg-paper px-2.5 py-2 text-ink transition-colors hover:border-ink/40 hover:text-brand"
+                              >
+                                {child.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        onClick={() => setMenuOpen(false)}
+                        aria-current={isActive(item.href) ? "page" : undefined}
+                        className={cn(
+                          "block py-1.5 font-display text-2xl tracking-wide transition-colors hover:text-brand",
+                          isActive(item.href) ? "text-brand" : "text-ink",
+                        )}
+                      >
+                        {item.label}
+                      </Link>
                     )}
-                  >
-                    {link.label}
-                  </Link>
+                  </div>
                 ))}
                 <Button
                   asChild
@@ -128,7 +300,7 @@ export function Header() {
                     setMenuOpen(false);
                     track("click_booking", { source: "mobile_menu" });
                   }}
-                  className="mt-6 h-14 rounded-none bg-brand font-display text-2xl tracking-wider text-white hover:bg-ink"
+                  className="mt-6 h-14 w-full rounded-none bg-brand font-display text-2xl tracking-wider text-white hover:bg-ink"
                 >
                   <Link href={SITE.bookingUrl}>BOOK A RIDE</Link>
                 </Button>

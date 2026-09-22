@@ -38,7 +38,7 @@ export function Hero() {
             <div className="flex items-center gap-3">
               <span className="h-px w-10 bg-brand" aria-hidden="true" />
               <p className="label-micro text-brand">
-                SCOOTY RENTAL — SREEMANGAL
+                THE WAY YOU EXPLORE SREEMANGAL
               </p>
             </div>
           </Reveal>
@@ -104,14 +104,11 @@ export function Hero() {
                   className="h-auto w-full object-cover"
                 />
               </div>
-              <p className="sticker absolute right-4 top-5 rotate-2 bg-ink px-3 py-1.5">
-                <span className="label-micro text-cream">SCOOTY RENTAL</span>
-              </p>
-              <p className="sticker absolute bottom-6 left-4 -rotate-2 bg-brand px-3 py-1.5">
-                <span className="font-display text-lg tracking-wider text-white">
-                  SREEMANGAL / 3210
-                </span>
-              </p>
+              {/* Quiet editorial caption — verified listing coordinates */}
+              <figcaption className="label-micro mt-3 flex items-center justify-between gap-4 text-steel">
+                <span>24.3041° N · 91.7342° E</span>
+                <span className="hidden sm:inline">JALALIA ROAD, SREEMANGAL</span>
+              </figcaption>
             </div>
           </Reveal>
         </motion.div>

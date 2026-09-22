@@ -1064,3 +1064,79 @@ Stage Summary:
   times, real OSRM road geometry with honest fallback labeling.
 - Booking pipeline bug fixed (routeRef) — verified end-to-end with DB.
 - Lint 0 errors (1 benign pre-existing warning); tsc clean for src/.
+
+---
+Task ID: 8
+Agent: Z.ai Code (main agent)
+Task: UX revision round 2 — nav dropdowns, footer Legal/Company columns +
+policy pages + Tasbir Kabir credit, logo/favicon/apple-icon integration,
+badge cleanup, and phone map/image reliability fixes.
+
+Work Log:
+- DIAGNOSIS (phone): server + image optimizer + all images verified healthy
+  via curl + agent-browser mobile emulation (0 broken images). Real culprits
+  found: (a) Google Maps IFRAME on /contact renders blank on phones -> replaced
+  with our Leaflet map; (b) map popup AUTO-OPENED on load (MapController fired
+  for the preselected slug) and buried the whole map on small screens; (c)
+  OSM-hosted tiles are the single point of failure on flaky mobile networks;
+  (d) contact map wrapper `min-h-72 flex-1` -> `h-[340px] flex-1` collapsed to
+  height 0 (flex-basis 0 beats height in a column flex) — removed flex-1,
+  added shrink-0 + ResizeObserver-driven invalidateSize on both maps.
+- MAPS: new src/components/map/tiles.ts (provider chain, env-overridable) +
+  fallback-tile-layer.tsx — after 4 tile errors the map silently switches
+  provider (OSM -> openstreetmap.de -> HOT France). CARTO is NOT usable
+  anonymously anymore ("API KEY REQUIRED" watermark) — do not use.
+  Popups now only open on USER tap (first-run guard in MapController);
+  popup width min(244px, 76vw). SreemangalMap props made optional so
+  /contact can embed a standalone map.
+- LOGO (owner-supplied PNG): scripts/make-logo-assets.mjs (sharp) generates
+  public/logo/{mark,mark-white,logo-full}.png (white->alpha via redness mask),
+  src/app/icon.png (256), public/favicon.ico (hand-packed PNG-in-ICO 16/32/48;
+  Next chokes on processing an app-dir favicon.ico — keep it in public/),
+  src/app/apple-icon.png (180, red bg + white mark), src/app/opengraph-image.png
+  (1200x630 brand card). Layout metadata now relies on file-convention icons/OG.
+  Mark wired into header wordmark, mobile sheet, footer (white), IntroReveal.
+- NAV: new src/data/nav.ts — NAV_ITEMS with children (EXPLORE -> 7 destinations
+  /explore#slug, ROUTES -> 4 routes /routes?route=id, COMPANY -> about/journal/
+  rental-guide/contact). Header rewritten: hover+click dropdowns, Escape close,
+  derived open-state (openAt === pathname) so route changes close menus without
+  setState-in-effect (lint clean). Mobile sheet groups children as chips.
+  Destination entries got id={slug} + scroll-mt-24 anchors.
+- FOOTER: rebuilt — brand+contact column (white mark), EXPLORE destinations,
+  COMPANY links, LEGAL links; bottom bar: (c) line, DEVELOPED BY TASBIR KABIR
+  -> https://tasbirkabir.me (external, arrow-up-right), demo note.
+- LEGAL PAGES: /privacy-policy, /refund-policy, /terms-of-service via new
+  components/site/legal-page.tsx (numbered sections, honest demo-stage
+  footnotes, contact strip). Added to sitemap.ts. Truthful copy: no online
+  payment exists; analytics = local dataLayer only.
+- BADGES REMOVED: hero kicker "SCOOTY RENTAL — SREEMANGAL" -> verified slogan
+  "THE WAY YOU EXPLORE SREEMANGAL"; hero stickers (SCOOTY RENTAL / SREEMANGAL
+  3210) removed -> quiet verified-coordinates caption under the image; About
+  "JALALIA ROAD / SREEMANGAL" + "THE OWNER" stickers removed; contact map
+  "RED SCOOTY SREEMANGAL" sticker removed with the iframe. Honesty DEMO tags
+  and slogan stickers ("NO GEARS · NO TENSION", @REDSCOOTYSMG) kept.
+- FIXES DURING BUILD: script buildIco reduce bug (60-byte ico), 3-channel RGB
+  raw stride bug, sharp trim+raw corruption (manual alpha-bbox trim), tint()
+  greying the white mark (manual RGB rewrite), next/image aspect warnings
+  (intrinsic width/height), LegalPage title ReactNode.
+- VERIFICATION: lint 0 errors; tsc src clean; 13 routes x iPhone-14 emulation:
+  0 broken images, 0 horizontal overflow; desktop 1440: EXPLORE/ROUTES/COMPANY
+  dropdowns, deep links (/explore#tea-gardens scrolls, /routes?route=forest-
+  escape selects), map tiles render, user-tap popup works, OSRM real geometry
+  on /routes, contact Leaflet map 340px with 4 tiles, booking form intact,
+  favicon/apple-icon/og:image links present in <head>.
+
+Stage Summary:
+- Phone reliability: maps never covered by popups, tiles self-heal across
+  providers, contact uses Leaflet (no Google iframe), maps re-measure on
+  resize. Every route image-clean and overflow-free at mobile widths.
+- Brand: owner logo now lives everywhere (favicon, apple icon, OG card,
+  header, footer, intro). Nav has real dropdowns incl. COMPANY; footer has
+  EXPLORE/COMPANY/LEGAL columns and the tasbirkabir.me credit; three honest
+  policy pages shipped and sitemapped.
+- Files: NEW src/data/nav.ts, src/components/map/{tiles,fallback-tile-layer}.tsx,
+  src/components/site/legal-page.tsx, src/app/{privacy-policy,refund-policy,
+  terms-of-service}/page.tsx, public/logo/*, public/favicon.ico,
+  src/app/{icon,apple-icon,opengraph-image}.png; REWRITTEN header/footer;
+  EDITED hero, about, contact, explore/destination-entry, map components,
+  layout.tsx, sitemap.ts, site.ts, globals.css, intro-reveal.

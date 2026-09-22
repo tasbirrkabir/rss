@@ -15,6 +15,7 @@ import "leaflet/dist/leaflet.css";
 import { DESTINATIONS, HQ_GEO } from "@/data/destinations";
 import type { RideRoute } from "@/data/ride-routes";
 import { SITE } from "@/data/site";
+import { FallbackTileLayer } from "@/components/map/fallback-tile-layer";
 import { cn } from "@/lib/utils";
 
 /**
@@ -29,16 +30,8 @@ import { cn } from "@/lib/utils";
  * - If OSRM is unavailable (error or 4s timeout), the map falls back to
  *   straight dashed lines BETWEEN waypoints — and the label says so.
  *   A schematic line is never presented as a navigation route.
- * - Tile provider is configurable via NEXT_PUBLIC_MAP_TILE_URL (same
- *   contract as sreemangal-map.tsx).
+ * - Tiles self-heal across providers — see fallback-tile-layer.tsx.
  */
-
-const TILE_URL =
-  process.env.NEXT_PUBLIC_MAP_TILE_URL ??
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-const TILE_ATTRIBUTION =
-  process.env.NEXT_PUBLIC_MAP_TILE_ATTRIBUTION ??
-  '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors';
 
 const OSRM_URL = "https://router.project-osrm.org/route/v1/driving";
 const OSRM_TIMEOUT_MS = 4000;
@@ -158,6 +151,22 @@ const STATUS_LABELS: Record<GeometryStatus, string> = {
   schematic: "SCHEMATIC WAYPOINT LINE — NOT A NAVIGATION ROUTE",
 };
 
+/** Re-measures the map when its container resizes (mobile-safe). */
+function SizeKeeper() {
+  const map = useMap();
+
+  useEffect(() => {
+    const el = map.getContainer();
+    const ro = new ResizeObserver(() => {
+      map.invalidateSize({ animate: false });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [map]);
+
+  return null;
+}
+
 /** Flies to the active route's waypoint bounds whenever the selection changes. */
 function RouteFlyController({ route }: { route: RideRoute }) {
   const map = useMap();
@@ -222,7 +231,8 @@ export default function RouteMap({ route }: RouteMapProps) {
         className="h-full w-full"
         attributionControl
       >
-        <TileLayer url={TILE_URL} attribution={TILE_ATTRIBUTION} />
+        <FallbackTileLayer />
+        <SizeKeeper />
         <RouteFlyController route={route} />
 
         {/* Route line: real road geometry, or honest dashed schematic.

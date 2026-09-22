@@ -15,6 +15,9 @@ const PAGES = [
   { path: "/about", priority: 0.6, changeFrequency: "yearly" as const },
   { path: "/journal", priority: 0.8, changeFrequency: "weekly" as const },
   { path: "/contact", priority: 0.6, changeFrequency: "yearly" as const },
+  { path: "/privacy-policy", priority: 0.3, changeFrequency: "yearly" as const },
+  { path: "/refund-policy", priority: 0.3, changeFrequency: "yearly" as const },
+  { path: "/terms-of-service", priority: 0.3, changeFrequency: "yearly" as const },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

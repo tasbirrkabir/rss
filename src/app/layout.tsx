@@ -44,7 +44,8 @@ export const metadata: Metadata = {
       "Scooty rentals for exploring the tea gardens, forests, roads and hidden corners of Sreemangal.",
     url: siteUrl,
     siteName: "Red Scooty Sreemangal",
-    images: [{ url: "/images/hero-scooty.webp", width: 864, height: 1152 }],
+    // Images: provided by the file-convention src/app/opengraph-image.png
+    // (1200x630 brand card) — no explicit entry needed here.
     type: "website",
     locale: "en_BD",
   },
@@ -53,7 +54,6 @@ export const metadata: Metadata = {
     title: "Red Scooty Sreemangal | Scooty Rental & Rides",
     description:
       "Scooty rentals for exploring the tea gardens, forests, roads and hidden corners of Sreemangal.",
-    images: ["/images/hero-scooty.webp"],
   },
   robots: { index: true, follow: true },
 };

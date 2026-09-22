@@ -491,8 +491,9 @@
   padding: 0;
 }
 .smg-popup .leaflet-popup-content {
-  margin: 0;
-  width: 244px !important;
+  /* Fixed-ish width on desktop, tighter on small phones so the popup
+     never buries the whole map. */
+  width: min(244px, 76vw) !important;
   font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 }
 .smg-popup .leaflet-popup-tip {

@@ -136,11 +136,6 @@ export default function AboutPage() {
                       <span>RED SCOOTY</span>
                     </p>
                   </div>
-                  <p className="sticker absolute -top-2 left-4 bg-brand px-3 py-1.5">
-                    <span className="font-display text-lg tracking-wider text-white">
-                      JALALIA ROAD / SREEMANGAL
-                    </span>
-                  </p>
                 </div>
               </Reveal>
             </div>
@@ -169,9 +164,6 @@ export default function AboutPage() {
                       <span>RED SCOOTY SREEMANGAL</span>
                     </p>
                   </div>
-                  <p className="sticker absolute -top-2 right-4 bg-ink px-3 py-1.5">
-                    <span className="label-micro text-cream">THE OWNER</span>
-                  </p>
                 </div>
               </Reveal>
 

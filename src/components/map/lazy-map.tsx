@@ -26,8 +26,8 @@ export function LazySreemangalMap({
   selected,
   onSelect,
 }: {
-  selected: string | null;
-  onSelect: (slug: string) => void;
+  selected?: string | null;
+  onSelect?: (slug: string) => void;
 }) {
   return <SreemangalMap selected={selected} onSelect={onSelect} />;
 }

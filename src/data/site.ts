@@ -100,9 +100,7 @@ export const ALL_PAGES = [
   { label: "CONTACT", href: "/contact" },
 ] as const;
 
-/** Live embedded map (no API key needed) centred on the verified listing. */
-export const MAPS_EMBED_URL = `https://maps.google.com/maps?q=${SITE.coords.lat},${SITE.coords.lng}&z=16&hl=en&output=embed`;
-
+/** Directions endpoint for Google Maps deep links. */
 export const MAPS_DIRECTIONS_URL =
   "https://www.google.com/maps/search/?api=1&query=";
 

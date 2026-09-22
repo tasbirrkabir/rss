@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { EASE_OUT } from "@/components/site/reveal";
@@ -51,21 +52,36 @@ export function IntroReveal() {
           exit={{ y: "-100%" }}
           transition={{ duration: 0.55, ease: EASE_OUT }}
         >
-          <motion.p
-            className="overflow-hidden font-display text-[clamp(3rem,10vw,7rem)] leading-none tracking-wide text-cream"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: 0.08 }}
-          >
-            <motion.span
-              className="inline-block"
-              initial={{ y: "110%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.1 }}
+          <div className="flex flex-col items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: EASE_OUT, delay: 0.05 }}
             >
-              RED <span className="text-brand">SCOOTY</span>
-            </motion.span>
-          </motion.p>
+              <Image
+                src="/logo/mark-white.png"
+                alt=""
+                width={368}
+                height={516}
+                className="h-16 w-auto"
+              />
+            </motion.div>
+            <motion.p
+              className="mt-5 overflow-hidden font-display text-[clamp(3rem,10vw,7rem)] leading-none tracking-wide text-cream"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.08 }}
+            >
+              <motion.span
+                className="inline-block"
+                initial={{ y: "110%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.1 }}
+              >
+                RED <span className="text-brand">SCOOTY</span>
+              </motion.span>
+            </motion.p>
+          </div>
           <motion.span
             className="absolute bottom-10 left-1/2 h-px w-16 -translate-x-1/2 bg-brand"
             initial={{ scaleX: 0 }}

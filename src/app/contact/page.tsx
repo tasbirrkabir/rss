@@ -18,7 +18,8 @@ import { DemoBadge } from "@/components/site/demo-badge";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/reveal";
 import { TrackedLink } from "@/components/site/tracked-link";
 import { QuickMessageForm } from "@/components/contact/quick-message-form";
-import { SITE, MAPS_EMBED_URL, whatsappMessageUrl } from "@/data/site";
+import { LazySreemangalMap } from "@/components/map/lazy-map";
+import { SITE, whatsappMessageUrl } from "@/data/site";
 import type { AnalyticsEvent } from "@/lib/analytics";
 
 export const metadata: Metadata = {
@@ -239,20 +240,8 @@ export default function ContactPage() {
 
               <Reveal delay={0.1} className="h-full">
                 <div className="img-frame flex h-full flex-col">
-                  <div className="relative min-h-72 flex-1 overflow-hidden">
-                    <iframe
-                      src={MAPS_EMBED_URL}
-                      title="Google Map showing Red Scooty Sreemangal on Jalalia Road"
-                      loading="lazy"
-                      allowFullScreen
-                      referrerPolicy="no-referrer-when-downgrade"
-                      className="absolute inset-0 h-full w-full grayscale transition-all duration-500 hover:grayscale-0"
-                    />
-                    <p className="sticker absolute left-3 top-3 bg-brand px-2.5 py-1">
-                      <span className="font-display text-base tracking-wider text-white">
-                        RED SCOOTY SREEMANGAL
-                      </span>
-                    </p>
+                  <div className="relative h-[340px] shrink-0 overflow-hidden sm:h-[420px]">
+                    <LazySreemangalMap />
                   </div>
                   <div className="flex flex-col gap-4 border-t border-ink/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
                     <div>

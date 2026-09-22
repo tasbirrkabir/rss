@@ -1,8 +1,20 @@
 import Link from "next/link";
-import { Facebook, Mail, MapPin, Phone, Youtube } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight, Facebook, Mail, MapPin, MessageCircle, Phone, Youtube } from "lucide-react";
 
-import { ALL_PAGES, SITE, whatsappMessageUrl } from "@/data/site";
+import { DESTINATIONS } from "@/data/destinations";
+import { LEGAL_LINKS } from "@/data/nav";
+import { SITE, whatsappMessageUrl } from "@/data/site";
 import { TrackedLink } from "@/components/site/tracked-link";
+
+const COMPANY_LINKS = [
+  { label: "About", href: "/about" },
+  { label: "Journal", href: "/journal" },
+  { label: "Rental Guide", href: "/rental-guide" },
+  { label: "How It Works", href: "/how-it-works" },
+  { label: "Contact", href: "/contact" },
+  { label: "Book a Ride", href: "/book" },
+];
 
 /** Footer - sticks to viewport bottom via flex layout (min-h-screen + flex-1 main). */
 export function Footer() {
@@ -21,10 +33,20 @@ export function Footer() {
           </p>
         </div>
 
-        <div className="grid gap-10 py-12 md:grid-cols-12">
+        <div className="grid gap-10 py-12 md:grid-cols-12 md:gap-8">
+          {/* Brand + contact */}
           <div className="md:col-span-4">
-            <p className="font-display text-5xl leading-none tracking-wide">
-              RED SCOOTY
+            <p className="flex items-center gap-3">
+              <Image
+                src="/logo/mark-white.png"
+                alt=""
+                width={368}
+                height={516}
+                className="h-8 w-auto"
+              />
+              <span className="font-display text-5xl leading-none tracking-wide">
+                RED SCOOTY
+              </span>
             </p>
             <p className="label-micro mt-2 text-brand">
               THE WAY YOU EXPLORE SREEMANGAL
@@ -65,29 +87,8 @@ export function Footer() {
                 <MapPin className="h-5 w-5" aria-hidden="true" />
               </TrackedLink>
             </div>
-          </div>
 
-          <nav aria-label="Footer navigation" className="md:col-span-4">
-            <p className="label-micro text-cream/50">SITE</p>
-            <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3">
-              {ALL_PAGES.map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className={`font-display text-xl tracking-wide transition-colors hover:text-brand ${
-                      l.href === "/book" ? "text-brand" : "text-cream"
-                    }`}
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <div className="md:col-span-4">
-            <p className="label-micro text-cream/50">CONTACT</p>
-            <ul className="mt-4 space-y-3 text-sm text-cream/85">
+            <ul className="mt-8 space-y-3 text-sm text-cream/85">
               <li>
                 <TrackedLink
                   event="click_call"
@@ -109,9 +110,7 @@ export function Footer() {
                   external
                   className="inline-flex items-center gap-2 hover:text-brand"
                 >
-                  <span aria-hidden="true" className="text-base leading-none">
-                    ▸
-                  </span>
+                  <MessageCircle className="h-4 w-4" aria-hidden="true" />
                   WHATSAPP US
                 </TrackedLink>
               </li>
@@ -138,15 +137,104 @@ export function Footer() {
                 </TrackedLink>
               </li>
             </ul>
-            <p className="label-micro mt-6 text-cream/40">
-              {SITE.locationStrip}
-            </p>
           </div>
+
+          {/* Explore — destinations */}
+          <nav aria-label="Explore destinations" className="md:col-span-3">
+            <p className="label-micro text-cream/50">EXPLORE</p>
+            <ul className="mt-4 space-y-2.5">
+              <li>
+                <Link
+                  href="/explore"
+                  className="font-display text-xl tracking-wide text-cream transition-colors hover:text-brand"
+                >
+                  All Destinations
+                </Link>
+              </li>
+              {DESTINATIONS.map((d) => (
+                <li key={d.slug}>
+                  <Link
+                    href={`/explore#${d.slug}`}
+                    className="text-sm text-cream/80 transition-colors hover:text-brand"
+                  >
+                    {d.name
+                      .toLowerCase()
+                      .replace(/(^|\s)\S/g, (t) => t.toUpperCase())}
+                  </Link>
+                </li>
+              ))}
+              <li className="pt-2">
+                <Link
+                  href="/routes"
+                  className="font-display text-xl tracking-wide text-cream transition-colors hover:text-brand"
+                >
+                  Ride Routes
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Company */}
+          <nav aria-label="Company" className="md:col-span-2">
+            <p className="label-micro text-cream/50">COMPANY</p>
+            <ul className="mt-4 space-y-2.5">
+              {COMPANY_LINKS.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className={`font-display text-xl tracking-wide transition-colors hover:text-brand ${
+                      l.href === "/book" ? "text-brand" : "text-cream"
+                    }`}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Legal */}
+          <nav aria-label="Legal" className="md:col-span-3">
+            <p className="label-micro text-cream/50">LEGAL</p>
+            <ul className="mt-4 space-y-2.5">
+              {LEGAL_LINKS.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="text-sm text-cream/80 transition-colors hover:text-brand"
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 border-t border-cream/15 pt-4 text-xs leading-relaxed text-cream/50">
+              Booking requests are confirmed personally by phone or WhatsApp.
+              No online payment is collected on this site.
+            </p>
+          </nav>
         </div>
 
-        <div className="flex flex-col gap-2 border-t border-cream/15 py-6 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-t border-cream/15 py-6 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
             &copy; {year} {SITE.fullName}. All rides confirmed personally.
+          </p>
+          <p className="flex items-center gap-1.5">
+            <span className="label-micro">DEVELOPED BY</span>
+            <a
+              href="https://tasbirkabir.me"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-1 text-cream transition-colors hover:text-brand"
+            >
+              <span className="border-b border-cream/40 pb-0.5 transition-colors group-hover:border-brand">
+                Tasbir Kabir
+              </span>
+              <ArrowUpRight
+                className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                aria-hidden="true"
+              />
+            </a>
           </p>
           <p className="label-micro">
             CONCEPT DEMO · FINAL CONTENT PENDING OWNER VALIDATION

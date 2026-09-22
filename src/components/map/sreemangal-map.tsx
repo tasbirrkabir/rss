@@ -7,20 +7,17 @@ import "leaflet/dist/leaflet.css";
 
 import { DESTINATIONS, HQ_GEO } from "@/data/destinations";
 import { SITE } from "@/data/site";
+import { FallbackTileLayer } from "@/components/map/fallback-tile-layer";
 
 /**
- * Real geographic map (OpenStreetMap tiles via React Leaflet).
+ * Real geographic map (raster tiles via React Leaflet).
  * - HQ marker at the verified business listing position (plus code 8P3M+JMQ).
  * - Destination markers only at VERIFIED coordinates (OSM/Wikipedia sources).
  * - Tile provider is configurable via NEXT_PUBLIC_MAP_TILE_URL so the
- *   public OSM infrastructure can be swapped for a dedicated provider later.
+ *   default CDN tiles can be swapped for a dedicated provider later.
+ * - Mobile-safe: no popup is forced open on load, and the map re-measures
+ *   itself when its container resizes (address bar / orientation changes).
  */
-const TILE_URL =
-  process.env.NEXT_PUBLIC_MAP_TILE_URL ??
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-const TILE_ATTRIBUTION =
-  process.env.NEXT_PUBLIC_MAP_TILE_ATTRIBUTION ??
-  '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors';
 
 const hqIcon = L.divIcon({
   className: "smg-marker",
@@ -46,7 +43,26 @@ function destIcon(access: string, selected: boolean) {
   });
 }
 
-/** Flies to the selected destination and opens its popup. */
+/**
+ * Re-measures the map when its container resizes (mobile address bar,
+ * orientation changes, panel layout shifts) — prevents grey/partial tiles.
+ */
+function SizeKeeper() {
+  const map = useMap();
+
+  useEffect(() => {
+    const el = map.getContainer();
+    const ro = new ResizeObserver(() => {
+      map.invalidateSize({ animate: false });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [map]);
+
+  return null;
+}
+
+/** Flies to the selected destination and opens its popup — only on user action. */
 function MapController({
   selected,
   markerRefs,
@@ -55,9 +71,16 @@ function MapController({
   markerRefs: React.MutableRefObject<Record<string, L.Marker | null>>;
 }) {
   const map = useMap();
+  const firstRun = useRef(true);
 
   useEffect(() => {
+    const wasFirstRun = firstRun.current;
+    firstRun.current = false;
     if (!selected) return;
+    // Mounting with a preselected destination: the map already fits all
+    // bounds via the `bounds` prop — never hijack the view or force a
+    // popup open on load (on phones it would bury the whole map).
+    if (wasFirstRun) return;
     const dest = DESTINATIONS.find((d) => d.slug === selected);
     if (!dest) return;
     const marker = markerRefs.current[selected];
@@ -72,11 +95,16 @@ function MapController({
 }
 
 export type SreemangalMapProps = {
-  selected: string | null;
-  onSelect: (slug: string) => void;
+  /** Preselected destination slug. Mounts without touching the view. */
+  selected?: string | null;
+  /** Called when a marker is tapped. Optional for standalone map use. */
+  onSelect?: (slug: string) => void;
 };
 
-export default function SreemangalMap({ selected, onSelect }: SreemangalMapProps) {
+export default function SreemangalMap({
+  selected = null,
+  onSelect,
+}: SreemangalMapProps) {
   const markerRefs = useRef<Record<string, L.Marker | null>>({});
 
   const bounds = L.latLngBounds([
@@ -92,7 +120,8 @@ export default function SreemangalMap({ selected, onSelect }: SreemangalMapProps
       className="h-full w-full"
       attributionControl
     >
-      <TileLayer url={TILE_URL} attribution={TILE_ATTRIBUTION} />
+      <FallbackTileLayer />
+      <SizeKeeper />
       <MapController selected={selected} markerRefs={markerRefs} />
 
       {/* HQ — verified business location */}
@@ -127,7 +156,7 @@ export default function SreemangalMap({ selected, onSelect }: SreemangalMapProps
           ref={(m) => {
             markerRefs.current[d.slug] = m;
           }}
-          eventHandlers={{ click: () => onSelect(d.slug) }}
+          eventHandlers={{ click: () => onSelect?.(d.slug) }}
         >
           <Popup className="smg-popup">
             <div className="p-3">
