@@ -12,7 +12,7 @@ import { getPublicScooties } from "@/lib/cms";
 import { FLEET_NOTE } from "@/data/vehicles";
 
 export const metadata: Metadata = {
-  title: "Scooties — The Red Scooty Fleet | Red Scooty Sreemangal",
+  title: "Scooties — The Demo Scooty Fleet | Demo Scooty Rental",
   description:
     "Automatic scooties built for Sreemangal's tea-garden lanes and forest roads — light, easy and handed over in person. Rates, models and specs are confirmed on request, never guessed.",
 };
@@ -39,7 +39,7 @@ export default async function ScootiesPage() {
               YOUR RIDE.
             </>
           }
-          intro="Automatic scooties sized for Sreemangal — tea-garden lanes, forest roads and everything in between. Rates and full specs are confirmed directly with Red Scooty; ask when you book."
+          intro="Automatic scooties sized for Sreemangal — tea-garden lanes, forest roads and everything in between. Rates and full specs are confirmed directly with Demo Scooty; ask when you book."
           meta={["AUTOMATIC", "TOURIST FRIENDLY", "CONFIRM AVAILABILITY"]}
         />
         <FleetShowcase vehicles={scooties} />

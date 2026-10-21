@@ -54,14 +54,14 @@ export function Footer() {
                 className="h-8 w-auto"
               />
               <span className="font-display text-5xl leading-none tracking-wide">
-                RED SCOOTY
+                DEMO SCOOTY
               </span>
             </p>
             <p className="label-micro mt-2 text-brand">
               THE WAY YOU EXPLORE SREEMANGAL
             </p>
             <p className="mt-4 max-w-sm text-sm text-cream/70">
-              Scooty rentals based on Jalalia Road, Sreemangal. Request a ride,
+              Scooty rentals based on Demo Road, Sreemangal. Request a ride,
               get a personal confirmation, and go see the tea gardens your way.
             </p>
             <div className="mt-6 flex gap-3">
@@ -70,7 +70,7 @@ export function Footer() {
                 source="footer"
                 href={config.facebook}
                 external
-                ariaLabel="Red Scooty on Facebook"
+                ariaLabel="Demo Scooty on Facebook"
                 className="inline-flex h-12 w-12 items-center justify-center border border-cream/40 text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
               >
                 <Facebook className="h-5 w-5" aria-hidden="true" />
@@ -90,7 +90,7 @@ export function Footer() {
                 source="footer"
                 href={config.mapsUrl}
                 external
-                ariaLabel="Red Scooty Sreemangal on Google Maps"
+                ariaLabel="Demo Scooty on Google Maps"
                 className="inline-flex h-12 w-12 items-center justify-center border border-cream/40 text-cream transition-colors hover:border-brand hover:bg-brand hover:text-white"
               >
                 <MapPin className="h-5 w-5" aria-hidden="true" />
@@ -114,7 +114,7 @@ export function Footer() {
                   event="click_whatsapp"
                   source="footer"
                   href={wa(
-                    "Hi Red Scooty! I want to rent a scooty in Sreemangal.",
+                    "Hi Demo Scooty! I want to rent a demo scooty in Sreemangal.",
                   )}
                   external
                   className="inline-flex items-center gap-2 hover:text-brand"
@@ -208,7 +208,7 @@ export function Footer() {
 
         <div className="flex flex-col gap-3 border-t border-cream/15 py-6 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            &copy; {year} Red Scooty Sreemangal. All rides confirmed personally.
+            &copy; {year} Demo Scooty Rental. All rides confirmed personally.
           </p>
           <p className="flex items-center gap-1.5">
             <span className="label-micro">DEVELOPED BY</span>

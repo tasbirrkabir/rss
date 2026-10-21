@@ -51,7 +51,7 @@ export function FinalCta() {
             Prefer chat?{" "}
             <a
               href={wa(
-                "Hi Red Scooty! I'd like to book a scooty in Sreemangal.",
+                "Hi Demo Scooty! I'd like to book a demo scooty in Sreemangal.",
               )}
               target="_blank"
               rel="noopener noreferrer"

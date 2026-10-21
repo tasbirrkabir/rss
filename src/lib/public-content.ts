@@ -41,7 +41,7 @@ export const staticSiteConfig: PublicSiteConfig = {
   phoneDisplay: SITE.phoneDisplay,
   phoneIntl: SITE.phoneIntl,
   telUrl: SITE.telUrl,
-  whatsappNumber: "8801897423694",
+  whatsappNumber: "8801700000000",
   email: SITE.email,
   addressLine1: SITE.addressLine1,
   addressLine2: SITE.addressLine2,
@@ -64,7 +64,7 @@ export const staticHomeContent: PublicHomeContent = {
   heroSub: SITE.heroSub,
   heroImage: "/images/hero-scooty.webp",
   heroImageAlt:
-    "Red scooty parked on a quiet road winding through the green tea gardens of Sreemangal",
+    "Demo scooty parked on a quiet road winding through the green tea gardens of Sreemangal",
   bookingNote: "BOOKING BY REQUEST · CONFIRMED PERSONALLY · NO PAYMENT ONLINE",
   locationStrip: SITE.locationStrip,
   slogans: [...SITE.slogans],

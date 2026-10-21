@@ -30,7 +30,7 @@ export async function generateMetadata({
   if (!article) return {};
 
   return {
-    title: `${article.title} | Red Scooty Sreemangal Field Notes`,
+    title: `${article.title} | Demo Scooty Field Notes`,
     description: article.excerpt,
     openGraph: {
       title: article.title,
@@ -58,7 +58,7 @@ export default async function JournalArticlePage({
     headline: article.title,
     description: article.excerpt,
     image: article.image,
-    author: { "@type": "Organization", name: "Red Scooty Sreemangal" },
+    author: { "@type": "Organization", name: "Demo Scooty Rental" },
   };
 
   return (

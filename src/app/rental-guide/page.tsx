@@ -8,20 +8,20 @@ import { GuideSections } from "@/components/rental-guide/guide-sections";
 import { GuideCtaBand } from "@/components/rental-guide/guide-cta-band";
 
 export const metadata: Metadata = {
-  title: "Rental Guide — Before You Ride | Red Scooty Sreemangal",
+  title: "Rental Guide — Before You Ride | Demo Scooty Rental",
   description:
-    "What to expect before you ride with Red Scooty Sreemangal — requirements, rental rules, deposit, safety, damage and return. Framing only; every detail is confirmed personally at booking.",
+    "What to expect before you ride with Demo Scooty — requirements, rental rules, deposit, safety, damage and return. Framing only; every detail is confirmed personally at booking.",
 };
 
 /**
  * FAQ JSON-LD grounded strictly in known process facts:
  * request -> personal confirmation, no online payment, licence + deposit
- * confirmed personally, pickup on Jalalia Road, rates confirmed on request.
+ * confirmed personally, pickup on Demo Road, rates confirmed on request.
  */
 const FAQ = [
   {
     q: "How does booking work?",
-    a: "You send a request with your preferred date, duration and scooty. Red Scooty confirms personally — availability, price and requirements — before anything is fixed. No payment and no account are needed to send the request.",
+    a: "You send a request with your preferred date, duration and scooty. Demo Scooty confirms personally — availability, price and requirements — before anything is fixed. No payment and no account are needed to send the request.",
   },
   {
     q: "Is there online payment?",
@@ -33,7 +33,7 @@ const FAQ = [
   },
   {
     q: "Where do I pick up the scooter?",
-    a: "At the Red Scooty shop on Jalalia Road, Sreemangal. If you need a different pickup arrangement, mention it in your booking request and it will be discussed with you.",
+    a: "At the Demo Scooty shop on Demo Road, Sreemangal. If you need a different pickup arrangement, mention it in your booking request and it will be discussed with you.",
   },
   {
     q: "When do I find out the price?",
@@ -72,7 +72,7 @@ export default function RentalGuidePage() {
               YOU GO.
             </>
           }
-          intro="Requirements, rules, deposit, safety, damage and return — what to expect when you rent from Red Scooty. The exact details are confirmed personally at booking; nothing here is a fixed policy."
+          intro="Requirements, rules, deposit, safety, damage and return — what to expect when you rent from Demo Scooty. The exact details are confirmed personally at booking; nothing here is a fixed policy."
         />
         <GuideSections />
         <GuideCtaBand />

@@ -1,84 +1,70 @@
 /**
- * Central site configuration for Red Scooty Sreemangal.
+ * Central site configuration for Demo Scooty Rental.
  *
- * Sources (PRD section 3 / 50):
- * - Phone + location: screenshot-confirmed Facebook page + Google Maps listing.
- * - Email: screenshot value normalized ("redsc ootysreemangal@gmail.com" -> below).
- * - WhatsApp number: NOT owner-confirmed. Derived from the public phone number
- *   as a demo placeholder — must be validated before production (PRD section 50).
- * - Owner + photo: supplied directly by the owner (Radiyan Hossen).
- * - Maps share link + coordinates: owner-provided Google Maps listing
- *   (maps.app.goo.gl/ZE53GmbXSVHsUJQJ7 -> place "Red Scooty Sreemangal").
- * - YouTube tour video: business video "শ্রীমঙ্গল কখন ঘুরতে আসবেন | Bike Rent
- *   Sreemangal | Sreemangal Tour" (youtu.be/vk0oyKnZVPs).
+ * All contact information, branding, owner details and media
+ * are configured for demonstration purposes.
  */
 
 export const SITE = {
-  name: "RED SCOOTY",
-  fullName: "Red Scooty Sreemangal",
+  name: "DEMO SCOOTY",
+  fullName: "Demo Scooty Rental",
   tagline: "EXPLORE SREEMANGAL",
   heroHeadline: "DON'T JUST VISIT SREEMANGAL. RIDE IT.",
-  heroSub: "Scooty rentals for exploring the tea gardens, forest roads, local trails and the hidden corners of Sreemangal.",
+  heroSub: "Demo scooty rentals for exploring the tea gardens, forest roads, local trails and the hidden corners of Sreemangal.",
 
-  phoneDisplay: "01897-423694",
-  phoneIntl: "+8801897423694",
-  telUrl: "tel:+8801897423694",
-  whatsappUrl: "https://wa.me/8801897423694",
-  email: "redscootysreemangal@gmail.com",
+  phoneDisplay: "01700-000000",
+  phoneIntl: "+8801700000000",
+  telUrl: "tel:+8801700000000",
+  whatsappUrl: "https://wa.me/8801700000000",
+  email: "demo@example.com",
 
-  addressLine1: "Jalalia Road, Sreemangal 3210",
-  addressLine2: "Moulvibazar, Sylhet, Bangladesh",
-  plusCode: "8P3M+JMQ",
+  addressLine1: "Demo Road, Sreemangal 3210",
+  addressLine2: "Demo District, Sylhet, Bangladesh",
+  plusCode: "8P3M+DEMO",
 
-  facebook: "https://www.facebook.com/redscootysmg/",
-  // Owner-provided share link to the verified Google Maps listing.
-  mapsUrl: "https://maps.app.goo.gl/ZE53GmbXSVHsUJQJ7",
+  facebook: "https://www.facebook.com/demo",
+  mapsUrl: "https://maps.google.com/?q=Sreemangal+Bangladesh",
 
-  /** Verified listing coordinates (owner Maps share link + plus code 8P3M+JMQ). */
   coords: {
     lat: 24.3040891,
     lng: 91.7342349,
   },
 
-  /** Verified public slogans from the business's Facebook posts. */
   slogans: [
     "NO TENSION · NO FUEL COST · FULL FREEDOM",
     "ECO-FRIENDLY · AFFORDABLE · FUN",
     "RIDE SMART, RIDE GREEN",
-    "EXPLORE SREEMANGAL THE RED SCOOTY WAY",
+    "EXPLORE SREEMANGAL THE DEMO WAY",
   ],
 
-  /** The person behind the phone — supplied and approved by the owner. */
   owner: {
-    name: "RADIYAN HOSSEN",
-    role: "FOUNDER & OWNER",
-    photo: "/images/owner-radiyan-hossen.jpg",
-    photoAlt: "Radiyan Hossen, owner of Red Scooty Sreemangal, leaning against a car in front of green bushes",
+    name: "DEMO OWNER",
+    role: "DEMO FOUNDER & OWNER",
+    photo: "/images/demo-owner.jpg",
+    photoAlt: "Demo Owner portrait placeholder",
   },
 
-  /** Business tour video — embedded on the About page. */
   youtube: {
-    id: "vk0oyKnZVPs",
-    watchUrl: "https://youtu.be/vk0oyKnZVPs",
-    embedUrl: "https://www.youtube-nocookie.com/embed/vk0oyKnZVPs",
-    title: "শ্রীমঙ্গল কখন ঘুরতে আসবেন | Bike Rent Sreemangal | Sreemangal Tour",
-    titleEn: "When to come explore Sreemangal — Bike Rent Sreemangal",
+    id: "demo-tour",
+    watchUrl: "https://youtu.be/demo",
+    embedUrl: "https://www.youtube-nocookie.com/embed/demo",
+    title: "Demo Scooty Tour | Sreemangal Tour",
+    titleEn: "Demo Tour — Scooty Rental Sreemangal",
     poster: "/images/video-sreemangal-tour.jpg",
   },
 
-  // Honest, screenshot-sourced stats (PRD section 3.1). Never inflate.
   stats: {
-    followers: "3.1K+",
-    posts: "108",
-    category: "Bike rental / Scooty rental",
+    followers: "3.5K+",
+    posts: "100+",
+    category: "Demo Scooty Rental",
   },
 
-  locationStrip: "JALALIA ROAD · SREEMANGAL, BD",
+  locationStrip: "DEMO ROAD · SREEMANGAL, BD",
 
   bookingUrl: "/book",
 } as const;
 
-/** Primary desktop navigation (brief: EXPLORE / SCOOTIES / ROUTES / HOW IT WORKS). */
+/** Primary desktop navigation. */
 export const NAV_LINKS = [
   { label: "EXPLORE", href: "/explore" },
   { label: "SCOOTIES", href: "/scooties" },
@@ -108,7 +94,7 @@ export function mapsQueryUrl(query: string): string {
   return MAPS_DIRECTIONS_URL + encodeURIComponent(query);
 }
 
-/** Pre-filled WhatsApp handoff after a booking request (PRD section 23). */
+/** Pre-filled WhatsApp handoff after a booking request. */
 export function whatsappMessageUrl(text: string): string {
-  return `https://wa.me/8801897423694?text=${encodeURIComponent(text)}`;
+  return `https://wa.me/8801700000000?text=${encodeURIComponent(text)}`;
 }

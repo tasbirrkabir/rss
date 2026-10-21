@@ -108,7 +108,7 @@ export function Hero() {
               {/* Quiet editorial caption — verified listing coordinates */}
               <figcaption className="label-micro mt-3 flex items-center justify-between gap-4 text-steel">
                 <span>24.3041° N · 91.7342° E</span>
-                <span className="hidden sm:inline">JALALIA ROAD, SREEMANGAL</span>
+                <span className="hidden sm:inline">DEMO ROAD, SREEMANGAL</span>
               </figcaption>
             </div>
           </Reveal>

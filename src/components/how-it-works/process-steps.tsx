@@ -22,19 +22,19 @@ const STEPS: Step[] = [
     n: "01",
     title: "CHOOSE",
     headline: "Choose your scooter.",
-    body: "Mini scooty for the garden lanes, standard for longer days — or send the request without a preference and let Red Scooty match the ride to your plan.",
+    body: "Mini scooty for the garden lanes, standard for longer days — or send the request without a preference and let Demo Scooty match the ride to your plan.",
   },
   {
     n: "02",
     title: "BOOK",
     headline: "Send your preferred date and duration.",
-    body: "The request takes under a minute — no payment, no account. Red Scooty replies personally to confirm availability and price.",
+    body: "The request takes under a minute — no payment, no account. Demo Scooty replies personally to confirm availability and price.",
   },
   {
     n: "03",
     title: "PICK UP",
-    headline: "Collect your ride from Red Scooty.",
-    body: "The shop sits on Jalalia Road in Sreemangal. Need a different pickup spot? Say so in your request.",
+    headline: "Collect your ride from Demo Scooty.",
+    body: "The shop sits on Demo Road in Sreemangal. Need a different pickup spot? Say so in your request.",
     link: {
       kind: "maps",
       href: SITE.mapsUrl,
@@ -56,7 +56,7 @@ const STEPS: Step[] = [
     n: "05",
     title: "RETURN",
     headline: "Bring the scooter back at the agreed time.",
-    body: "Running late or changing plans? Message Red Scooty and sort it out — communication beats a clock, every time.",
+    body: "Running late or changing plans? Message Demo Scooty and sort it out — communication beats a clock, every time.",
   },
 ];
 
@@ -107,7 +107,7 @@ export function ProcessSteps() {
                       source={`how-it-works:step-${s.n}`}
                       href={s.link.href}
                       external
-                      ariaLabel="Open the Red Scooty location in Google Maps"
+                      ariaLabel="Open the Demo Scooty location in Google Maps"
                       className="btn-base btn-outline group mt-6"
                     >
                       {s.link.label}

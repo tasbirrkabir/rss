@@ -29,7 +29,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* Red Scooty brand tokens */
+  /* Demo Scooty brand tokens */
   --color-brand: var(--brand-red);
   --color-brand-foreground: #ffffff;
   --color-ink: #111111;

@@ -12,7 +12,7 @@ const settingsSchema = z.object({
   whatsappNumber: z
     .string()
     .trim()
-    .regex(/^[0-9]{6,15}$/, "Digits only, with country code (e.g. 8801897…)."),
+    .regex(/^[0-9]{6,15}$/, "Digits only, with country code (e.g. 8801700…)."),
   email: z.string().trim().email("Enter a valid email."),
   addressLine1: z.string().trim().max(120),
   addressLine2: z.string().trim().max(120),

@@ -83,7 +83,7 @@ const PICKUP_OPTIONS = [
   { value: "station", label: "SREEMANGAL STATION" },
   { value: "hotel", label: "HOTEL" },
   { value: "town", label: "CITY CENTER" },
-  { value: "shop", label: "RED SCOOTY PICKUP" },
+  { value: "shop", label: "DEMO SCOOTY PICKUP" },
   { value: "unsure", label: "NOT SURE" },
 ] as const;
 
@@ -91,16 +91,16 @@ const PICKUP_LABELS: Record<PickupValue, string> = {
   station: "SREEMANGAL STATION",
   hotel: "HOTEL",
   town: "CITY CENTER",
-  shop: "RED SCOOTY PICKUP",
+  shop: "DEMO SCOOTY PICKUP",
   unsure: "NOT SURE",
 };
 
 const PICKUP_NOTES: Record<PickupValue, string> = {
   station:
     "We'll aim to meet you near the station — details confirmed personally.",
-  hotel: "Hotel pickup is possible — confirmed with Red Scooty on request.",
-  town: "Start your ride from the Red Scooty pickup point.",
-  shop: "Collect from Jalalia Road, Sreemangal 3210.",
+  hotel: "Hotel pickup is possible — confirmed with Demo Scooty on request.",
+  town: "Start your ride from the Demo Scooty pickup point.",
+  shop: "Collect from Demo Road, Sreemangal 3210.",
   unsure: "No problem — we'll sort it out together.",
 };
 
@@ -313,7 +313,7 @@ export function BookingForm({ vehicles }: { vehicles: ScootyRecord[] }) {
       toast({
         title: "Request received.",
         description:
-          "Red Scooty will contact you shortly to confirm availability.",
+          "Demo Scooty will contact you shortly to confirm availability.",
       });
     } catch {
       const networkError =
@@ -326,11 +326,11 @@ export function BookingForm({ vehicles }: { vehicles: ScootyRecord[] }) {
   const whatsappHandoff = useMemo(() => {
     if (!success) {
       return wa(
-        "Hi Red Scooty! I just sent a booking request on your website. Can you confirm it?",
+        "Hi Demo Scooty! I just sent a booking request on your website. Can you confirm it?",
       );
     }
     const lines = [
-      "Hi Red Scooty! I just sent a booking request on your website.",
+      "Hi Demo Scooty! I just sent a booking request on your website.",
       `Date: ${success.rideDate}`,
       `Duration: ${DURATION_LABELS[success.duration]}`,
       `Scooty: ${
@@ -373,7 +373,7 @@ export function BookingForm({ vehicles }: { vehicles: ScootyRecord[] }) {
           <CheckCircle2 className="h-10 w-10 text-brand" aria-hidden="true" />
           <h3 className="display-1 mt-4 text-ink">REQUEST RECEIVED.</h3>
           <p className="mt-3 max-w-md text-base leading-relaxed text-ink-soft">
-            Red Scooty will contact you shortly to confirm availability.
+            Demo Scooty will contact you shortly to confirm availability.
           </p>
 
           <dl className="mt-6 grid grid-cols-2 gap-2 sm:max-w-md">

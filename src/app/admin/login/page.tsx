@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <p className="font-display text-5xl tracking-wide text-cream">
-            RED SCOOTY
+            DEMO SCOOTY
           </p>
           <p className="label-micro mt-2 flex items-center justify-center gap-2 text-brand">
             <LockKeyhole className="h-3.5 w-3.5" aria-hidden="true" />
@@ -68,7 +68,7 @@ export default function AdminLoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@redscooty.com"
+              placeholder="you@demoscooty.com"
               className="h-11 rounded-none border-ink/20 bg-paper"
             />
           </div>

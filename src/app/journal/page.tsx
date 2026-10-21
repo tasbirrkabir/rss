@@ -12,7 +12,7 @@ import { StaggerGroup } from "@/components/site/reveal";
 import { JOURNAL_ARTICLES, JOURNAL_NOTE } from "@/data/journal";
 
 export const metadata: Metadata = {
-  title: "Journal — The Sreemangal Field Notes | Red Scooty Sreemangal",
+  title: "Journal — The Sreemangal Field Notes | Demo Scooty Rental",
   description:
     "Field guides, routes and honest opinions from the tea capital of Bangladesh — one-day plans, garden road strategies and the scooty-vs-CNG debate.",
 };

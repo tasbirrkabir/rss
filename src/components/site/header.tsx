@@ -170,7 +170,7 @@ export function Header() {
         <Link
           href="/"
           className="group flex items-center gap-2.5"
-          aria-label="Red Scooty Sreemangal — home"
+          aria-label="Demo Scooty Rental — home"
         >
           <Image
             src="/logo/mark.png"
@@ -182,10 +182,10 @@ export function Header() {
           />
           <span className="flex flex-col leading-none">
             <span className="font-display text-3xl tracking-wide text-ink transition-colors group-hover:text-brand">
-              RED SCOOTY
+              DEMO SCOOTY
             </span>
             <span className="label-micro mt-0.5 text-steel">
-              SREEMANGAL / BANGLADESH
+              DEMO RENTAL / BANGLADESH
             </span>
           </span>
         </Link>
@@ -240,11 +240,11 @@ export function Header() {
                     className="h-8 w-auto"
                   />
                   <span className="font-display text-3xl tracking-wide">
-                    RED SCOOTY
+                    DEMO SCOOTY
                   </span>
                 </SheetTitle>
                 <p className="label-micro mt-1 text-steel">
-                  SREEMANGAL / BANGLADESH
+                  DEMO RENTAL / BANGLADESH
                 </p>
               </SheetHeader>
               <nav
@@ -352,7 +352,7 @@ export function Header() {
                   >
                     <a
                       href={wa(
-                        "Hi Red Scooty! I want to ask about renting a scooty in Sreemangal.",
+                        "Hi Demo Scooty! I want to ask about renting a demo scooty in Sreemangal.",
                       )}
                       target="_blank"
                       rel="noopener noreferrer"

@@ -40,7 +40,7 @@ export function FleetShowcase({ vehicles }: { vehicles: ScootyRecord[] }) {
           </h2>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">
             Every scooty below is automatic, checked and handed over in person
-            on Jalalia Road. Rates are confirmed on request — never guessed.
+            on Demo Road. Rates are confirmed on request — never guessed.
           </p>
         </Reveal>
 
@@ -91,7 +91,7 @@ export function FleetShowcase({ vehicles }: { vehicles: ScootyRecord[] }) {
                   >
                     <Reveal delay={0.08}>
                       <p className="label-micro text-brand">
-                        RED SCOOTY {String(i + 1).padStart(2, "0")}
+                        DEMO SCOOTY {String(i + 1).padStart(2, "0")}
                       </p>
                       <h3
                         id={`vehicle-${v.id}-title`}
@@ -183,7 +183,7 @@ export function FleetShowcase({ vehicles }: { vehicles: ScootyRecord[] }) {
                           event="click_whatsapp"
                           source={`scooties:confirm:${v.id}`}
                           href={wa(
-                            `Hi Red Scooty! I would like to confirm availability of the ${v.name}.`,
+                            `Hi Demo Scooty! I would like to confirm availability of the ${v.name}.`,
                           )}
                           external
                           ariaLabel={`Confirm availability of the ${v.name} on WhatsApp`}
@@ -223,7 +223,7 @@ export function FleetShowcase({ vehicles }: { vehicles: ScootyRecord[] }) {
                 </h3>
                 <p className="mt-3 text-base leading-relaxed text-ink-soft">
                   Final fleet list, models and rates are confirmed directly with
-                  Red Scooty. Ask about multi-day rates, helmets and hotel
+                  Demo Scooty. Ask about multi-day rates, helmets and hotel
                   pickup.
                 </p>
               </div>
@@ -231,7 +231,7 @@ export function FleetShowcase({ vehicles }: { vehicles: ScootyRecord[] }) {
                 event="click_whatsapp"
                 source="scooties:more-models"
                 href={wa(
-                  "Hi Red Scooty! Could you tell me which scooty models you have available?",
+                  "Hi Demo Scooty! Could you tell me which scooty models you have available?",
                 )}
                 external
                 ariaLabel="Ask which scooty models are available"

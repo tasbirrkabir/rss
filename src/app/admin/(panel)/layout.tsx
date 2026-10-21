@@ -6,7 +6,7 @@ import { getSessionUser } from "@/lib/admin-auth";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "Admin — Red Scooty Sreemangal",
+  title: "Admin — Demo Scooty Rental",
   robots: { index: false, follow: false },
 };
 

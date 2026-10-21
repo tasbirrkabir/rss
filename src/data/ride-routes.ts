@@ -58,11 +58,11 @@ export const RIDE_ROUTES: RideRoute[] = [
     ],
     startTime: "EARLY MORNING",
     image: "/images/dest-tea-gardens.webp",
-    imageAlt: "Red scooty beside rolling green tea garden rows near Sreemangal",
+    imageAlt: "Demo scooty beside rolling green tea garden rows near Sreemangal",
     description:
       "The ride that explains Sreemangal. Out through the garden roads, stop when the light looks good, drink tea when your hands are free. Short, gentle and impossible to get wrong.",
     stops: [
-      "PICK UP ON JALALIA ROAD",
+      "PICK UP ON DEMO ROAD",
       "GARDEN ROADS LOOP (TEA MUSEUM STRETCH)",
       "SEVEN-LAYER TEA STOP",
       "BACK TO TOWN",
@@ -90,7 +90,7 @@ export const RIDE_ROUTES: RideRoute[] = [
     description:
       "Leave the gardens behind and ride the paved Sreemangal–Bhanugach road into the region's most recognizable landscape. Park at the main gate and walk the forest floor — it's better on foot.",
     stops: [
-      "PICK UP ON JALALIA ROAD",
+      "PICK UP ON DEMO ROAD",
       "FOREST HIGHWAY (PAVED, 7–8 KM)",
       "LAWACHARA MAIN GATE + WALK",
       "VILLAGE ROAD RETURN",
@@ -118,7 +118,7 @@ export const RIDE_ROUTES: RideRoute[] = [
     description:
       "Point the scooty at Kamalganj and let the estate roads roll. Madhabpur Lake sits in its bowl of tea hills about 16 km out — the ride there is every bit as good as the lake. Roads can be muddy after rain; best in the dry season.",
     stops: [
-      "PICK UP ON JALALIA ROAD",
+      "PICK UP ON DEMO ROAD",
       "GARDEN ROAD OUT OF TOWN",
       "MADHABPUR LAKE (+ TEA ESTATE)",
       "RETURN BY THE SAME SCENIC ROAD",
@@ -142,11 +142,11 @@ export const RIDE_ROUTES: RideRoute[] = [
     ],
     startTime: "AFTERNOON",
     image: "/images/rider-road.webp",
-    imageAlt: "Rider on a red scooty following a quiet road through green plantations",
+    imageAlt: "Rider on a demo scooty following a quiet road through green plantations",
     description:
       "The anti-itinerary. Drift through village roads, stop for every good shadow, and aim the last leg at the wetland for golden hour. The last stretch to Baikka is a rougher country road — take it easy. The ride is the destination; the photos are the receipt.",
     stops: [
-      "PICK UP ON JALALIA ROAD",
+      "PICK UP ON DEMO ROAD",
       "VILLAGE LANES",
       "BAIKKA BEEL FOR SUNSET (ROUGH LAST STRETCH)",
       "BACK AFTER DARK",

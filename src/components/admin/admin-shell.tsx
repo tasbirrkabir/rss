@@ -114,7 +114,7 @@ export function AdminShell({
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-60 flex-col bg-ink lg:flex">
         <div className="border-b border-cream/10 px-4 py-5">
           <Link href="/admin" className="font-display text-3xl tracking-wide text-cream">
-            RED SCOOTY
+            DEMO SCOOTY
           </Link>
           <p className="label-micro mt-1 text-brand">MANAGEMENT PANEL</p>
         </div>
@@ -128,7 +128,7 @@ export function AdminShell({
       <div className="sticky top-0 z-40 flex items-center justify-between border-b border-ink/10 bg-ink px-4 py-3 lg:hidden">
         <div>
           <p className="font-display text-2xl leading-none tracking-wide text-cream">
-            RED SCOOTY
+            DEMO SCOOTY
           </p>
           <p className="label-micro mt-0.5 text-brand">MANAGEMENT PANEL</p>
         </div>

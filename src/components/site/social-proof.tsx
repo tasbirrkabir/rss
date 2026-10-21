@@ -13,7 +13,7 @@ import { Reveal } from "@/components/site/reveal";
  * ratings or quotes. Customer media replaces demo imagery after owner approval.
  */
 export function SocialProof() {
-  const { config, home } = useSiteConfig();
+  const { config, home, whatsappUrl: wa } = useSiteConfig();
   return (
     <section
       id="riders"
@@ -27,7 +27,7 @@ export function SocialProof() {
               <div className="-rotate-1 img-frame">
                 <Image
                   src="/images/rider-road.webp"
-                  alt="Rider on a red scooty following a quiet road through Sreemangal's tea plantations"
+                  alt="Rider on a demo scooty following a quiet road through Sreemangal's tea plantations"
                   width={1344}
                   height={768}
                   sizes="(min-width: 1024px) 48vw, 90vw"
@@ -37,7 +37,7 @@ export function SocialProof() {
               <div className="sticker absolute -bottom-5 right-4 rotate-2 bg-ink px-4 py-3">
                 <p className="label-micro text-cream">FOLLOW THE RIDES</p>
                 <p className="font-display text-2xl leading-none text-brand">
-                  @REDSCOOTYSMG
+                  @DEMOSCOOTY
                 </p>
               </div>
             </div>
@@ -77,7 +77,7 @@ export function SocialProof() {
                   <dd className="mt-1 font-display text-4xl leading-none text-ink">
                     SMG
                   </dd>
-                  <dd className="label-micro mt-1 text-brand">JALALIA ROAD</dd>
+                  <dd className="label-micro mt-1 text-brand">DEMO ROAD</dd>
                 </div>
               </dl>
             </Reveal>
@@ -97,9 +97,9 @@ export function SocialProof() {
                 <TrackedLink
                   event="click_whatsapp"
                   source="social_proof"
-                  href={`https://wa.me/8801897423694?text=${encodeURIComponent(
-                    "Hi Red Scooty! I want to rent a scooty in Sreemangal.",
-                  )}`}
+                  href={wa(
+                    "Hi Demo Scooty! I want to rent a demo scooty in Sreemangal.",
+                  )}
                   external
                   className="btn-base btn-outline"
                 >

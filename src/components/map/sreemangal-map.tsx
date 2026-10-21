@@ -130,7 +130,7 @@ export default function SreemangalMap({
           <div className="p-3">
             <p className="label-micro text-brand">START HERE</p>
             <p className="mt-1 font-display text-xl leading-tight tracking-wide text-ink">
-              RED SCOOTY SREEMANGAL
+              DEMO SCOOTY RENTAL
             </p>
             <p className="mt-1 text-xs leading-relaxed text-ink-soft">
               {SITE.addressLine1} · Plus code {SITE.plusCode}

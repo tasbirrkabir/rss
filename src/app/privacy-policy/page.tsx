@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "@/components/site/legal-page";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Red Scooty Sreemangal",
+  title: "Privacy Policy | Demo Scooty Rental",
   description:
-    "What information Red Scooty Sreemangal collects through this website, why it is collected, and how it is used. Written in plain language.",
+    "What information Demo Scooty collects through this website, why it is collected, and how it is used. Written in plain language.",
   alternates: { canonical: "/privacy-policy" },
 };
 
@@ -13,7 +13,7 @@ const SECTIONS: LegalSection[] = [
   {
     heading: "WHO WE ARE",
     body: [
-      "Red Scooty Sreemangal is a scooty rental service based on Jalalia Road, Sreemangal 3210, Moulvibazar, Sylhet, Bangladesh. This policy covers the website you are on and the booking request form it contains.",
+      "Demo Scooty Rental is a scooty rental service based on Demo Road, Sreemangal 3210, Moulvibazar, Sylhet, Bangladesh. This policy covers the website you are on and the booking request form it contains.",
       "If you have any question about anything below, call or message us first. We would rather explain it in person than hide behind fine print.",
     ],
   },

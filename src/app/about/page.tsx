@@ -20,12 +20,12 @@ import { DemoBadge } from "@/components/site/demo-badge";
 import { Reveal } from "@/components/site/reveal";
 import { TrackedLink } from "@/components/site/tracked-link";
 import { VideoBand } from "@/components/site/video-band";
-import { SITE } from "@/data/site";
+import { SITE, whatsappMessageUrl } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "About — We're Not Just Renting Scooties | Red Scooty Sreemangal",
+  title: "About — We're Not Just Renting Scooties | Demo Scooty Rental",
   description:
-    "Red Scooty exists to make Sreemangal easier to explore - independently, on two wheels, through the tea capital of Bangladesh. Confirmed personally, every time.",
+    "Demo Scooty exists to make Sreemangal easier to explore - independently, on two wheels, through the tea capital of Bangladesh. Confirmed personally, every time.",
 };
 
 /** VideoObject schema for the embedded business tour video. */
@@ -41,7 +41,7 @@ const videoJsonLd = {
   contentUrl: SITE.youtube.watchUrl,
   publisher: {
     "@type": "Organization",
-    name: "Red Scooty Sreemangal",
+    name: "Demo Scooty Rental",
   },
 };
 
@@ -52,7 +52,7 @@ const videoJsonLd = {
 const TIMELINE: { label: string; text: string }[] = [
   {
     label: "STARTED",
-    text: "A few scooties on Jalalia Road and one simple idea: explore Sreemangal your own way.",
+    text: "A few scooties on Demo Road and one simple idea: explore Sreemangal your own way.",
   },
   {
     label: "GROWING",
@@ -78,7 +78,7 @@ export default function AboutPage() {
       <Header />
       <main className="flex-1">
         <PageHeader
-          kicker="ABOUT RED SCOOTY"
+          kicker="ABOUT DEMO SCOOTY"
           title={
             <>
               WE&apos;RE NOT JUST
@@ -86,7 +86,7 @@ export default function AboutPage() {
               RENTING <span className="text-brand">SCOOTIES.</span>
             </>
           }
-          intro="A shop on Jalalia Road and one job: helping you explore the tea capital of Bangladesh on your own schedule."
+          intro="A shop on Demo Road and one job: helping you explore the tea capital of Bangladesh on your own schedule."
         />
 
         {/* Story */}
@@ -108,7 +108,7 @@ export default function AboutPage() {
                     does.
                   </p>
                   <p>
-                    Red Scooty exists for that gap. A scooty turns the area
+                    Demo Scooty exists for that gap. A scooty turns the area
                     into your own route: start when you want, stop where you
                     like, take the small road. We keep the rental part simple
                     so the exploring part is yours.
@@ -126,14 +126,14 @@ export default function AboutPage() {
                   <div className="rotate-2 img-frame transition-transform duration-300 hover:rotate-0">
                     <Image
                       src="/images/about-shop.webp"
-                      alt="Red scooters parked outside the Red Scooty shop on Jalalia Road, Sreemangal"
+                      alt="Demo scooters parked outside the Demo Scooty shop on Demo Road, Sreemangal"
                       width={1344}
                       height={768}
                       className="h-auto w-full object-cover"
                     />
                     <p className="label-micro flex items-center justify-between px-4 py-3 text-steel">
                       <span>THE SHOP</span>
-                      <span>RED SCOOTY</span>
+                      <span>DEMO SCOOTY</span>
                     </p>
                   </div>
                 </div>
@@ -161,7 +161,7 @@ export default function AboutPage() {
                     />
                     <p className="label-micro flex items-center justify-between px-4 py-3 text-steel">
                       <span>{SITE.owner.name}</span>
-                      <span>RED SCOOTY SREEMANGAL</span>
+                      <span>{SITE.fullName}</span>
                     </p>
                   </div>
                 </div>
@@ -177,9 +177,9 @@ export default function AboutPage() {
                 </p>
                 <div className="mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-ink-soft">
                   <p>
-                    When you message Red Scooty, this is who answers. Radiyan
+                    When you message Demo Scooty, this is who answers. The Demo Owner
                     reads every request, confirms every booking personally, and
-                    is the one handing over the keys on Jalalia Road.
+                    is the one handing over the keys on Demo Road.
                   </p>
                   <p>
                     Ask him where to ride and you get an answer from someone
@@ -196,9 +196,9 @@ export default function AboutPage() {
                   <TrackedLink
                     event="click_whatsapp"
                     source="about_owner"
-                    href={`https://wa.me/8801897423694?text=${encodeURIComponent(
-                      "Hi Radiyan! I'd like to ask about renting a scooty in Sreemangal.",
-                    )}`}
+                    href={whatsappMessageUrl(
+                      "Hi Demo Owner! I'd like to ask about renting a demo scooty in Sreemangal.",
+                    )}
                     external
                     className="btn-base btn-primary group"
                   >
@@ -288,7 +288,7 @@ export default function AboutPage() {
                           external
                           className="link-underline mt-0.5 block w-fit font-display text-xl tracking-wide text-ink"
                         >
-                          Red Scooty Sreemangal
+                          {SITE.fullName}
                         </TrackedLink>
                       </div>
                     </li>

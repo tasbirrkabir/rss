@@ -277,7 +277,7 @@ export default function RouteMap({ route }: RouteMapProps) {
                         FINISH
                       </p>
                       <p className="mt-1 font-display text-xl leading-tight tracking-wide text-ink">
-                        RED SCOOTY HQ
+                        DEMO SCOOTY HQ
                       </p>
                       <p className="mt-1 text-xs leading-relaxed text-ink-soft">
                         {SITE.addressLine1} · Plus code {SITE.plusCode}

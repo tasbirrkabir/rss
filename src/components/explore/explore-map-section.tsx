@@ -204,14 +204,14 @@ export function ExploreMapSection() {
                     <span className="text-brand">OR PICK A STOP.</span>
                   </p>
                   <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-soft">
-                    Seven stops around Sreemangal and our base on Jalalia Road.
+                    Seven stops around Sreemangal and our base on Demo Road.
                     Distances come from published sources; ride times are demo
                     estimates until you book.
                   </p>
                   <div className="mt-6 border-t border-ink/10 pt-5">
                     <p className="label-micro flex items-center gap-2 text-ink">
                       <MapPin className="h-4 w-4 text-brand" aria-hidden="true" />
-                      START HERE — RED SCOOTY HQ
+                      START HERE — DEMO SCOOTY HQ
                     </p>
                     <p className="mt-1.5 text-sm leading-relaxed text-steel">
                       {SITE.addressLine1} · Plus code {SITE.plusCode}
@@ -221,7 +221,7 @@ export function ExploreMapSection() {
                       source="explore_map:hq"
                       href={SITE.mapsUrl}
                       external
-                      ariaLabel="Get directions to Red Scooty Sreemangal on Google Maps"
+                      ariaLabel="Get directions to Demo Scooty on Google Maps"
                       className="label-micro link-underline mt-3 inline-flex items-center gap-1.5 text-brand"
                     >
                       OPEN IN GOOGLE MAPS

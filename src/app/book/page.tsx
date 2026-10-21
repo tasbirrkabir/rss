@@ -25,9 +25,9 @@ import { getPublicScooties, getSiteConfig } from "@/lib/cms";
 import { whatsappUrl } from "@/lib/public-content";
 
 export const metadata: Metadata = {
-  title: "Book a Scooty — Request Your Ride | Red Scooty Sreemangal",
+  title: "Book a Scooty — Request Your Ride | Demo Scooty Rental",
   description:
-    "Request a scooty for your Sreemangal ride - pick a date, duration and pickup point. Red Scooty confirms personally. No online payment, no account needed.",
+    "Request a scooty for your Sreemangal ride - pick a date, duration and pickup point. Demo Scooty confirms personally. No online payment, no account needed.",
 };
 
 const GOOD_TO_KNOW: {
@@ -80,7 +80,7 @@ export default async function BookPage() {
               YOU MOVING.
             </>
           }
-          intro="Send your date and duration. Red Scooty confirms personally - no payment online, no account needed."
+          intro="Send your date and duration. Demo Scooty confirms personally - no payment online, no account needed."
         />
 
         <RideStatus />
@@ -206,7 +206,7 @@ export default async function BookPage() {
                         event="click_whatsapp"
                         source="book_rail"
                         href={whatsappUrl(config.whatsappNumber, 
-                          "Hi Red Scooty! I have a question about renting a scooty in Sreemangal.",
+                          "Hi Demo Scooty! I have a question about renting a demo scooty in Sreemangal.",
                         )}
                         external
                         className="btn-base btn-red w-full"

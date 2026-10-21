@@ -30,13 +30,13 @@ export function MobileCtaBar() {
       </a>
       <a
         href={wa(
-          "Hi Red Scooty! I want to rent a scooty in Sreemangal.",
+          "Hi Demo Scooty! I want to rent a demo scooty in Sreemangal.",
         )}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => track("click_whatsapp", { source: "mobile_bar" })}
         className="flex min-h-14 flex-col items-center justify-center gap-0.5 py-1 text-ink transition-colors hover:text-brand active:text-brand"
-        aria-label="Message Red Scooty on WhatsApp"
+        aria-label="Message Demo Scooty on WhatsApp"
       >
         <MessageCircle className="h-5 w-5" aria-hidden="true" />
         <span className="label-micro">WHATSAPP</span>

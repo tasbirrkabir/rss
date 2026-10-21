@@ -51,7 +51,7 @@ export function ExploreCtaBand() {
             </Link>
             <a
               href={whatsappMessageUrl(
-                "Hi Red Scooty! I've been exploring the map on your site — I'd like to plan a ride in Sreemangal.",
+                "Hi Demo Scooty! I've been exploring the map on your site — I'd like to plan a ride in Sreemangal.",
               )}
               target="_blank"
               rel="noopener noreferrer"
@@ -64,7 +64,7 @@ export function ExploreCtaBand() {
             </a>
           </div>
           <p className="label-micro mt-6 text-cream/50">
-            PICKUP ON JALALIA ROAD · CONFIRMED PERSONALLY · DEMO ESTIMATES
+            PICKUP ON DEMO ROAD · CONFIRMED PERSONALLY · DEMO ESTIMATES
             UNTIL YOU BOOK
           </p>
         </Reveal>

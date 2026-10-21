@@ -9,9 +9,9 @@ import { TrustStrip } from "@/components/how-it-works/trust-strip";
 import { HowCtaBand } from "@/components/how-it-works/cta-band";
 
 export const metadata: Metadata = {
-  title: "How It Works — Book, Pick Up, Ride | Red Scooty Sreemangal",
+  title: "How It Works — Book, Pick Up, Ride | Demo Scooty Rental",
   description:
-    "Request, confirm, pick up, ride, return. Booking a Red Scooty scooty in Sreemangal takes under a minute — no payment, no account, and every detail is confirmed personally.",
+    "Request, confirm, pick up, ride, return. Booking a Demo Scooty in Sreemangal takes under a minute — no payment, no account, and every detail is confirmed personally.",
 };
 
 /**
@@ -32,7 +32,7 @@ export default function HowItWorksPage() {
               ZERO FRICTION.
             </>
           }
-          intro="From request to road in five honest steps. You send the details, Red Scooty confirms personally — no payment, no account, no surprises."
+          intro="From request to road in five honest steps. You send the details, Demo Scooty confirms personally — no payment, no account, no surprises."
         />
         <ProcessSteps />
         <TrustStrip />

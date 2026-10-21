@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { IntroReveal } from "@/components/site/intro-reveal";
 import { SiteConfigProvider } from "@/components/site/site-config-provider";
 import { getHomeContent, getSiteConfig } from "@/lib/cms";
-import { whatsappUrl } from "@/lib/public-content";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -24,9 +23,9 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Red Scooty Sreemangal | Scooty Rental & Rides in Sreemangal",
+  title: "Demo Scooty Rental | Scooty Rental & Rides in Sreemangal",
   description:
-    "Rent a scooty in Sreemangal and explore the tea gardens, Lawachara National Park, Madhabpur Lake and the quiet roads between them. Simple booking, local pickup on Jalalia Road. Don't just visit Sreemangal - ride it.",
+    "Rent a scooty in Sreemangal and explore the tea gardens, Lawachara National Park, Madhabpur Lake and the quiet roads between them. Simple booking, demo pickup on Demo Road. Don't just visit Sreemangal - ride it.",
   keywords: [
     "scooty rental Sreemangal",
     "scooter rental Sreemangal",
@@ -37,25 +36,23 @@ export const metadata: Metadata = {
     "Lawachara National Park",
     "Madhabpur Lake",
     "Sreemangal transport",
-    "Red Scooty Sreemangal",
+    "Demo Scooty",
   ],
-  authors: [{ name: "Red Scooty Sreemangal" }],
+  authors: [{ name: "Demo Scooty Rental" }],
   openGraph: {
-    title: "Red Scooty Sreemangal | Don't Just Visit Sreemangal. Ride It.",
+    title: "Demo Scooty Rental | Don't Just Visit Sreemangal. Ride It.",
     description:
-      "Scooty rentals for exploring the tea gardens, forests, roads and hidden corners of Sreemangal.",
+      "Demo scooty rentals for exploring the tea gardens, forests, roads and hidden corners of Sreemangal.",
     url: siteUrl,
-    siteName: "Red Scooty Sreemangal",
-    // Images: provided by the file-convention src/app/opengraph-image.png
-    // (1200x630 brand card) — no explicit entry needed here.
+    siteName: "Demo Scooty Rental",
     type: "website",
     locale: "en_BD",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Red Scooty Sreemangal | Scooty Rental & Rides",
+    title: "Demo Scooty Rental | Scooty Rental & Rides",
     description:
-      "Scooty rentals for exploring the tea gardens, forests, roads and hidden corners of Sreemangal.",
+      "Demo scooty rentals for exploring the tea gardens, forests, roads and hidden corners of Sreemangal.",
   },
   robots: { index: true, follow: true },
 };
@@ -69,19 +66,19 @@ export const viewport: Viewport = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "AutoRental",
-  name: "Red Scooty Sreemangal",
+  name: "Demo Scooty Rental",
   description:
-    "Scooty rental service for exploring the tea gardens and nature of Sreemangal, Bangladesh.",
+    "Demo scooty rental showcase for exploring the tea gardens and nature of Sreemangal, Bangladesh.",
   slogan: "Don't just visit Sreemangal. Ride it.",
   url: siteUrl,
   founder: {
     "@type": "Person",
-    name: "Radiyan Hossen",
-    jobTitle: "Founder & Owner",
+    name: "Demo Owner",
+    jobTitle: "Demo Founder & Owner",
   },
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Jalalia Road",
+    streetAddress: "Demo Road",
     addressLocality: "Sreemangal",
     addressRegion: "Moulvibazar, Sylhet",
     postalCode: "3210",
@@ -94,9 +91,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Load CMS-managed content once per request; every client component below
-  // reads it through useSiteConfig(). Contact details come from the DB when
-  // available, otherwise the verified launch values are used.
   const [config, home] = await Promise.all([getSiteConfig(), getHomeContent()]);
   const jsonLdFull = {
     ...jsonLd,

@@ -51,7 +51,7 @@ export function ScootyShowcase({ vehicles }: { vehicles: ScootyRecord[] }) {
                   {/* Index + tags */}
                   <div className="flex items-center justify-between gap-3 border-b border-ink/10 px-4 py-3">
                     <p className="label-micro text-brand">
-                      RED SCOOTY {String(i + 1).padStart(2, "0")}
+                      DEMO SCOOTY {String(i + 1).padStart(2, "0")}
                     </p>
                     <p className="label-micro hidden text-steel sm:block">
                       {CARD_TAGS.join(" · ")}
@@ -134,7 +134,7 @@ export function ScootyShowcase({ vehicles }: { vehicles: ScootyRecord[] }) {
                   </p>
                   <p className="mt-4 text-sm leading-relaxed text-cream/70">
                     Final fleet list, models and rates are confirmed directly
-                    with Red Scooty. Ask us what&apos;s available.
+                    with Demo Scooty. Ask us what&apos;s available.
                   </p>
                 </div>
                 <p className="mt-6 inline-flex items-center gap-2 font-display text-2xl tracking-wider text-brand">

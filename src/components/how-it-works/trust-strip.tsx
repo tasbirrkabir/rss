@@ -40,7 +40,7 @@ export function TrustStrip() {
         <Reveal delay={0.1}>
           <p className="label-micro mt-8 flex flex-wrap items-center gap-3 text-cream/60">
             DEPOSIT, DOCUMENTS AND DELIVERY DETAILS ARE CONFIRMED PERSONALLY
-            WITH RED SCOOTY.
+            WITH DEMO SCOOTY.
             <DemoBadge>DETAILS TO BE CONFIRMED</DemoBadge>
           </p>
         </Reveal>

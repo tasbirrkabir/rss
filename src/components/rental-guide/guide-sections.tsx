@@ -66,7 +66,7 @@ const SECTIONS: GuideSection[] = [
       "Helmet expected on every ride — ask about sizes when booking",
       "Tea-garden lanes are gentle; the forest highway is busier",
       "Weather turns fast — check the sky before long routes",
-      "Save Red Scooty's number before you set off",
+      "Save Demo Scooty's number before you set off",
     ],
   },
   {

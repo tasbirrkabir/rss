@@ -162,7 +162,7 @@ export function BuildYourRide() {
                     </Link>
                     <a
                       href={wa(
-                        `Hi Red Scooty! I'm interested in the "${mood.label}" ride in Sreemangal. Can you tell me more?`,
+                        `Hi Demo Scooty! I'm interested in the "${mood.label}" ride in Sreemangal. Can you tell me more?`,
                       )}
                       target="_blank"
                       rel="noopener noreferrer"

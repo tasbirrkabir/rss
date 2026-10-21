@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "@/components/site/legal-page";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | Red Scooty Sreemangal",
+  title: "Terms of Service | Demo Scooty Rental",
   description:
-    "The terms of renting a scooty from Red Scooty Sreemangal: who can ride, what is expected, and what you agree to. Plain language, no tricks.",
+    "The terms of renting a scooty from Demo Scooty Rental: who can ride, what is expected, and what you agree to. Plain language, no tricks.",
   alternates: { canonical: "/terms-of-service" },
 };
 
@@ -46,7 +46,7 @@ const SECTIONS: LegalSection[] = [
   {
     heading: "IF SOMETHING GOES WRONG",
     body: [
-      "Call us first. Nearly everything — a late return, a flat tyre, a changed plan — can be settled with a short, honest phone call. That is how business works on Jalalia Road, and this site does not change that.",
+      "Call us first. Nearly everything — a late return, a flat tyre, a changed plan — can be settled with a short, honest phone call. That is how business works on Demo Road, and this site does not change that.",
     ],
   },
 ];

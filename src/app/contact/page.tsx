@@ -24,9 +24,9 @@ import { whatsappUrl } from "@/lib/public-content";
 import type { AnalyticsEvent } from "@/lib/analytics";
 
 export const metadata: Metadata = {
-  title: "Contact — Talk to a Human | Red Scooty Sreemangal",
+  title: "Contact — Talk to a Human | Demo Scooty Rental",
   description:
-    "Call, WhatsApp, Facebook, email or visit Red Scooty in Sreemangal. Every booking is confirmed by a person - no bots, no booking engine.",
+    "Call, WhatsApp, Facebook, email or visit Demo Scooty in Sreemangal. Every booking is confirmed by a person - no bots, no booking engine.",
 };
 
 type MethodCardProps = {
@@ -104,7 +104,7 @@ export default async function ContactPage() {
               A HUMAN.
             </>
           }
-          intro="Every booking is confirmed by a person, not a bot. Call, message or drop by the shop on Jalalia Road - pick whichever is easiest for you."
+          intro="Every booking is confirmed by a person, not a bot. Call, message or drop by the shop on Demo Road - pick whichever is easiest for you."
         />
 
         {/* Contact method cards */}
@@ -145,7 +145,7 @@ export default async function ContactPage() {
                   detail={config.phoneDisplay}
                   note="Message any time - we reply personally between rides."
                   href={whatsappUrl(config.whatsappNumber, 
-                    "Hi Red Scooty! I'd like to ask about renting a scooty in Sreemangal.",
+                    "Hi Demo Scooty! I'd like to ask about renting a demo scooty in Sreemangal.",
                   )}
                   event="click_whatsapp"
                   external
@@ -156,7 +156,7 @@ export default async function ContactPage() {
                 <MethodCard
                   icon={Facebook}
                   label="FACEBOOK"
-                  detail="Red Scooty Sreemangal"
+                  detail="Demo Scooty Rental"
                   note="Fastest reply - message the page and we'll get back to you."
                   href={config.facebook}
                   event="click_facebook"
@@ -177,7 +177,7 @@ export default async function ContactPage() {
                   icon={MapPin}
                   label="GOOGLE MAPS"
                   detail="GET DIRECTIONS"
-                  note="Verified listing - find us on Jalalia Road, the tea capital is easy to navigate."
+                  note="Verified listing - find us on Demo Road, the tea capital is easy to navigate."
                   href={config.mapsUrl}
                   event="get_directions"
                   external
@@ -249,7 +249,7 @@ export default async function ContactPage() {
                     <div>
                       <p className="label-micro text-steel">VERIFIED LISTING · PLUS CODE {config.plusCode}</p>
                       <p className="mt-1 text-sm text-ink-soft">
-                        Jalalia Road, Sreemangal - the tea capital of Bangladesh.
+                        Demo Road, Sreemangal - the tea capital of Bangladesh.
                       </p>
                     </div>
                     <TrackedLink

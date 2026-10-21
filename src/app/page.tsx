@@ -15,7 +15,7 @@ import { FinalCta } from "@/components/home/final-cta";
 import { getPublicScooties } from "@/lib/cms";
 
 /**
- * Red Scooty Sreemangal - HOME.
+ * Demo Scooty Rental - HOME.
  * HERO -> THE RIDE (showcase) -> ROUTES (real map + build your ride)
  * -> THE STORY (cinematic scroll) -> trust strip -> proof -> YOUR TURN.
  */

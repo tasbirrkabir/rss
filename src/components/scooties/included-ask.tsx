@@ -6,8 +6,8 @@ import { Reveal } from "@/components/site/reveal";
 const INCLUDED: string[] = [
   "An automatic scooty suited to Sreemangal's roads",
   "A checked, cleaned ride handed over in person",
-  "Pickup at the shop on Jalalia Road",
-  "Red Scooty's number for the road — call or WhatsApp",
+  "Pickup at the shop on Demo Road",
+  "Demo Scooty's number for the road — call or WhatsApp",
 ];
 
 const ASK: string[] = [

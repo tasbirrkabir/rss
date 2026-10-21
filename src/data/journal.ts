@@ -137,19 +137,19 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
         heading: "WHAT YOU WILL NEED",
         paragraphs: [
           "Bring a valid driving license - if it is not Bangladeshi, check that it covers scooters or motorcycles before you travel. You will also be asked for a security deposit; the exact amount and form are confirmed personally when you book, so ask then and write it down.",
-          "Details like deposit amounts and document requirements are finalized directly with Red Scooty - we do not publish numbers until the owner confirms them.",
+          "Details like deposit amounts and document requirements are finalized directly with Demo Scooty - we do not publish numbers until the owner confirms them.",
         ],
       },
       {
         heading: "HOW BOOKING WORKS HERE",
         paragraphs: [
-          "There is no online payment and no self-service unlock. You send a request with your date and duration, a real person confirms availability, and you collect the scooty from Jalalia Road. It is low-tech on purpose: it keeps the process honest and the pricing personal.",
+          "There is no online payment and no self-service unlock. You send a request with your date and duration, a real person confirms availability, and you collect the scooty from Demo Road. It is low-tech on purpose: it keeps the process honest and the pricing personal.",
         ],
       },
       {
         heading: "BEFORE YOU RIDE",
         paragraphs: [
-          "Check the helmet fits and actually wear it - the roads are calm but not empty. Confirm fuel level, take a photo of the scooty's condition, put your phone in your pocket rather than on the handlebar, and save the Red Scooty number where you can reach it offline.",
+          "Check the helmet fits and actually wear it - the roads are calm but not empty. Confirm fuel level, take a photo of the scooty's condition, put your phone in your pocket rather than on the handlebar, and save the Demo Scooty number where you can reach it offline.",
         ],
       },
       {

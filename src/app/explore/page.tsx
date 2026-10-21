@@ -14,7 +14,7 @@ import { DESTINATIONS, RIDE_METRICS_NOTE } from "@/data/destinations";
 
 export const metadata: Metadata = {
   title:
-    "Explore Sreemangal — Real Map, Tea Gardens, Lawachara & More | Red Scooty Sreemangal",
+    "Explore Sreemangal — Real Map, Tea Gardens, Lawachara & More | Demo Scooty Rental",
   description:
     "Seven places around Sreemangal on a real OpenStreetMap with verified coordinates — tea gardens, Lawachara, Madhabpur Lake, Baikka Beel and more — with honest access notes, suggested routes and the Ride Passport stamp game.",
 };

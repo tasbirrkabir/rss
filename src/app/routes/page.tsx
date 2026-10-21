@@ -9,7 +9,7 @@ import { RoutesOwnBand } from "@/components/routes/routes-own-band";
 import { RIDE_ROUTES, findRoute } from "@/data/ride-routes";
 
 export const metadata: Metadata = {
-  title: "Ride Routes — Rides Worth Taking | Red Scooty Sreemangal",
+  title: "Ride Routes — Rides Worth Taking | Demo Scooty Rental",
   description:
     "Four suggested scooty routes through Sreemangal — tea garden loops, Lawachara forest roads, the Madhabpur lake run and wetland sunsets. Sourced distances, honest timings; the real plan is confirmed personally when you book.",
 };

@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "@/components/site/legal-page";
 
 export const metadata: Metadata = {
-  title: "Refund & Cancellation Policy | Red Scooty Sreemangal",
+  title: "Refund & Cancellation Policy | Demo Scooty Rental",
   description:
-    "How cancellations, delays and deposits work for scooty rentals at Red Scooty Sreemangal. No hidden fees, no fine print games.",
+    "How cancellations, delays and deposits work for scooty rentals at Demo Scooty. No hidden fees, no fine print games.",
   alternates: { canonical: "/refund-policy" },
 };
 

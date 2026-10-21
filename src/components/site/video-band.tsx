@@ -55,7 +55,7 @@ export function VideoBand() {
               <Play className="ml-1 h-9 w-9 fill-current sm:h-11 sm:w-11" />
             </span>
             <span className="label-micro absolute bottom-3 left-3 bg-ink px-2.5 py-1.5 text-cream">
-              YOUTUBE · RED SCOOTY
+              YOUTUBE · DEMO SCOOTY
             </span>
           </button>
         )}

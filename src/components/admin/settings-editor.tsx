@@ -116,7 +116,7 @@ export function SettingsEditor({ initial }: { initial: AdminSettings }) {
               id="c-intl"
               value={form.phoneIntl}
               onChange={(e) => set("phoneIntl", e.target.value)}
-              placeholder="+8801897423694"
+              placeholder="+8801700000000"
               className="h-10 rounded-none border-ink/20 bg-paper"
             />
           </div>
@@ -126,7 +126,7 @@ export function SettingsEditor({ initial }: { initial: AdminSettings }) {
               id="c-wa"
               value={form.whatsappNumber}
               onChange={(e) => set("whatsappNumber", e.target.value)}
-              placeholder="8801897423694"
+              placeholder="8801700000000"
               className="h-10 rounded-none border-ink/20 bg-paper"
             />
           </div>
